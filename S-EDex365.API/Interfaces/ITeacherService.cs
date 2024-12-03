@@ -6,6 +6,7 @@ namespace S_EDex365.API.Interfaces
     {
         Task<List<ProblemPostAll>> GetAllPostAsync();
         Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId);
+        Task<string> UpdateProblemFlagAsync(Guid postId);
         //Task<List<ProblemPostAll>> GetAllPostByUserAsync();
 
     }

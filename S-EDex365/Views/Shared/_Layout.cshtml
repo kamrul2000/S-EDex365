@@ -72,9 +72,8 @@
                         <a class="btn btn-primary btn-hover-secondery text-capitalize me-2" asp-action="Login" asp-controller="Auth">Sign In</a>
                         <a class="btn btn-primary btn-hover-secondery text-capitalize" asp-action="Signup" asp-controller="User">Sign Up</a>
 
-                        <a class="btn btn-primary btn-hover-secondery text-capitalize"
-                           asp-action="DownloadApk"
-                           asp-controller="APK">
+                        <a style="display:none" class="btn btn-outline-warning btn-hover-secondery text-capitalize m-2"
+                           asp-action="DownloadApk" asp-controller="APK">
                             APK
                         </a>
 
@@ -87,7 +86,7 @@
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <div class="logo">
-                    <a class="navbar-brand py-0 me-0" href="#"><img src="~/frontend/images/Creato-logo.svg" alt=""></a>
+                    <a class="navbar-brand py-0 me-0" href="#"><img src="~/images/logos/dark-logo.png" alt=""></a>
                 </div>
                 <button type="button" class="btn-close text-reset  ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"><i class="ti ti-x"></i></button>
             </div>
@@ -120,13 +119,13 @@
                     <br />
                     
 
-                    <a class="btn btn-primary btn-hover-secondery text-capitalize" asp-action="Login" asp-controller="Auth">Sign In</a>
+                    <a class="btn btn-success btn-hover-secondery text-capitalize" asp-action="Login" asp-controller="Auth">Sign In</a>
                     <br />
-                    <a class="btn btn-primary btn-hover-secondery text-capitalize" asp-action="Signup" asp-controller="User">Sign Up</a>
+                    <a class="btn btn-warning btn-hover-secondery text-capitalize" asp-action="Signup" asp-controller="User">Sign Up</a>
 
                 </ul>
                 <div class="login d-block align-items-center">
-                    <a class="btn btn-primary text-capitalize w-100" href="#">contact us</a>
+                    <a style="display:none" class="btn btn-primary text-capitalize w-100" href="#">contact us</a>
                 </div>
             </div>
         </div>
@@ -148,7 +147,8 @@
                 <div class="col-xxl-4 col-xxl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                     <div class="footer-logo-col">
                         <a href="#"><img src="~/images/logos/dark-logo.png"></a>
-                        <p class="copyrights fs-5 mb-0">Copyright<span id="autodate"></span></p>
+                        <p class="copyrights fs-5 mb-0" style="display:none">Copyright<span id="autodate"></span></p>
+                        <p class="mb-0 copyrights">© 2024 Edex365. All Rights Reserved.</p>
                         <ul class="social-icons list-unstyled mb-0 pl-0 d-flex align-items-center">
                             <li><a href="#" class="rounded-circle"><img src="~/frontend/images/footer/icon_facebook.svg"><img src="~/frontend/images/footer/icon_facebook_white.svg"></a></li>
                             <li><a href="#" class="rounded-circle"><img src="~/frontend/images/footer/icon_twitter.svg"><img src="~/frontend/images/footer/icon_twitter_white.svg"></a></li>
@@ -158,6 +158,8 @@
                     </div>
                 </div>
                 <div class="col-xxl-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+                    </div>
+                <div class="col-xxl-3 col-xxl-3 col-lg-3 col-md-4 col-sm-12 col-12" style="display:none">
                     <h5 class="text-secondary fw-bold fs-4">Quick links</h5>
                     <ul class="list-unstyled mb-0 pl-0">
                         <li><a href="#" class="text-capitalize fs-6 text-decoration-none">Home</a></li>
@@ -169,17 +171,15 @@
                     </ul>
                 </div>
                 <div class="col-xxl-5 col-xxl-5 col-lg-5 col-md-8 col-sm-12 col-12">
-                    <h5 class="text-secondary fw-bold fs-4">From the blog</h5>
+                    <h5 class="text-secondary fw-bold fs-4">Edex365</h5>
                     <div class="blog mb-3">
-                        <p class="mb-0 fs-6">It has survived not only centuries, that rela but also the all this among lea.</p>
-                        <p class="mt-2 fs-6">16 Mar,2021</p>
+                        <p class="mb-0 fs-6">Welcome to <b>EDex365</b> , your ultimate education platform designed to bridge the gap between students and teachers in a collaborative, problem-solving environment.</p>
+                        <p class="mt-2 fs-6">At <b>EDex365</b>, we believe education is more than just lectures and textbooks—it’s about empowering students to overcome challenges and fostering a community where knowledge thrives.</p>
                     </div>
                     <div class="blog mb-3">
-                        <p class="mb-0 fs-6">It has survived not only centuries, that rela but also the all this among lea.</p>
-                        <p class="mt-2 fs-6">16 Mar,2021</p>
-                    </div>
-                    <div class="blog">
-                        <a href="#" class="text-decoration-none text-primary text-capitalize fs-6">read more</a>
+                        <a asp-action="DownloadApk" asp-controller="APK"><img src="~/images/logos/Capture.png"></a>
+                        <p style="display:none" class="mb-0 fs-6">It has survived not only centuries, that rela but also the all this among lea.</p>
+                        <p style="display:none" class="mt-2 fs-6">16 Mar,2021</p>
                     </div>
                 </div>
             </div>

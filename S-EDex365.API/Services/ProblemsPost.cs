@@ -86,12 +86,12 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS Class, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.UserId = @UserId";
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.UserId = @UserId";
 
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
-                var baseUrl = "https://www.edex365.com/uploads/";
+                var baseUrl = "https://www.api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -237,7 +237,7 @@ namespace S_EDex365.API.Services
 
                     // Prepend the base URL to the photo filename
                     string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://www.edex365.com/uploads/{uniqueFileName}"
+                        ? $"https://www.api.edex365.com/uploads/{uniqueFileName}"
                         : null;
 
                     // Prepare the response

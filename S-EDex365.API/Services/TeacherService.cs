@@ -92,7 +92,7 @@ namespace S_EDex365.API.Services
 
 
 
-        private readonly string _basePhotoUrl = "https://www.edex365.com/uploads/";
+        private readonly string _basePhotoUrl = "https://www.api.edex365.com/uploads/";
 
         public async Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId)
         {
@@ -122,7 +122,7 @@ namespace S_EDex365.API.Services
                     var userIdList = (await connection.QueryAsync<Guid>(query, new { SubjectId = subjectId })).ToList();
 
                     // Define the query for getting the problem posts for each user and each SubjectId
-                    query = @"SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN TeacherSkill t4 ON t4.SubjectId = t1.SubjectId WHERE t1.SubjectId = @SubjectId AND t4.UserId = @UserId";
+                    query = @"SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN TeacherSkill t4 ON t4.SubjectId = t1.SubjectId WHERE t1.Flag=1 and t1.SubjectId = @SubjectId AND t4.UserId = @UserId";
 
                     // Retrieve problem posts for each user and add them to the list
                     foreach (var currentUserId in userIdList)
@@ -144,10 +144,29 @@ namespace S_EDex365.API.Services
             }
         }
 
+        public async Task<string> UpdateProblemFlagAsync(Guid postId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
 
+                            string updateQuery = "UPDATE ProblemsPost SET Flag = @Flag WHERE Id = @Id";
+                            SqlCommand updateCommand = new SqlCommand(updateQuery, connection);
+                            updateCommand.Parameters.AddWithValue("@Id", postId);
+                            updateCommand.Parameters.AddWithValue("@Flag", 1);
 
+                           var result= await updateCommand.ExecuteNonQueryAsync();
 
-
-
+                    return result.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as necessary
+                throw;
+            }
+        }
     }
 }

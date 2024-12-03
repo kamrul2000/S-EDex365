@@ -33,5 +33,11 @@ namespace S_EDex365.API.Controllers
 
             return Ok(subjectDetails);
         }
+        [HttpPut("s/UpdateProblemFlag/{postId}")]
+        public async Task<ActionResult<List<ProblemPostAll>>> UpdateProblemFlag(Guid postId)
+        {
+            var updateDetails = await _teacherService.UpdateProblemFlagAsync(postId);
+            return Ok("This Task Accepted..");
+        }
     }
 }
