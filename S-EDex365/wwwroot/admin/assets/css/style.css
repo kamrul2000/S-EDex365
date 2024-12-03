@@ -1,0 +1,2680 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300&display=swap');
+
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Noto Sans Bengali', sans-serif;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+/*
+    Header Start
+=================================*/
+.header{
+    width: 100%;
+    padding: 5px 70px;
+}
+.header .phone a i{
+    padding-right: 5px;
+}
+.header .mail a i{
+    padding-right: 5px;
+}
+.header .mail{
+    padding-left: 70px;
+}
+.header a{
+    text-decoration: none;
+    color: #029F7D;
+    font-size: 14px;
+    font-weight: 600;
+}
+.header .social-link a{
+    margin-right: 8px;
+    padding: 3px 3px 0px 3px;
+    font-size: 12px;
+    border-style: solid;
+    border-width: 1px;
+}
+.header .social-link a:hover{
+    color: white;
+    background-color: #029F7D;
+    transition: .6s ease;
+}
+/*
+    Header End
+=================================*/
+
+
+
+/*
+    Navbar Start
+=================================*/
+/*--Sticky Navbar Start--*/
+.sticky-nav{
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    background-image: linear-gradient(to right, #03dbac, #03dbac, #03dbac);
+    box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.3);
+    animation: stickyNav-slide-down .7s ease;
+}
+.sticky-nav .nav-item .nav-link{
+    font-size: 14px;
+    font-weight: 600;
+    color: white!important;   
+}
+.sticky-nav .nav-item .nav-link:hover{
+    color: black!important;
+    transition: .6s;
+}
+.sticky-nav .nav-item .nav-link.active{
+    color: black!important;
+}
+.sticky-nav .navbar-nav .nav-item .browseBtn{
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: white;
+    color: black!important;
+}
+.sticky-nav .navbar-nav .nav-item .browseBtn:hover{
+    background-color: transparent;
+    color: white!important;
+    transition: .6s ease;
+}
+@keyframes stickyNav-slide-down{
+    0%{
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    100%{
+        opacity: 1;
+        transform: none;
+    }
+}
+/*--Sticky Navbar End--*/
+nav{
+    background-image: linear-gradient(to right, #03dbac, #9FF1DE, #03dbac);
+}
+nav .navbar-brand{
+    width: 150px;
+}
+nav .navbar-nav .nav-item .nav-link{
+    font-size: 14px;
+    font-weight: 600;
+    color: #605F61;
+    padding:10px 15px;
+}
+nav .navbar-nav .dropdown .dropdown-menu{
+    padding: 20px 20px;
+    border-style: none;
+    border-right: 1px solid #03dbac;
+    border-bottom: 1px solid #03dbac;
+    border-left: 1px solid #03dbac;
+    border-radius: 1px;  
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;  
+}
+nav .navbar-nav .dropdown .dropdown-menu .dropdown-item{
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #D8FAF3;
+}
+nav .navbar-nav .dropdown .dropdown-menu .dropdown-item:hover{
+    background-color: transparent;
+    color: #02AA85;
+    transition: .6s;
+}
+nav .navbar-nav .dropdown:hover>.dropdown-menu{
+    display: block;
+    animation: slide-down .6s ease;
+}
+nav .navbar-nav .dropdown .nav-link .icon i{
+    padding-left: 3px;
+}
+nav .navbar-nav .dropdown .nav-link[aria-expanded="true"] .icon i{
+  transition: .5s;
+  transform: rotate(180deg);
+}
+@keyframes slide-down{
+    0%{
+        opacity: 0;
+        transform: translateY(-14px);
+    }
+    100%{
+        opacity: 1;
+        transform: none;
+    }
+}
+nav .navbar-nav .nav-item .nav-link:hover{
+    color: black;
+}
+nav .navbar-nav .nav-item .nav-link.active{
+    color: black;
+}
+nav .navbar-nav .nav-item .browseBtn{
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+}
+nav .navbar-nav .nav-item .browseBtn i{
+    padding-right: 5px;
+}
+nav .navbar-nav .nav-item .browseBtn:hover{
+    background-color: transparent;
+    color: white;
+    transition: .6s ease;
+}
+/*
+    Navbar End
+=================================*/
+
+
+/*
+    marquee Start
+=================================*/
+marquee{
+    width: 100%;
+    padding: 5px 0px;
+    font-size: 14px;
+    color: black;
+}
+marquee a{
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+marquee .blink {
+    animation: blinker 1s linear infinite;
+    color: #E63B16;
+}
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+marquee .blink2{
+    color: #F51090!important;
+}
+marquee .blink3{
+    color: #8B1BEE!important;
+}
+marquee a:hover{
+    animation: none;
+}
+/*
+    marquee End
+=================================*/
+
+
+
+/*
+    Banner Area Start
+=================================*/
+.banner{
+    width: 100%;
+    padding: 50px 70px 150px 70px;
+    background-color: #EEFFFC;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: -10px;
+    background-image: url('../../assets/img/shape/shape-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.banner .video-area{
+    width: 90%;
+    margin: auto;
+    background-color: #F4FFFD;
+    padding: 15px 15px 10px 15px;
+    border-style: solid;
+    border-color: #F4FFFD;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+.banner .text-box h5{
+    font-size: 18px;
+}
+.banner .text-box h5 i{
+    padding-right: 5px;
+    color: #02AA85;
+}
+.banner .text-box .heading{
+    margin-top: 30px;
+}
+.banner .text-box .heading h1{
+    font-size: 45px;
+    font-weight: bold;
+    color: #02AA85;
+    text-align: justify-all;
+    line-height: 55px;
+} 
+.banner .text-box p{
+    font-size: 18px;
+    text-align: justify;
+}
+.banner .btn-area{
+    width: 100%;
+}
+.banner .btn-area a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.banner .btn-area a i{
+    padding-right: 5px;
+}
+.banner .btn-area a:hover{
+    color: white;
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    transition: .6s;
+}
+/*
+    Banner Area End
+=================================*/
+
+
+
+/*
+    Courser Item Slider Box Start
+=================================*/
+.course-item{
+    padding: 40px 100px;
+    margin-top: -120px;
+    background-color: transparent;
+    overflow-x: hidden;
+}
+.course-item #course-item-slider{
+    margin-top: -20px;
+}
+.course-item #course-item-slider .item{
+    width: 95%;
+    height: 160px;
+    padding: 20px 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    background-color: white;
+    text-align: center;
+    border-style: solid;
+    border-color: #02AA85;
+    border-width: 1px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;   
+}
+.course-item #course-item-slider .item:hover{
+    border-color: #F4FDFB;
+    transition: .6s;
+}
+.course-item #course-item-slider .item a{
+    text-decoration: none;
+    color: #02AA85;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.course-item #course-item-slider .item a:hover{
+    color: #03dbac;
+    transition: .6s;
+}
+.course-item #course-item-slider .item .icon i{
+    color: #03dbac;
+    font-size: 35px;
+    font-weight: bold;
+}
+.course-item #course-item-slider .slick-arrow::before{
+    color: #02AA85;
+}
+/*
+    Courser Item Slider Box End
+=================================*/
+
+
+
+/*
+    Our All Courses Item Start
+=================================*/
+.all-course-box{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.all-course-box .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.all-course-box .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.all-course-box .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.all-course-box .heading .line{
+    color: #02AA85;
+}
+.all-course-box .item{
+    width: 95%;
+    height: 160px;
+    padding: 20px 20px;
+    margin: 20px 0px;
+    background-color: white;
+    text-align: center;
+    border-style: solid;
+    border-color: #02AA85;
+    border-width: 1px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.all-course-box .item:hover{
+    border-color: #F4FDFB;
+    transition: .6s;
+}
+.all-course-box .item a{
+    text-decoration: none;
+    color: #02AA85;
+    font-size: 18px;
+    font-weight: bold;
+}
+.all-course-box .item a:hover{
+    color: #03dbac;
+    transition: .6s;
+}
+.all-course-box .item .icon{
+    margin-bottom: 10px;
+}
+.all-course-box .item .icon i{
+    color: #03dbac;
+    font-size: 35px;
+    font-weight: bold;
+}
+/*
+    Our All Courses Item End
+=================================*/
+
+
+
+/*
+    All Courses Admission Area Start
+=================================*/
+.courses-admission{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.courses-admission .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.courses-admission .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.courses-admission .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.courses-admission .heading .line{
+    color: #02AA85;
+}
+.courses-admission #course-item{
+    padding-top: 20px;
+}
+.courses-admission #course-item h2{
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+}
+.courses-admission .card{
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.courses-admission .card img{
+    width: 100%;
+    height: auto;
+}
+.courses-admission .card:hover img{
+    transform: scale(1.1);
+    transition: .6s;
+}
+.courses-admission .card .card-body{
+    padding: 20px 20px;
+}
+.courses-admission .card .card-body p{
+    color: #03dbac;
+    font-size: 14px;
+}
+.courses-admission .card .card-body .course-name a{
+    color: #02AA85;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+.courses-admission .card .card-body .course-name a:hover{
+    text-decoration: underline;
+    transition: .6s;
+}
+.courses-admission .card .card-body .rating .star i{
+    color: #03dbac;
+    font-size: 12px;
+}
+.courses-admission .card .card-body .rating span{
+    color: #787E7E;
+    font-size: 12px;
+}
+.courses-admission .card .card-body .course-fee{
+    padding-top: 12px;
+}
+.courses-admission .card .card-body .course-fee p{
+    color: #4A4B4B;
+    font-size: 15px;
+    font-weight: bold;
+}
+.courses-admission .card .card-body .time-duration span{
+    font-size: 14px;
+}
+.courses-admission .card .card-body .time-duration i{
+    color: #02AA85;
+    padding-right: 5px;
+}
+.courses-admission .moreBtn{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+.courses-admission .moreBtn a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.courses-admission .moreBtn a:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+.courses-admission #web-software-course-slider .card{
+    width: 95%;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+.courses-admission #web-software-course-slider .slick-arrow::before{
+    color: #02AA85;
+}
+/*
+    All Courses Admission Area End
+=================================*/
+
+
+
+/*
+    Our All Popular Courses Start
+=================================*/
+.all-popular-course{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.all-popular-course .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.all-popular-course .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.all-popular-course .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.course-topic-tab #course-tab-slider .item h4{
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #F5F9F8;
+    border-bottom: solid 2px #02AA85;
+    padding: 10px 5px;
+    cursor: pointer;
+}
+.course-topic-tab #course-tab-slider .item h4:hover{
+    background-color: #02AA85;
+    color: white;
+    transition: .6s;
+}
+.course-topic-tab #course-tab-slider .item h4.active{
+    color: white;
+    background-color: #02AA85;
+}
+.course-topic-tab #course-tab-slider .slick-arrow::before{
+    color: #02AA85;
+}
+.all-popular-course .tab-content{
+    border-style: none;
+    padding: 5px 10px;
+}
+.all-popular-course .tab-content  .topic-heading h3{
+    color: #02AA85;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.all-popular-course .tab-content .card .hours i{
+    color: #02AA85;
+    padding-right: 5px;
+}
+.all-popular-course .tab-content .card .duration i{
+    color: #02AA85;
+    padding-right: 5px;
+}
+.all-popular-course .tab-content .digital-marketing{
+    display: none;
+}
+.all-popular-course .tab-content .cyber-security{
+    display: none;
+}
+.all-popular-course .tab-content .web-software{
+    display: none;
+}
+.all-popular-course .tab-content .project-management-professional{
+    display: none;
+}
+.all-popular-course .tab-content .design-and-multimedia{
+    display: none;
+}
+.all-popular-course .tab-content .mobile-app-development{
+    display: none;
+}
+.all-popular-course .tab-content .spoken-english{
+    display: none;
+}
+.all-popular-course .tab-content .all-course .card{
+    width: 95%;
+    margin: auto;
+}
+.all-popular-course .tab-content .card{
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.all-popular-course .tab-content .card img{
+    width: 100%;
+    height: auto;
+}
+.all-popular-course .tab-content .card:hover img{
+    transform: scale(1.1);
+    transition: .6s;
+}
+.all-popular-course .tab-content .card .card-body{
+    padding: 20px 20px;
+}
+.all-popular-course .tab-content .card .card-body p{
+    color: #03dbac;
+    font-size: 14px;
+}
+.all-popular-course .tab-content .card .card-body .course-name a{
+    color: #02AA85;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+.all-popular-course .tab-content .card .card-body .course-name a:hover{
+    text-decoration: underline;
+    transition: .6s;
+}
+.all-popular-course .tab-content .card .card-body .rating{
+    display: flex;
+    justify-content: space-between;
+}
+.all-popular-course .tab-content .card .card-body .rating .star i{
+    color: #03dbac;
+    font-size: 15px;
+}
+.all-popular-course .tab-content .card .card-body .rating span{
+    color: #787E7E;
+    font-size: 12px;
+}
+.all-popular-course .tab-content .card .card-body .rating .student span{
+    font-size: 12px;
+}
+.all-popular-course .tab-content .card .card-body .course-fee{
+    padding-top: 20px;
+}
+.all-popular-course .tab-content .card .card-body .course-fee p{
+    color: #4A4B4B;
+    font-size: 15px;
+    font-weight: bold;
+}
+.all-popular-course #all-course-slider .slick-arrow::before{
+    color: #02AA85;
+}
+/*
+    Our All Popular Courses End
+=================================*/
+
+
+/*
+    100% Job Courses Start
+=================================*/
+.job-course{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.job-course .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.job-course .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.job-course .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.job-course #course-item{
+    padding-top: 20px;
+}
+.job-course #course-item h2{
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+}
+.job-course .card{
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.job-course .card img{
+    width: 100%;
+    height: auto;
+}
+.job-course .card:hover img{
+    transform: scale(1.1);
+    transition: .6s;
+}
+.job-course .card .card-body{
+    padding: 20px 20px;
+}
+.job-course .card .card-body .text{
+    padding-top: 10px;
+}
+.job-course .card .card-body .text p{
+    color: black;
+    font-size: 14px;
+    text-align: justify;
+}
+.job-course .card .card-body .course-name a{
+    color: #02AA85;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+.job-course .card .card-body .course-name a:hover{
+    text-decoration: underline;
+    transition: .6s;
+}
+.job-course .card .card-body .rating .star i{
+    color: #03dbac;
+    font-size: 12px;
+}
+.job-course .card .card-body .rating span{
+    color: #787E7E;
+    font-size: 12px;
+}
+.job-course .card .card-body .course-fee p{
+    color: #4A4B4B;
+    font-size: 18px;
+    font-weight: bold;
+}
+.job-course .card .card-body .time-duration span{
+    font-size: 16px;
+}
+.job-course .card .card-body .time-duration i{
+    color: #02AA85;
+    padding-right: 5px;
+}
+.job-course .moreBtn{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+.job-course .moreBtn a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.job-course .moreBtn a:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+/*
+    100% Job Courses End
+=================================*/
+
+
+
+/*
+    Day Long Course Start
+=================================*/
+.day-long-course{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.day-long-course .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.day-long-course .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.day-long-course .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.day-long-course .heading .line{
+    color: #02AA85;
+}
+.day-long-course  .card{
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.day-long-course  .card img{
+    width: 100%;
+    height: auto;
+}
+.day-long-course  .card:hover img{
+    transform: scale(1.1);
+    transition: .6s;
+}
+.day-long-course  .card .card-body{
+    padding: 20px 20px;
+}
+.day-long-course  .card .card-body p{
+    color: #03dbac;
+    font-size: 14px;
+}
+.day-long-course  .card .card-body .course-name a{
+    color: #02AA85;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+.day-long-course  .card .card-body .course-name a:hover{
+    text-decoration: underline;
+    transition: .6s;
+}
+.day-long-course  .card .card-body .rating .star i{
+    color: #03dbac;
+    font-size: 12px;
+}
+.day-long-course  .card .card-body .rating span{
+    color: #787E7E;
+    font-size: 12px;
+}
+.day-long-course  .card .card-body .course-fee{
+    padding-top: 12px;
+}
+.day-long-course  .card .card-body .course-fee p{
+    color: #4A4B4B;
+    font-size: 15px;
+    font-weight: bold;
+}
+.day-long-course  .card .card-body .time-duration span{
+    font-size: 14px;
+}
+.day-long-course  .card .card-body .time-duration i{
+    color: #02AA85;
+    padding-right: 5px;
+}
+#day-long-course-slider .card{
+    width: 95%;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+#day-long-course-slider .slick-arrow::before{
+    color: #02AA85;
+}
+/*
+    Day Long Course End
+=================================*/
+
+
+
+/*
+    Day Long Course Details Start
+=================================*/
+.day-long-course-details{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.day-long-course-details .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.day-long-course-details .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.day-long-course-details .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.day-long-course-details .heading .line{
+    color: #02AA85;
+}
+.day-long-course-details .course-name{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.day-long-course-details .course-name .photo img{
+    width: 400px;
+    height: 250px;
+}
+.day-long-course-details .course-overview{
+    width: 100%;
+}
+.day-long-course-details .course-overview .card{
+    width: 100%;
+    padding: 20px 40px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #EDF7F7;
+    margin-bottom: 25px;
+}
+.day-long-course-details .course-overview .card h2{
+    font-size: 25px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+.day-long-course-details .course-overview .card  p{
+    text-align: justify;
+    font-size: 16px;
+}
+.day-long-course-details .course-curriculum{
+    width: 100%;
+}
+.day-long-course-details .course-curriculum .card{
+    width: 100%;
+    padding: 20px 40px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #EDF7F7;
+    margin-bottom: 25px;
+}
+.day-long-course-details .course-curriculum .card h2{
+    font-size: 25px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+.day-long-course-details .course-curriculum .card ul li{
+    font-size: 16px;
+    margin-left: -15px;
+    padding-top: 5px;
+}
+.day-long-course-details .details-card .card{
+ width: 100%;
+ padding: 20px 40px;
+ border-style: none;
+ border-radius: 10px;
+ background-color: #EDF7F7;
+ margin-bottom: 25px;
+}
+.day-long-course-details .details-card .card h3{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.day-long-course-details .details-card .card .btn-area{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0px 40px 0px;
+}
+.day-long-course-details .details-card .card .btn-area a{
+ font-size: 16px;
+ color: black;
+ text-decoration: none;
+ border-style: none;
+ border-radius: 5px;
+ padding: 12px 28px;
+ background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.day-long-course-details .details-card .card .btn-area a:hover{
+    color: white;
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    transition: .6s;
+}
+.day-long-course-details .details-card .card span{
+    padding-right: 15px;
+    padding-bottom: 12px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.day-long-course-details .details-card .card span i{
+    padding-right: 5px;
+    color: #02AA85;
+}
+/*
+    Day Long Course Details End
+=================================*/
+
+
+
+
+
+/*
+    Course Details Start
+=================================*/
+.course-details{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.course-details .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.course-details .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.course-details .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.course-details .ima-area{
+    width: 100%;
+    height: 350px;
+    margin: auto;
+    margin-top: 10px;
+}
+.course-details .ima-area img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.course-details .course-name h2{
+    font-size: 30px;
+    font-weight: bold;
+    color: #02AA85;
+}
+#duration-card .card{
+    text-align: center;
+    margin-top: 15px;
+    border-color: #02AA85;
+    background-color: white;
+}
+#duration-card .card:hover{
+    background-color: #02AA85;
+    color: white;
+    transition: .6s;
+}
+#duration-card .card h6{
+    font-size: 16px;
+}
+#duration-card .card h3{
+    font-size: 22px;
+    font-weight: bold;
+}
+.course-details .about-course p{
+    text-align: justify;
+    font-size: 16px;
+    padding-top: 15px;
+}
+.course-details .btn-area{
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+.course-details .btn-area a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 14px 23px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.course-details .btn-area a i{
+    padding-left: 5px;
+}
+.course-details .btn-area a:hover{
+    color: white;
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    transition: .6s;
+}
+#course-overview h2{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+#course-overview p{
+    text-align: justify;
+    font-size: 16px;
+}
+#course-curriculum .card{
+    padding: 20px 40px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #EDF7F7;
+}
+#course-curriculum h2{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+#course-curriculum h4{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+#course-curriculum p{
+    text-align: justify;
+    font-size: 16px;
+}
+#course-curriculum ul.square {
+    list-style-type: square;
+}
+#course-curriculum ul li{
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+#course-curriculum ul li i{
+    padding-right: 10px;
+    color: #02AA85;
+}
+.course-details .software{
+    margin-top: 50px;
+}
+.course-details .software .card{
+    padding: 20px 40px;
+    margin-top: 15px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #E7FBFB;
+}
+.course-details .software .card h2{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+.course-details .software .card .logo{
+    width: 35px;
+    height: 35px;
+}
+.course-details .software .card .logo img{
+    width: 100%;
+    height: 100%;
+}
+.course-details .software .card .name{
+    padding-left: 15px;
+}
+.course-details .software .card .name h6{
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 10px;
+}
+.course-details .course-for-whom{
+    margin-top: 50px;
+}
+.course-details .course-for-whom .card{
+    padding: 20px 40px;
+    margin-top: 15px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #EDF7F7;
+    background-image: url('../../assets/img/shape/shape-1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.course-details .course-for-whom .card h2{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+.course-details .course-for-whom .card .box{
+    border-style: none;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 10px;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.course-details .course-for-whom .card .box h4{
+    font-size: 16px;
+    font-weight: bold;
+}
+.course-details .course-for-whom .card .box .icon{
+    padding-bottom: 15px;
+}
+.course-details .course-for-whom .card .box .icon img{
+    width: 80px;
+    height: 80px;
+}
+.course-details .work-position{
+    margin-top: 50px;
+}
+.course-details .work-position .card{
+    padding: 20px 40px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #E7FBFB;
+}
+.course-details .work-position .card h2{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+.course-details .work-position .card ul.square {
+    list-style-type: square;
+}
+.course-details .work-position .card ul{
+    margin-left: 30px;
+}
+.course-details .work-position .card ul li{
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+#admission-card{
+    width: 100%;
+    border-style: solid;
+    padding: 35px 20px;
+    background-color: #E7FBFB;
+    border-style: none;
+    border-radius: 15px;
+    background-image: url('../../assets/img/shape/shape-1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+#admission-card h3{
+    font-size: 24px;
+    font-weight: bold;
+}
+#admission-card .card{
+    background-color: #02AA85;
+    color: white;
+    border-style: none;
+    border-radius: 15px;
+    padding: 20px 0px 20px 15px;
+    margin-top: 10px;
+}
+#admission-card .card:hover{
+    background-color: white;
+    color:  #02AA85;
+    transition: .6s;
+}
+#admission-card .card h4{
+    font-size: 22px;
+    font-weight: bold;
+}
+#admission-card .card h5{
+    font-size: 18px;
+    font-weight: bold;
+}
+#admission-card .card:hover .enrollBtn a{
+    background-color: #02AA85;
+    color: white;
+    transition: .6s;
+}
+#admission-card .card .enrollBtn{
+    padding: 20px 0px 15px 0px;
+}
+#admission-card .card .enrollBtn a{
+    background-color: white;
+    border-style: solid;
+    border-color: #02AA85;
+    border-width: 1px;
+    color: #02AA85;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 22px;
+    border-radius: 10px;
+}
+#admission-card .card .enrollBtn a:hover{
+    background-color: transparent;
+    color: #02AA85;
+}
+.success-story-slider{
+    background-color: red;
+    padding: 30px 10px 15px 10px;
+}
+/*
+    Course Details End
+=================================*/
+
+
+/*
+    Course Admission Modal Form Start
+=================================*/
+#admissionModalForm{
+    padding: 10px 120px;
+}
+    #admissionModalForm label{
+        font-size: 18px;
+        font-weight: bold;
+        color: black;
+    }
+    #admissionModalForm .form-control:focus {
+        border-color: #03dbac;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    } 
+    #admissionModalForm .form-check input {
+        width: 18px;
+        height: 18px;
+        margin-top: -0px;
+    }
+    #admissionModalForm .form-check-input:checked {
+        background-color: #03dbac;
+        border-color: #03dbac;
+    }
+    /*
+    Course Admission Modal Form End
+=================================*/
+
+
+
+    /*
+    Our Special Services Start
+=================================*/
+    .our-services {
+        width: 100%;
+        padding: 80px 100px;
+        background-color: white;
+        overflow-x: hidden;
+    }
+.our-services .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.our-services .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.our-services .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.our-services .card{
+    width: 100%;
+    padding: 30px 20px;
+    background-color: #EDF7F7;
+    border-style: none;
+    border-radius: 15px;
+    border-color: #03dbac;
+    margin-top: 15px;
+    /*
+    background-image: url('../../assets/img/support-bg.PNG');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    */
+}
+.our-services .card .icon{
+   text-align: center;
+}
+.our-services .card .icon i{
+    color: #03dbac;
+    font-size: 45px;
+    font-weight: bold;
+}
+.our-services .card .card-heading{
+    padding-top: 14px;
+    padding-bottom: 8px;
+}
+.our-services .card .card-heading h4{
+    color: #02AA85;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 2px;
+}
+.our-services .card .text p{
+    font-size: 16px;
+    text-align: justify;
+}
+.our-services .moreBtn{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+.our-services .moreBtn a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.our-services .moreBtn a:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+/*
+    Our Special Services End
+=================================*/
+
+
+
+/*
+    Free Seminar Area Start
+=================================*/
+.free-seminar-area{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #EFEFEF;
+    overflow-x: hidden;
+}
+.free-seminar-area .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.free-seminar-area .text p{
+    font-size: 16px;
+    text-align: justify;
+}
+.free-seminar-area  h3{
+    font-size: 22px ;
+    font-weight: bold;
+}
+.free-seminar-area .box{
+    width: 100%;
+    border-style: none;
+    margin-top: 10px;
+}
+.free-seminar-area .box:hover .date{
+    background-color: #02AA85;
+    color: white;
+    transition: .6s;
+}
+.free-seminar-area .box .date{
+    border-style: solid;
+    border-color: #DBDBDB;
+    border-width: 1px;
+    border-radius: 15px 0px 0px 15px;
+    background-color: #5BECCD;
+    padding: 15px 10px 10px 10px;
+    text-align: center;
+}
+.free-seminar-area .box .date h4{
+    font-size: 25px;
+    font-weight: bold;
+}
+.free-seminar-area .box .date p{
+    font-size: 16px;
+    font-weight: bold;
+}
+.free-seminar-area .box .seminar-topic-box{
+    width: 100%;
+    border-style: solid;
+    border-color: #DBDBDB;
+    border-width: 1px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px 10px 10px 15px;
+    margin-left: -10px;
+}
+.free-seminar-area .box .seminar-topic-box h4{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.free-seminar-area .box .seminar-topic-box .topic-name span i{
+    color: #02AA85;
+}
+.free-seminar-area .box .seminar-topic-box .joinBtn{
+    margin-top: 35px;
+}
+.free-seminar-area .box .seminar-topic-box .joinBtn a{
+    text-decoration: none;
+    color: #02AA85;
+    font-size: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #02AA85;
+    padding: 5px 22px;
+    border-radius: 12px;
+    margin-right: 10px;
+}
+.free-seminar-area .box .seminar-topic-box .joinBtn a:hover{
+    background-color: #02AA85;
+    color: white;
+    transition: .6s;
+}
+.free-seminar-area .all-seminarBtn{
+    width: 100%;
+    margin-top: 40px;
+}
+.free-seminar-area .all-seminarBtn a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    border-style: none;
+    border-color: #02AA85;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.free-seminar-area .all-seminarBtn a:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+.free-seminar-area .img{
+    width: 100%;
+    height: 400px;
+    margin-top: 100px;
+    border-style: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+    background-image: url('../../assets/img/seminar.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/*
+    Free Seminar Area End
+=================================*/
+
+
+
+/*
+    Practical Project Training Area Start
+=================================*/
+.practical-training-area{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: white;
+    overflow-x: hidden;
+}
+.practical-training-area .heading{
+    margin-top: 80px;
+}
+.practical-training-area .heading h2{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+.practical-training-area .text p{
+    font-size: 16px;
+    text-align: justify;
+}
+.practical-training-area .img{
+    width: 100%;
+    height: 400px;
+    border-style: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+    background-image: url('../../assets/img/tactsoft-training.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/*
+    Practical Project Training Area End
+=================================*/
+
+
+
+/*
+    Our Student Success Story Start
+=================================*/
+.success-story{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.success-story .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.success-story .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.success-story .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.success-story .video-area{
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    padding: 10px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.success-story .video-area video{
+    border-radius: 10px;
+}
+.success-story .moreBtn{
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+.success-story .moreBtn a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.success-story .moreBtn a:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+/*
+    Our Student Success Story End
+=================================*/
+
+
+
+
+/*
+    Our Success Story Area Start
+=================================*/
+.our-success-history{
+    width: 100%;
+    padding: 60px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.our-success-history .heading{
+    margin-top: 80px;
+}
+.our-success-history .heading h2{
+    font-size: 30px;
+    font-weight: bold;
+}
+.our-success-history .heading h6{
+    font-size: 16px;
+    color: #02AA85;
+    font-weight: bold;
+}
+.our-success-history .text p{
+    font-size: 16px;
+    text-align: justify;
+}
+.our-success-history .img{
+    width: 100%;
+    height: 400px;
+    border-style: solid;
+    border-color: #DBDBDB;
+    border-width: 2px;
+    background-image: url('../../assets/img/tactsoft-training.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.our-success-history .btn-area{
+    margin-top: 50px;
+}
+.our-success-history .btn-area a{
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 5px;
+    padding: 12px 18px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+.our-success-history .btn-area a:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+.our-success-history .counter-area{
+    width: 98%;
+    height: auto;
+    margin: auto;
+    margin-top: 50px;
+    border-style: none;
+    position: relative;
+    background-image: url('../../assets/img/tactsoft-training.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.our-success-history .counter-area .over-layer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .8;
+}
+.our-success-history .counter-area .counter-box{
+    position: relative;
+    width: 100%;
+    border-style: solid;
+    border-color: #C3E3DC;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 20px 30px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.our-success-history .counter-area .counter-box h4{
+    color: #02AA85;
+    font-size: 25px;
+    font-weight: bold;
+}
+.our-success-history .counter-area .counter-box h6{
+    color: #02AA85;
+    font-size: 14px;
+    font-weight: bold;
+    padding-top: 5px;
+}
+/*
+    Our Success Story Area End
+=================================*/
+
+
+
+
+/*
+    Our Students Comments Start
+=================================*/
+.students-comments{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.students-comments .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.students-comments .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.students-comments .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.students-comments .heading .line{
+    color: #02AA85;
+}
+.students-comments .slider-area #students-comments-slider .card{
+    width: 95%;
+    margin: auto;
+    border-style: solid;
+    border-color: #A7AFAF;
+    border-width: 1px;
+    padding: 5px 10px;
+}
+.students-comments .slider-area #students-comments-slider .card .img{
+    width: 60px;
+    height: 60px;
+    border-style: solid;
+    border-color: #A7AFAF;
+    border-width: 1px;
+    border-radius: 50%;
+    text-align: center;
+}
+.students-comments .slider-area #students-comments-slider .card .img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.students-comments .slider-area #students-comments-slider .card h3{
+    font-size: 16px;
+    font-weight: bold;
+}
+.students-comments .slider-area #students-comments-slider .card h5{
+    color: #787E7E;
+    font-size: 14px;
+}
+.students-comments .slider-area #students-comments-slider .card hr{
+    color: #787E7E;
+}
+.students-comments .slider-area #students-comments-slider .card .comments p{
+    text-align: justify;
+    font-size: 14px;
+}
+.students-comments .slider-area #students-comments-slider .card .comments p i{
+    font-size: 25px;
+    color: #787E7E;
+}
+.students-comments .slider-area #students-comments-slider .slick-arrow::before{
+    color: #02AA85;
+}
+/*
+    Our Students Comments End
+=================================*/
+
+
+
+/*
+    Our Partner Area Start
+=================================*/
+.our-partner-area{
+    width: 100%;
+    padding: 60px 80px;
+    background-color: white;
+    overflow-x: hidden;
+}
+.our-partner-area .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.our-partner-area .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.our-partner-area .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.our-partner-area .btn-area{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.our-partner-area .btn-area ul{
+    display: flex;
+}
+.our-partner-area .btn-area ul li{
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #F5F9F8;
+    border-bottom: solid 2px #02AA85;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+.our-partner-area .btn-area ul li:hover{
+    background-color: #02AA85;
+    color: white;
+}
+.our-partner-area .btn-area ul li.active{
+    background-color: #02AA85;
+    color: white;
+}
+.our-partner-area #content-one{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.our-partner-area #content-one .logo{
+    padding-top: 50px;
+}
+.our-partner-area #content-one .logo img{
+ width: 150px;
+ height: auto;
+ text-align: center;
+}
+.our-partner-area #content-two{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.our-partner-area #content-two .logo{
+    padding-top: 50px;
+}
+.our-partner-area #content-two .logo img{
+ width: 150px;
+ height: auto;
+ text-align: center;
+}
+.our-partner-area #content-three{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.our-partner-area #content-three .logo{
+    padding-top: 50px;
+}
+.our-partner-area #content-three .logo img{
+ width: 150px;
+ height: auto;
+ text-align: center;
+}
+.our-partner-area #content-two{
+    display: none;
+}
+.our-partner-area #content-three{
+    display: none;
+}
+/*
+    Our Partner Area End
+=================================*/
+
+
+
+/*
+    Our Events Area Start
+=================================*/
+.our-events{
+    overflow-x: hidden;
+}
+.our-events .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.our-events .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.our-events .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.our-events .card{
+    width: 100%;
+    border-style: none;
+    text-align: center;
+    position: relative;
+    border-radius: 0px;
+    overflow: hidden;
+}
+.our-events .card img{
+    width: 100%;
+    height: 170px;
+}
+.our-events .card .card-body{
+    position: absolute;
+    width: 100%;
+    margin-top: 105px;
+    padding: 15px 0px 5px 0px;
+    background-color: #03dbac; 
+    display: none;  
+}
+.our-events .card .card-body h5{
+    color: #02AA85;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+}
+.our-events .card .card-body h6{
+    color: #02AA85;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+}
+@keyframes event-title{
+    0%{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100%{
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.our-events .card:hover .card-body{
+    display: block;
+    animation: event-title .6s ease;
+}
+.our-events .card:hover img{
+    transform: scale(1.2);
+    opacity: .7;
+    transition: .6s;
+}
+
+/*
+    Our Events Area End
+=================================*/
+
+
+
+/*
+    Career Placement Cell Start
+=================================*/
+.career-placement-cell{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.career-placement-cell .heading{
+    text-align: center;
+    margin-bottom: 40px;
+}
+.career-placement-cell .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.career-placement-cell .text p{
+    font-size: 16px;
+    text-align: justify;
+}
+.career-placement-cell .text h4{
+    font-size: 20px;
+    font-weight: bold;
+}
+.career-placement-cell .text ul li{
+    margin-left: -25px;
+    margin-top: 10px;
+}
+.career-placement-cell .text ul li i{
+    padding-right: 5px;
+}
+.career-placement-cell .text .img{
+    width: 100%;
+    height: 350px;
+}
+.career-placement-cell .text .img img{
+    width: 100%;
+    height: 100%;
+}
+.career-placement-cell .cell-activites{
+    margin-top: 80px;
+}
+.career-placement-cell .cell-activites h4{
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: solid 2px #E9F9F6;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 30%;
+    margin: auto;
+}
+.career-placement-cell .cell-activites .img{
+    width: 100%;
+    height: 400px;
+    margin-top: 15px;
+    text-align: center;
+}
+.career-placement-cell .cell-activites .img img{
+    width: 80%;
+    height: 100%;
+}
+/*
+    Career Placement Cell Start
+=================================*/
+
+
+
+/*
+    Contact with us Start
+=================================*/
+.contact-us{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.contact-us .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.contact-us .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.contact-us .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.contact-us .heading .line{
+    color: #02AA85;
+}
+#contact-way{
+    width: 100%;
+    margin: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ECF6F6;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+#contact-way h3{
+    font-size: 22px;
+    font-weight: bold;
+    padding: 35px 0px 15px 0px;
+}
+#contact-way hr{
+    color: #C4CCCC;
+}
+#contact-way .address{
+    width: 100%;
+    padding: 25px 20px;
+}
+#contact-way .address h4{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 0px;
+}
+#contact-way .address p{
+    color: black;
+    font-size: 16px;
+}
+#contact-way .address a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+#contact-way .address i{
+    padding-right: 10px;
+}
+#contact-way .visit-time{
+    width: 100%;
+    padding: 10px 20px 5px 20px;
+}
+#contact-way .visit-time h4{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 0px;
+}
+#contact-way .visit-time p{
+    font-size: 16px;
+    color: black;
+}
+#contact-way .visit-time p i{
+    padding-right: 5px;
+}
+#contact-way .map{
+    width: 100%;
+    height: 400px;
+    margin-bottom: 40px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ECF6F6;
+}
+#contact-way .map iframe{
+    width: 100%;
+    height: 100%;
+}
+#messege-section{
+    width: 100%;
+    padding: 20px 20px;
+}
+#messege-section h3{
+    text-align: center;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 50px 0px 30px 0px;
+}
+#messege-section .form-area{
+    width: 80%;
+    margin: auto;
+}
+#messege-section .form-area form{
+    font-size: 16px;
+}
+#messege-section .form-area form label{
+    color: #868C8C;
+}
+#messege-section .form-area form select{
+    color: #868C8C;
+    font-size: 16px;
+    padding: 14px 8px;
+}
+#messege-section .form-area form select option{
+    color: black;
+    font-size: 16px;
+}
+#messege-section .form-area form select #default{
+    color: #868C8C!important;
+}
+#messege-section .form-area .submitBtn{
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+}
+#messege-section .form-area .submitBtn input{
+    padding: 16px 20px;
+    border-style: none;
+    border-radius: 5px;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+}
+#messege-section .form-area .submitBtn input:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    color: white;
+    transition: .6s;
+}
+/*
+    Contact with us End
+=================================*/
+
+
+
+/*
+    Photo Gallery Start
+=================================*/
+.photo-gallery {
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+
+    .photo-gallery .heading {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+        .photo-gallery .heading h2 {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .photo-gallery .heading p {
+            width: 60%;
+            margin: auto;
+            font-size: 16px;
+        }
+
+        .photo-gallery .heading .line {
+            color: #02AA85;
+        }
+
+    .photo-gallery .photo-heading {
+        margin-bottom: 15px;
+    }
+
+        .photo-gallery .photo-heading h2 {
+            font-size: 25px;
+            font-weight: bold;
+            padding: 8px 0px;
+            border-top: 1px solid #E5EEED;
+            border-bottom: 1px solid #E5EEED;
+        }
+
+            .photo-gallery .photo-heading h2 i {
+                padding-right: 5px;
+                color: #02AA85;
+            }
+
+    .photo-gallery .photo {
+        width: 100%;
+        height: 200px;
+        border-style: solid;
+        border-color: white;
+        margin-top: 15px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        overflow: hidden;
+    }
+
+        .photo-gallery .photo img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .photo-gallery .photo:hover img {
+            transform: scale(1.3);
+            transition: .6s;
+        }
+
+    .photo-gallery .real-life-project-work {
+        margin-top: 80px;
+    }
+
+    .photo-gallery .industrial-attachment-training {
+        margin-top: 80px;
+    }
+
+    .photo-gallery .job-placement-trainings {
+        margin-top: 80px;
+    }
+
+    .photo-gallery .animated-nft-workshop {
+        margin-top: 80px;
+    }
+
+    .photo-gallery .new-year-bbq-party {
+        margin-top: 80px;
+    }
+/*
+    Photo Gallery End
+=================================*/
+
+
+/*
+    Mentors Start
+=================================*/
+.mentors{
+    width: 100%;
+    padding: 80px 100px;
+    background-color: #FBFEFE;
+    overflow-x: hidden;
+}
+.mentors .heading{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.mentors .heading h2{
+    font-size: 40px;
+    font-weight: bold;
+}
+.mentors .heading p{
+    width: 60%;
+    margin: auto;
+    font-size: 16px;
+}
+.mentors  .heading .line{
+    color: #02AA85;
+}
+.mentors .course-topic-tab #course-tab-slider .item h4{
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #F5F9F8;
+    border-bottom: solid 2px #02AA85;
+    padding: 10px 5px;
+    cursor: pointer;
+}
+.mentors .course-topic-tab #course-tab-slider .item h4:hover{
+    background-color: #02AA85;
+    color: white;
+    transition: .6s;
+}
+.mentors .course-topic-tab #course-tab-slider .item h4.active{
+    color: white;
+    background-color: #02AA85;
+}
+.mentors .course-topic-tab #course-tab-slider .slick-arrow::before{
+    color: #02AA85;
+}
+.mentors .tab-content{
+    border-style: none;
+    padding: 5px 10px;
+}
+.mentors .tab-content  .topic-heading h3{
+    color: #02AA85;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.mentors .tab-content .about-mentor{
+    border-style: solid;
+    border-color: #02AA85;
+    border-width: 1px;
+    padding: 30px 30px;
+    margin-bottom: 15px;
+    background-color: white;
+}
+.mentors .tab-content .about-mentor .mentor-photo{
+    width: 80%;
+    height: 300px;
+    margin: auto;
+    margin-top: 35px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #02AA85;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.mentors .tab-content .about-mentor .mentor-photo img{
+    width: 100%;
+    height: 100%;
+}
+.mentors .tab-content .about-mentor .details .name h2{
+    font-size: 25px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .designation h4{
+    font-size: 16px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .educational-qualification h4{
+    font-size: 18px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .educational-qualification ul li{
+    font-size: 14px;
+    padding-top: 5px;
+    margin-left: -15px;
+    list-style-type: square;
+}
+.mentors .tab-content .about-mentor .details .educational-qualification ul li::before{
+    content: "";
+    color: red;
+}
+.mentors .tab-content .about-mentor .details .specialized-area h4{
+    font-size: 18px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .specialized-area ul li{
+    font-size: 14px;
+    padding-top: 5px;
+    margin-left: -15px;
+    list-style-type: square;
+}
+.mentors .tab-content .about-mentor .details .work-experience h4{
+    font-size: 18px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .work-experience ul li{
+    font-size: 14px;
+    padding-top: 5px;
+    margin-left: -15px;
+    list-style-type: square;
+}
+.mentors .tab-content .about-mentor .details .workplace h4{
+    font-size: 18px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .workplace .logo{
+    width: 100%;
+}
+.mentors .tab-content .about-mentor .details .workplace .logo img{
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #02AA85;
+    padding: 0px 15px;
+}
+.mentors .tab-content .about-mentor .details .experience h4{
+    font-size: 18px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .experience p{
+    font-size: 16px;
+}
+.mentors .tab-content .about-mentor .details .students h4{
+    font-size: 18px;
+    font-weight: bold;
+}
+.mentors .tab-content .about-mentor .details .students p{
+    font-size: 16px;
+}
+.mentors .tab-content .about-mentor .details hr{
+    color: #CFE7E1;
+    height: 2px;
+}
+.mentors .tab-content .cyber-security{
+    display: none;
+}
+.mentors .tab-content .web-software{
+    display: none;
+}
+.mentors .tab-content .project-management-professional{
+    display: none;
+}
+.mentors .tab-content .design-and-multimedia{
+    display: none;
+}
+.mentors .tab-content .mobile-app-development{
+    display: none;
+}
+.mentors .tab-content .spoken-english{
+    display: none;
+}
+.mentors .tab-content .networking-technology{
+    display: none;
+}
+/*
+    Mentors End
+=================================*/
+
+
+
+
+/*
+    Footer Start
+  =================================*/
+  .footer{
+    width: 100%;
+    padding: 40px 80px;
+    background-color: #42464B;
+    color: white;
+}
+.footer .heading{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.footer .heading h5{
+    font-size: 20px;
+    font-weight:  bold;
+}
+
+.footer .contact-way{
+    padding-right: 10px;
+}
+.footer .contact-way i{
+    text-align: center;
+    font-size: 22px;
+    margin-right: 15px;
+}
+.footer .contact-way p{
+    font-size: 16px;
+    color: #CFCFD1;
+}
+.footer .contact-way a{
+    text-decoration: none;
+    font-size: 16px;
+    color: #CFCFD1;
+    margin-top: 3px;
+}
+.footer .contact-way a:hover{
+    color: white;
+    padding-left: 5px;
+    transition: .6s ease;
+}
+.footer .social-link{
+    margin-top: 40px;
+}
+.footer .social-link .icon{
+    text-align: center;
+}
+.footer .social-link .icon a{
+    color: #02AA85;
+    font-size: 14px;
+    padding: 8px 10px 6px 10px;
+    margin-right: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #02AA85;
+    background-color: white;
+    border-radius: 50%;
+}
+.footer .social-link .icon a:hover{
+    background-color: #02AA85;
+    transition: .6s;
+}
+/*---------
+.footer .social-link .facbook .icon a i{
+    color: #3B5998;
+}
+.footer .social-link .twitter .icon a i{
+    color: #00ACEE;
+}
+.footer .social-link .linkedin .icon a i{
+    color: #0072B1;
+}
+.footer .social-link .pinterest .icon a i{
+    color: #C8232C;
+}---------*/
+.footer .social-link .icon a:hover i{
+    color: white!important;
+}
+.footer .footer-link ul li{
+    margin-left: -28px;
+    margin-bottom: 20px; 
+}
+.footer .footer-link ul li a{
+    font-size: 16px;
+    text-decoration: none;
+    color: #CFCFD1;  
+}
+.footer .footer-link ul li a:hover{
+    color: white;
+    padding-left: 5px;
+    transition: .6s ease;
+}
+.footer .copyright{
+    text-align: center;
+    padding-top: 15px;
+}
+.footer .copyright .logo{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.footer .copyright .logo img{
+    width: 100px;
+}
+.footer .copyright a{
+    text-decoration: none;
+    color: #02AA85;
+    font-size: 14px;
+}
+.footer .copyright span{
+    font-size: 14px;    
+}
+/*
+    Footer End
+=================================*/
+
+
+
+/*=================================
+    Scroll Bottom To Top Start
+  =================================*/
+  #scroll-bottom-top{
+    opacity: 0;
+    position: fixed;
+    color: white;
+    background-image: linear-gradient(90deg, #02AA85 0%, #03dbac 100%);
+    border: none;
+    border-radius: 50%;
+    bottom: 40px;
+    right: 40px;
+    width: 40px;
+    height: 40px;
+    transition: .7s ease;   
+}
+#scroll-bottom-top i{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#scroll-bottom-top:hover{
+    background-image: linear-gradient(90deg, #03dbac 0%, #02AA85 100%);
+    transition: .8s;
+}
+/*=================================
+    Scroll Bottom To Top End
+  =================================*/
+
+
+
+
+  .sidebar{
+    padding: 30px 10px;
+    width: 20%;
+    border: 1px solid #eee;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+details{
+  padding: 5px;
+  border-radius: 5px;
+}
+
+details>summary {
+  list-style-type: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+
+summary::after {
+  margin-left: 1ch;
+  display: inline-block;
+  transition: 0.5s;
+  content: '\203A'; /* chevron */
+}
+
+details[open] summary::after {
+  transform: rotate(90deg);
+}

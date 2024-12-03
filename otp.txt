@@ -1,0 +1,82 @@
+
+//Script
+@{
+    ViewData["Title"] = "OTP Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>OTP Page</h2>
+
+<div>
+    <p>UserId: @ViewBag.UserId</p>
+    <p>Mobile Number: @ViewBag.MobileNo</p>
+</div>
+
+<form id="otpForm" method="post">
+    <input type="hidden" id="userId" name="userId" value="@ViewBag.UserId" />
+    <div class="input-box">
+        <label>Enter OTP</label>
+        <input type="text" id="otp" name="otp" required />
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#otpForm").submit(function (event) {
+        event.preventDefault();
+
+        var data = {
+            userId: $("#userId").val(),
+            otp: $("#otp").val()
+        };
+
+        $.ajax({
+            url: "/SaveOtp/UpdateOtp",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.result) {
+                    alert("OTP updated successfully.");
+                } else {
+                    alert("Failed to update OTP.");
+                }
+            },
+            error: function (error) {
+                alert("An error occurred.");
+            }
+        });
+    });
+</script>
+
+
+//Controller
+public class SaveOtpController : Controller
+{
+    private readonly IUserService _userService;
+
+    public SaveOtpController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
+    public IActionResult Otp(string userId, string mobileNo)
+    {
+        ViewBag.UserId = userId;
+        ViewBag.MobileNo = mobileNo;
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateOtp(string userId, string otp)
+    {
+        var user = new User
+        {
+            Id = userId,
+            OTP = otp
+        };
+
+        var success = await _userService.UpdateOtpAsync(user);
+        return Json(new { result = success });
+    }
+}

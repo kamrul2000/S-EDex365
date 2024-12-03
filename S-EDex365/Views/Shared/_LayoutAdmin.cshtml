@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>AdminLTE 3 | Dashboard</title>
+
+	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
+	<!-- Bootstrap5 -->
+	<link rel="stylesheet" href="~/admin/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/admin/assets/fonts/bootstrap-icons.css">
+	<!-- overlayScrollbars -->
+	<link rel="stylesheet" href="~/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+	<!-- Theme style -->
+    <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
+	<link href="~/admin/lib/font-awesome-icon/css/all.css" rel="stylesheet" />
+	<link href="~/admin/lib/font-awesome-icon/css/all.min.css" rel="stylesheet" />
+	<link href="~/admin/lib/datatables/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+	<link href="~/admin/lib/datatables/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" />
+
+</head>
+<body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+
+    <div class="app">
+        <header class="app-header app-header-dark" style="background-color:black">
+            <div class="top-bar">
+                <div class="top-bar-brand">
+                    <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside-menu" aria-label="toggle aside menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle aside menu -->
+                    <a asp-controller="Home" asp-action="Index">
+                        <img src="../img/xtra_logo.png" />
+                    </a>
+                </div>
+                <div class="top-bar-list">
+                    <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+                        <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button> <!-- /toggle menu -->
+                    </div>
+                    <div class="top-bar-item top-bar-item-full">
+                        <form class="top-bar-search">
+                            <div class="input-group input-group-search dropdown">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+                                </div><input type="text" class="form-control" data-toggle="dropdown" aria-label="Search" placeholder="Search"> <!-- .dropdown-menu -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        @await Component.InvokeAsync("Menu")
+
+        <main class="app-main">
+            <div class="wrapper">
+                <div class="page">
+                    <div class="page-inner">
+                        <div class="page-section">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="exampleModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="passForm">
+                        <div class="form-group">
+                            <label class="col-form-label">Old Password</label>
+                            <input type="password" name="OldPassword" class="form-control form-control-lg" placeholder="Please Enter the Old Password">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">New Password</label>
+                            <input type="password" id="newPassword" name="NewPassword" class="form-control form-control-lg" placeholder="Please Enter the New Password">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Confirm New Password</label>
+                            <input type="password" name="ConfirmNewPassword" class="form-control form-control-lg" placeholder="Please Enter the Old Password">
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <button class="btn btn-lg btn-primary btn-submit btn-block" type="submit">Sign In</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+		<partial name="admin/_Footer" />
+	</div>
+	<partial name="admin/_Scripts" />
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

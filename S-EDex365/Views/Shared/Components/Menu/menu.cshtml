@@ -1,0 +1,48 @@
+﻿
+@model IList<S_EDex365.Model.Model.Menu>
+
+<aside class="app-aside app-aside-expand-md app-aside-light">
+    <div class="aside-content">
+        <header class="aside-header d-block d-md-none">
+            <button class="btn-account" type="button" data-toggle="collapse" data-target="#dropdown-aside">
+                <span class="user-avatar user-avatar-md mb-3"><i class="fas fa-user-circle" aria-hidden="true"></i></span>
+                <span class="account-icon">
+                    <span class="fa fa-caret-down fa-lg"></span>
+                </span>
+                <span class="account-summary">
+                    <span class="account-name">Welcome</span> <span class="account-description"></span>
+                </span>
+            </button> <!-- /.btn-account -->
+            <div id="dropdown-aside" class="dropdown-aside collapse">
+                <div class="pb-3">
+                    <button class="dropdown-item detailBtn" data-toggle="ajax-modal" data-target="#exampleModalCenter"
+                            data-url="@Url.Action("ChangePassword","Account")">
+                        <span class="dropdown-icon oi oi-person"></span> Change Password
+                    </button>                   
+                    <a class="dropdown-item" asp-action="logout" asp-controller="account"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+                </div>
+            </div>
+        </header>
+        <div class="aside-menu overflow-hidden">
+            <nav id="stacked-menu" class="stacked-menu">
+                <ul class="menu">
+                    <li class="menu-item ">
+                        <a asp-action="Index" asp-controller="AdminDashboard" class="menu-link"><span class="menu-icon fas fa-home"></span> <span class="menu-text  pl-1">Dashboard</span></a>
+                    </li>
+                    @foreach (var menu in Model)
+                    {
+                        <li class="menu-item">
+                            <a  asp-controller="@menu.Controller" asp-action="@menu.Action" class="menu-link">
+                                <span class="menu-icon">
+                                    <i class=""></i>
+                                </span>
+                                <span class="menu-text pl-1">@menu.Name</span>
+                            </a>
+                         
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</aside>

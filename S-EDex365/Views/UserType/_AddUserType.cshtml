@@ -1,0 +1,55 @@
+﻿<div class="col-12 mt-2 mt-3">
+    <div class="form-group">
+        <label> UserType</label>
+        <input type="text" class="form-control" id="UserTypes" placeholder="Enter Role Name....">
+    </div>
+</div>
+<div class="col-12 mt-2">
+    <div class="form-check">
+        <label>
+            Status
+        </label>
+        <input class="form-check-input" type="checkbox" checked class="form-control" id="status">
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <button id="submitBtn" class="btn btn-primary form-control">Submit</button>
+</div>
+<div class="col-12 mt-2 mb-3">
+    <button id="closeBtn" class="btn btn-warning form-control">Closed</button>
+</div>
+
+
+<script>
+    $("#submitBtn").click(function () {
+        var data = {
+            UserTypes: $("#UserTypes").val(),
+            status: 1
+        };
+
+        $.ajax({
+            url: "/UserType/InsertUserType",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.result == true) {
+                    $("#addContent").html('');
+                    $('#addModal').modal('hide');
+                    dataTable.ajax.reload();
+                    toastr.success("Successfully  Created")
+                }
+                else {
+                    toastr.error("Something went wrong")
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+    $("#closeBtn").click(function () {
+        $('#addModal').modal('hide');
+    });
+</script>

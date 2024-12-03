@@ -1,0 +1,24 @@
+﻿@model S_EDex365.Model.Model.User
+
+<div class="top-bar-item top-bar-item-right px-0 d-none d-sm-flex">
+    <div class="dropdown d-none d-md-flex">
+        <button class="btn-account mb-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="user-avatar user-avatar-md mb-3"><i class="fas fa-user-circle" aria-hidden="true"></i></span>
+            <span class="account-summary pr-lg-4 d-none d-lg-block">
+                <span class="account-name">Welcome</span>
+                <span class="account-description">@Model.Name</span>
+                <span class="account-description" style="display:none">@Model.Id</span>
+            </span>
+        </button>
+        <div class="dropdown-menu mt-5">
+            <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+            <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+            <h6 class="dropdown-header d-none d-md-block d-lg-none"> @*@userName?.Value *@</h6>
+            @* data-userId="@userId.Value"  *@
+            <button class="dropdown-item detailBtn" data-toggle="modal" data-target="#exampleModalCenter">
+                <span class="dropdown-icon oi oi-person"></span> Change Password
+            </button>
+            <a class="dropdown-item" asp-action="Logout" asp-controller="Auth"><span class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿@model S_EDex365.Model.Model.Login
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - Service Management System</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <main class="auth">
+        <span class="d-none" id="loginBox">@TempData["LoginSuccess"]</span>
+        <span class="d-none" id="logoutBox">@TempData["logoutmessage"]</span>
+        <header id="auth-header" class="auth-header">
+            <h1>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="64" viewbox="0 0 351 100">
+                    <h1>USER LOGIN</h1>
+                </svg>
+            </h1>
+        </header>
+        
+        @* <form class="auth-form" method="post" asp-action="Login" asp-controller="Auth">
+            
+            
+            <div class="form-group">
+                <div class="form-label-group">
+                    <input type="text" id="inputUser" asp-for="Email" class="form-control" placeholder="Username" autofocus=""> <label for="inputUser">Username</label>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" asp-for="Password" class="form-control" placeholder="Password"> <label for="inputPassword">Password</label>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+            </div>
+            
+        </form> *@
+
+
+        <form class="auth-form" method="post" asp-action="Login" asp-controller="Auth">
+            <div class="form-group">
+                <div class="form-label-group">
+                    <input type="text" id="inputUser" asp-for="Email" class="form-control" placeholder="Username" autofocus="">
+                    <label for="inputUser"></label>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" asp-for="Password" class="form-control" placeholder="Password">
+                    <label for="inputPassword"></label>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
+            </div>
+        </form>
+
+
+
+
+        <footer class="auth-footer">
+            © @DateTime.Now.Year All Rights Reserved.
+        </footer>
+    </main>
+    <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/popper.min.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+    <script src="~/js/menu.min.js" asp-append-version="true"></script>
+    <script src="~/js/theme.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116692175-1"></script>
+    <script src="~/SiteJS//login.js" asp-append-version="true"></script>
+</body>
+</html>
+

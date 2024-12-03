@@ -1,0 +1,94 @@
+﻿@model S_EDex365.Model.Model.PermissionDto
+
+
+<div class="col-12 mt-2 mt-3">
+    <input hidden id="roleId" value="@Model.RoleId" />
+    <div class="form-group">
+        <label> Name</label>
+        <input type="text" class="form-control" value="@Model.RoleName" id="name" readonly disabled>
+    </div>
+</div>
+<div class="col-12 mt-2 row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Controller</td>
+                <td>Action</td>
+                <td>Permission Name</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MenuList)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Controller</td>
+                    <td>@item.Action</td>
+                    <td>@item.PermissionName</td>
+                    @if (item.Status == true)
+                    {
+                        <td><input class="form-check-input" type="checkbox" checked class="form-control permissionId" data-id="@item.Id" /></td>
+
+                    }
+                    else
+                    {
+                        <td><input class="form-check-input" type="checkbox" class="form-control permissionId" data-id="@item.Id" /></td>
+
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<div class="col-12 mt-2">
+    <button id="submitBtn" class="btn btn-primary form-control">Submit</button>
+</div>
+<div class="col-12 mt-2 mb-3">
+    <button id="closeBtn" class="btn btn-warning form-control">Closed</button>
+</div>
+
+<script>
+
+    $("#submitBtn").click(function () {
+        var menuList = [];
+        $("input[type='checkbox']").each(function () {
+            if ($(this).is(":checked")) {
+                var value = $(this).attr("data-id");
+                menuList.push(value);
+            }
+        });
+        console.log(menuList);
+        var data = {
+            RoleId: $("#roleId").val(),
+            Menus: menuList
+        };
+
+        $.ajax({
+            url: "/Role/AddPermissionToTole",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.success == true) {
+                    $("#permissionContent").html('');
+                    $('#permissionModal').modal('hide');
+                    dataTable.ajax.reload();
+                    toastr.success("Successfully  Updated")
+                }
+                else {
+                    toastr.error("Something went wrong")
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+    $("#closeBtn").click(function () {
+        $('#permissionModal').modal('hide');
+    });
+</script>

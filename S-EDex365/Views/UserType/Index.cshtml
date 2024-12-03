@@ -1,0 +1,200 @@
+﻿@model IEnumerable<S_EDex365.Model.Model.UserType>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int i = 1;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <h1 class="m-0">Student Admission List</h1>
+                        <div class="col-md-2 mt-2">
+                            <button type="button" id="clearBtn" class="btn btn-primary form-control">Refresh</button>
+                        </div>
+                        <div class="col-md-2 mt-2">
+                            <button type="button" id="addBtn" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                    
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <table id="tblData" class="table table-bordered border-primary table-sm">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>UserType</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                @* <tbody>
+                    @if (Model != null)
+                        foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserTypes)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StatusName)
+                                    </td>
+                                    <td>
+                                        <button type="button" data-toggle="aj-modal"
+                                                data-target="#addCourse" data-url="@Url.Action($"Delete/{item.Id}")">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    }
+                </tbody> *@
+            </table>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<div class="row">
+    <div class="col-12 row">
+        <div class="modal fade col-12" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content row" id="addContent">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 row">
+        <div class="modal fade ml-3 col-12" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content row" id="modalContent">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+@section Scripts {
+    <script>
+
+        var dataTable;
+        $(document).ready(function () {
+            loadDataTable();
+            var text = $("#messageBox").text();
+            if (text != "") {
+                toastr.success(text);
+            }
+        })
+
+        var i = 1;
+        function loadDataTable() {
+            dataTable = $("#tblData").DataTable({
+                "ajax": {
+                    "url": "/UserType/GetAllUserType"
+                },
+                "columns": [
+                    {
+                        data: 'SrNo',
+                        render: function (data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    { "data": "usertypes", "width": "40%" },
+                    { "data": "statusName", "width": "20%" },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `<div class="text-center">
+                                                <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
+                                                <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
+                                                <button type="button" class="btn btn-primary permissionBtn" data-id="${data}" ><i class="fas fa-plus"></i></button>
+                                            </div>`;
+                        }, "width": "30%"
+                    }
+                ]
+            });
+        }
+        
+        $(document).on('click', '#addBtn', function () {
+            $.ajax({
+                url: "/UserType/AddUsertype",
+                type: "GET",
+                success: function (response) {
+                    $("#addContent").html(response);
+                },
+                error: function (er) {
+                    alert(er);
+                }
+            });
+            $('#addModal').modal('show');
+        });
+
+        $(document).on('click', '.modalBtn', function () {
+            $.ajax({
+                url: "/UserType/UpdateUpserType",
+                type: "GET",
+                data: {
+                    serviceId: $(this).attr("data-id")
+                },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                error: function (er) {
+                    alert(er);
+                }
+            });
+            $('#updateModal').modal('show');
+        });
+        debugger
+        $(document).on('click', '.deleteBtn', function () {
+            swal({
+                title: "Are you sure that you want to delete this data",
+                text: "If you once delete this you can not restore it!",
+                icon: "warning",
+                dangerMode: true,
+                buttons: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteUserType", "UserType")',
+                        type: "POST",
+                        data: {
+                            userTypeId: $(this).attr("data-id")
+                        }
+                    }).done(function (response) {
+                        swal("Successfully Deleted", {
+                            icon: "success"
+                        });
+                        dataTable.ajax.reload();
+                    }).fail(function (xhr) {
+                        toastr.error("User Type Can Not Delete");
+                    })
+                }
+            })
+        });
+
+        
+    </script>
+}
+

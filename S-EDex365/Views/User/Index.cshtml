@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutA.cshtml";
+}
+<div class="content-wrapper">
+<span class="d-none" id="messageBox"></span>
+<br />
+<div class="row">
+    <div class="col-12">
+        <h2 class="text-primary text-center">User List</h2>
+    </div>
+</div>
+<br />
+
+<div class="p-4 border rounded row  bg-white">
+    <div class="col-12 row">
+        <div class="col-md-4 mt-2" style="display:none">
+            <select class="form-control" id="activeId">
+                <option disabled selected value="">--Select Status--</option>
+                <option value="Active">Active</option>
+                <option value="InActive">InActive</option>
+            </select>
+        </div>
+
+        <div class="col-md-2 mt-2">
+            <button type="button" id="clearBtn" class="btn btn-primary form-control">Refresh</button>
+        </div>
+        <div class="col-md-2 mt-2">
+            <button type="button" id="addBtn" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add</button>
+        </div>
+    </div>
+    <div class="col-12 mt-2 table-responsive">
+        <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+            <thead class="thead-light">
+                <tr class="table-info">
+                    <th>SL</th>
+                    <th>Name</th>
+                    <th>Mobile No</th>
+                    <th>Email</th>
+                    <th>School</th>
+                    <th>Class</th>
+                    <th>DOB</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 row">
+        <div class="modal fade ml-3 col-12" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content row" id="modalContent">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 row">
+        <div class="modal fade col-12" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content row" id="addContent">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        var dataTable;
+        $(document).ready(function () {
+            loadDataTable();
+            var text = $("#messageBox").text();
+            if (text != "") {
+                toastr.success(text);
+            }
+        });
+        var i = 1;
+
+        function loadDataTable() {
+            dataTable = $("#tblData").DataTable({
+                "ajax": {
+                    "url": "/User/GetAllUsers",
+                    "type": "GET"
+                },
+                "columns": [
+                    {
+                        data: 'srNo',
+                        render: function (data, type, row, meta) {
+                            return meta.row + 1; // This creates the row number dynamically
+                        }
+                    },
+                    { "data": "name", "width": "15%" }, // Make sure the property name matches 'Name'
+                    { "data": "mobileNo", "width": "8%" }, // Property name should be 'MobileNo'
+                    { "data": "email", "width": "15%" }, // Email is correct
+                    { "data": "school", "width": "5%" }, // School matches
+                    { "data": "class", "width": "5%" }, // Class matches
+                    {
+                        "data": "dob",
+                        "render": function (data) {
+                            // Format date before displaying it
+                            var date = new Date(data);
+                            return date.toLocaleDateString();
+                        },
+                        "width": "8%"
+                    },
+                    { "data": "statusName", "width": "8%" }, // Make sure the 'StatusName' property matches
+                    {
+                        "data": "id", // The primary key field (Id)
+                        "render": function (data) {
+                            return `<div class="text-center">
+                                <button type="button" class="btn btn-success modalBtn" data-id="${data}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger deleteBtn" data-id="${data}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>`;
+                        },
+                        "width": "20%"
+                    }
+                ]
+                        // console.log('Data being sent:', data);
+
+            });
+        }
+
+        $(document).on('click', '.modalBtn', function () {
+            $.ajax({
+                url: "/User/UpdateUser",
+                type: "GET",
+                data: {
+                    userId: $(this).attr("data-id")
+                },
+                success: function (response) {
+                    $("#modalContent").html(response);
+                },
+                error: function (er) {
+                    alert(er);
+                }
+            });
+            $('#myModal').modal('show');
+        });
+
+        $(document).on('click', '.deleteBtn', function () {
+            swal({
+                title: "Are you sure that you want to delete this data",
+                text: "If you once delete this you can not restore it!",
+                icon: "warning",
+                dangerMode: true,
+                buttons: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteUser", "User")',
+                        type: "POST",
+                        data: {
+                            userId: $(this).attr("data-id")
+                        }
+                    }).done(function (response) {
+                        swal("Successfully Deleted", {
+                            icon: "success"
+                        });
+                        dataTable.ajax.reload();
+                    }).fail(function (xhr) {
+                        toastr.error("Role Can Not Delete");
+                    })
+                }
+            })
+        });
+
+
+
+
+    </script>
+}
+
