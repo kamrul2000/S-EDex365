@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@* front Dashboard............ *@
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -69,8 +73,8 @@
 
                     </ul>
                     <div class="ms-auto d-flex align-items-center">
-                        <a class="btn btn-primary btn-hover-secondery text-capitalize me-2" asp-action="Login" asp-controller="Auth">Sign In</a>
-                        <a class="btn btn-primary btn-hover-secondery text-capitalize" asp-action="Signup" asp-controller="User">Sign Up</a>
+                        <a class="btn btn-hover-secondery text-capitalize me-2" asp-action="Login" asp-controller="Auth" style="background-color:#F27A24; color:white;">Sign In</a>
+                        <a class="btn btn-hover-secondery text-capitalize" asp-action="Signup" asp-controller="User" style="background-color:#F27A24; color:white;">Sign Up</a>
 
                         <a style="display:none" class="btn btn-outline-warning btn-hover-secondery text-capitalize m-2"
                            asp-action="DownloadApk" asp-controller="APK">
@@ -135,7 +139,7 @@
     <!------------------------------>
     <!-- Contact Section End  -->
     <!------------------------------>
-    <main role="main" class="pb-3">
+    <main role="main" class="pb-0">
         @RenderBody()
     </main>
     <!------------------------------>

@@ -5,6 +5,7 @@ using S_EDex365.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
@@ -16,6 +17,7 @@ builder.Services.AddScoped<ITeacherApprovalService, TeacherApprovalService>();
 builder.Services.AddScoped<IUserVMService, UserVMService>();
 builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
 builder.Services.AddScoped<IStudentDashboardService, StudentDashboardService>();
+builder.Services.AddScoped<IContactMeService, ContactMeService>();
 
 
 
@@ -31,6 +33,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddPermissionAuthorization();
 var app = builder.Build();
 
+
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -40,6 +45,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthorization();
+
+app.UseAuthentication(); // Add authentication middleware
 app.UseAuthorization();
 
 app.MapControllerRoute(

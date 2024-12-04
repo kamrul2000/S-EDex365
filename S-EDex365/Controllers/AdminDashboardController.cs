@@ -29,5 +29,9 @@ namespace S_EDex365.Controllers
 
             return View(model);
         }
+        public IActionResult View()
+        {
+            return View();
+        }
     }
 }

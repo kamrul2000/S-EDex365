@@ -27,7 +27,7 @@
             <button type="button" id="clearBtn" class="btn btn-primary form-control">Refresh</button>
         </div>
         <div class="col-md-2 mt-2">
-            <button type="button" id="addBtn" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add</button>
+            <button style="display:none" type="button" id="addBtn" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add</button>
         </div>
     </div>
     <div class="col-12 mt-2 table-responsive">
@@ -38,8 +38,8 @@
                     <th>Name</th>
                     <th>Mobile No</th>
                     <th>Email</th>
-                    <th>School</th>
-                    <th>Class</th>
+                    @* <th>School</th>
+                    <th>Class</th> *@
                     <th>DOB</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -96,11 +96,13 @@
                             return meta.row + 1; // This creates the row number dynamically
                         }
                     },
-                    { "data": "name", "width": "15%" }, // Make sure the property name matches 'Name'
+                    { "data": "name", "width": "20%" }, // Make sure the property name matches 'Name'
                     { "data": "mobileNo", "width": "8%" }, // Property name should be 'MobileNo'
-                    { "data": "email", "width": "15%" }, // Email is correct
-                    { "data": "school", "width": "5%" }, // School matches
-                    { "data": "class", "width": "5%" }, // Class matches
+                    { "data": "email", "width": "20%" }, // Email is correct
+
+                    // { "data": "school", "width": "5%" }, // School matches
+                    // { "data": "class", "width": "5%" }, // Class matches
+
                     {
                         "data": "dob",
                         "render": function (data) {
@@ -130,6 +132,28 @@
 
             });
         }
+
+        $(document).on('click', '#addBtn', function () {
+            $.ajax({
+                url: "/User/AddRole",
+                type: "GET",
+                success: function (response) {
+                    $("#addContent").html(response);
+                },
+                error: function (er) {
+                    alert(er);
+                }
+            });
+            $('#addModal').modal('show');
+        });
+
+        $("#clearBtn").click(function () {
+            $('#activeId').val('');
+            dataTable
+                .search('')
+                .columns().search('')
+                .draw();
+        })
 
         $(document).on('click', '.modalBtn', function () {
             $.ajax({
