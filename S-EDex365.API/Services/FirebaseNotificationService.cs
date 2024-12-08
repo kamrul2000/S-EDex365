@@ -11,7 +11,7 @@ namespace S_EDex365.API.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException(nameof(_connectionString));
         }
-        public async Task<string> SendNotificationAsync(string title, string body, string token)
+        public async Task<string> SendNotificationAsync(string title, string body, string token, Guid postId)
         {
             var message = new Message()
             {
@@ -20,9 +20,15 @@ namespace S_EDex365.API.Services
                     Title = title,
                     Body = body
                 },
+                Data=new Dictionary<string, string> {
+                    {"page","sobuj" },
+                    {"problemPostId",""+ postId +"" }
+                
+                },
                 Token = token // Device token
             };
 
+            
             // Send a message to the device corresponding to the provided token.
             string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
             return response;

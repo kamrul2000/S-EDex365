@@ -14,17 +14,17 @@ namespace S_EDex365.API.Controllers
         {
             _notificationService = notificationService;
         }
-        [HttpPost("s/send")]
-        public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request)
-        {
-            if (string.IsNullOrEmpty(request.Token))
-            {
-                return BadRequest("Device token is required");
-            }
+        //[HttpPost("s/send")]
+        //public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request)
+        //{
+        //    if (string.IsNullOrEmpty(request.Token))
+        //    {
+        //        return BadRequest("Device token is required");
+        //    }
 
-            var response = await _notificationService.SendNotificationAsync(request.Title, request.Body, request.Token);
+        //    var response = await _notificationService.SendNotificationAsync(request.Title, request.Body, request.Token);
 
-            return Ok(new { MessageId = response });
-        }
+        //    return Ok(new { MessageId = response });
+        //}
     }
 }

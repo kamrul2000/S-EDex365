@@ -33,50 +33,50 @@ namespace S_EDex365.API.Services
                 return deviceToken; // Will return null if no DeviceToken is found
             }
         }
-        public async Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId)
-        {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
+        //public async Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId)
+        //{
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        await connection.OpenAsync();
 
-                // Fetch the SubjectId based on userId
-                var query = "SELECT CAST(SubjectId AS VARCHAR(36)) AS SubjectId FROM Users WHERE Id = @UserId";
-                var subjectId = await connection.QueryFirstOrDefaultAsync<string>(query, new { UserId = userId });
+        //        // Fetch the SubjectId based on userId
+        //        var query = "SELECT CAST(SubjectId AS VARCHAR(36)) AS SubjectId FROM Users WHERE Id = @UserId";
+        //        var subjectId = await connection.QueryFirstOrDefaultAsync<string>(query, new { UserId = userId });
 
-                // Query to get the problem posts
-                var queryString = @"SELECT t1.id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass 
-                            FROM ProblemsPost t1 
-                            JOIN Subject t2 ON t2.Id = t1.SubjectId 
-                            JOIN Class t3 ON t3.Id = t1.ClassId 
-                            WHERE t1.SubjectId = @SubjectId";
+        //        // Query to get the problem posts
+        //        var queryString = @"SELECT t1.id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass 
+        //                    FROM ProblemsPost t1 
+        //                    JOIN Subject t2 ON t2.Id = t1.SubjectId 
+        //                    JOIN Class t3 ON t3.Id = t1.ClassId 
+        //                    WHERE t1.SubjectId = @SubjectId";
 
-                var parameters = new { SubjectId = subjectId };
-                var problemPostList = (await connection.QueryAsync<ProblemPostAll>(queryString, parameters)).ToList();
+        //        var parameters = new { SubjectId = subjectId };
+        //        var problemPostList = (await connection.QueryAsync<ProblemPostAll>(queryString, parameters)).ToList();
 
-                // Add base URL to the Photo property
-                foreach (var post in problemPostList)
-                {
-                    post.Photo = $"{_basePhotoUrl}{post.Photo}";
-                }
+        //        // Add base URL to the Photo property
+        //        foreach (var post in problemPostList)
+        //        {
+        //            post.Photo = $"{_basePhotoUrl}{post.Photo}";
+        //        }
 
-                // Send notification if posts are found
-                if (problemPostList.Count > 0)
-                {
-                    var notificationTitle = "New Problem Posts Available";
-                    var notificationBody = $"{problemPostList.Count} new problem posts have been added.";
+        //        // Send notification if posts are found
+        //        if (problemPostList.Count > 0)
+        //        {
+        //            var notificationTitle = "New Problem Posts Available";
+        //            var notificationBody = $"{problemPostList.Count} new problem posts have been added.";
 
-                    // Retrieve user's notification token here if available (e.g., from database or request)
-                    string userToken = await GetUserTokenAsync(userId); // Assume this method fetches the token
+        //            // Retrieve user's notification token here if available (e.g., from database or request)
+        //            string userToken = await GetUserTokenAsync(userId); // Assume this method fetches the token
 
-                    if (!string.IsNullOrEmpty(userToken))
-                    {
-                        await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, userToken);
-                    }
-                }
+        //            if (!string.IsNullOrEmpty(userToken))
+        //            {
+        //                await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, userToken);
+        //            }
+        //        }
 
-                return problemPostList;
-            }
-        }
+        //        return problemPostList;
+        //    }
+        //}
 
         public async Task<(Guid postId, List<Guid> userIds)> GetStudentProblemAsync(Guid postId)
         {
@@ -102,6 +102,9 @@ namespace S_EDex365.API.Services
             }
         }
 
-
+        public Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

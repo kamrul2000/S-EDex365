@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
 using S_EDex365.API.Services;
@@ -95,10 +96,15 @@ namespace S_EDex365.API.Controllers
 
 
         [HttpPost("s/ProblemsPost")]
-        public async Task<IActionResult> UploadProblemPost([FromForm] ProblemsPostDto problemsPost, Guid userId)
+        public async Task<IActionResult> UploadProblemPost([FromForm] ProblemsPostDto problemsPost, [FromQuery] Guid userId)
         {
             try
             {
+                if (problemsPost == null || userId == Guid.Empty)
+                {
+                    return BadRequest("Invalid input data.");
+                }
+
                 // Insert the problem post and get the postId and response
                 var (postId, problemsPostResponse) = await _problemsPost.InsertProblemPostAsync(problemsPost);
 
@@ -108,7 +114,6 @@ namespace S_EDex365.API.Controllers
                 }
 
                 // Retrieve all posts by the user
-
                 var problemPosts = await _teacherService.GetStudentProblemAsync(postId);
 
                 // Retrieve the userIds based on postId
@@ -128,18 +133,21 @@ namespace S_EDex365.API.Controllers
                     if (!string.IsNullOrEmpty(deviceToken))
                     {
                         // Send a notification to the user
-                        var notificationTitle = "New Problem Post Added";
-                        var notificationBody = "A new problem post has been added successfully.";
-                        await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, deviceToken);
+                        var notificationTitle = "Welcome";
+                        var notificationBody = "New Task Added";
+                        await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, deviceToken, postId);
+                       
                     }
+                    
                 }
+                
 
                 // Return the result
                 return Ok(new
                 {
                     Message = "Problem post uploaded successfully.",
                     InsertedPost = problemsPostResponse,
-                    UserPosts = problemPosts
+                    //UserPosts = problemPosts
                 });
             }
             catch (Exception ex)
@@ -149,6 +157,7 @@ namespace S_EDex365.API.Controllers
                 return StatusCode(500, "An internal server error occurred.");
             }
         }
+
 
 
 

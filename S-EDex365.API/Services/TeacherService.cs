@@ -2,6 +2,8 @@
 using Microsoft.Data.SqlClient;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
+using System.Collections.Generic;
+using System.Data;
 
 namespace S_EDex365.API.Services
 {
@@ -122,7 +124,7 @@ namespace S_EDex365.API.Services
                     var userIdList = (await connection.QueryAsync<Guid>(query, new { SubjectId = subjectId })).ToList();
 
                     // Define the query for getting the problem posts for each user and each SubjectId
-                    query = @"SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN TeacherSkill t4 ON t4.SubjectId = t1.SubjectId WHERE t1.Flag=1 and t1.SubjectId = @SubjectId AND t4.UserId = @UserId";
+                    query = @"SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN TeacherSkill t4 ON t4.SubjectId = t1.SubjectId WHERE t1.SubjectId = @SubjectId AND t4.UserId = @UserId";
 
                     // Retrieve problem posts for each user and add them to the list
                     foreach (var currentUserId in userIdList)
@@ -144,7 +146,7 @@ namespace S_EDex365.API.Services
             }
         }
 
-        public async Task<string> UpdateProblemFlagAsync(Guid postId)
+        public async Task<List<ProblemPostAll>> UpdateProblemFlagAsync(Guid userId, Guid postId)
         {
             try
             {
@@ -152,19 +154,40 @@ namespace S_EDex365.API.Services
                 {
                     await connection.OpenAsync();
 
-                            string updateQuery = "UPDATE ProblemsPost SET Flag = @Flag WHERE Id = @Id";
-                            SqlCommand updateCommand = new SqlCommand(updateQuery, connection);
-                            updateCommand.Parameters.AddWithValue("@Id", postId);
-                            updateCommand.Parameters.AddWithValue("@Flag", 1);
+                    // Insert into RecivedProblem
+                    var queryString = @"
+                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)"
+                    ;
 
-                           var result= await updateCommand.ExecuteNonQueryAsync();
+                    //INSERT INTO RecivedProblem(id, UserId, ProblemsPostId, GetDateby, Updateby) OUTPUT INSERTED.Id VALUES(@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)";
 
-                    return result.ToString();
+                    var parameters = new DynamicParameters();
+                    var newId = Guid.NewGuid();
+                    parameters.Add("id", newId, DbType.Guid);
+                    parameters.Add("UserId", userId, DbType.Guid);
+                    parameters.Add("ProblemsPostId", postId, DbType.Guid);
+                    parameters.Add("GetDateby", DateTime.Now, DbType.DateTime);
+                    parameters.Add("Updateby", DateTime.Now, DbType.DateTime);
+
+                    // Execute the insertion
+                    await connection.ExecuteScalarAsync<Guid>(queryString, parameters);
+
+                    // Query to fetch updated data for PostReceived
+                    var fetchQuery = @"
+                SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId join RecivedProblem t4 on t1.Id=t4.ProblemsPostId WHERE t4.UserId = @UserId";
+
+                    // Fetch and map results to PostReceived
+                    var result = await connection.QueryAsync<ProblemPostAll>(
+                        fetchQuery,
+                        new { UserId = userId });
+
+                    return result.ToList(); // Convert to List<PostReceived>
                 }
             }
             catch (Exception ex)
             {
                 // Log or handle the exception as necessary
+                Console.WriteLine($"Error: {ex.Message}");
                 throw;
             }
         }

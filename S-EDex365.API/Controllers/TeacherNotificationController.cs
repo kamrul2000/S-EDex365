@@ -19,28 +19,28 @@ namespace S_EDex365.API.Controllers
         }
         
 
-        [HttpGet("s/AllProblems/{userId}")]
-        public async Task<ActionResult<List<ProblemPostAll>>> GetProblemss(Guid userId)
-        {
-            // Fetch all problem posts by the user
-            var problemPosts = await _teacherService.GetAllPostByUserAsync(userId);
+        //[HttpGet("s/AllProblems/{userId}")]
+        //public async Task<ActionResult<List<ProblemPostAll>>> GetProblemss(Guid userId)
+        //{
+        //    // Fetch all problem posts by the user
+        //    var problemPosts = await _teacherService.GetAllPostByUserAsync(userId);
 
-            // If no posts are found, return 404
-            if (problemPosts.Count == 0)
-                return NotFound();
+        //    // If no posts are found, return 404
+        //    if (problemPosts.Count == 0)
+        //        return NotFound();
 
-            // Retrieve user's device token for sending notification
-            var deviceToken = await _teacherService.GetUserTokenAsync(userId);
+        //    // Retrieve user's device token for sending notification
+        //    var deviceToken = await _teacherService.GetUserTokenAsync(userId);
 
-            if (!string.IsNullOrEmpty(deviceToken))
-            {
-                // Send notification to the user
-                var notificationTitle = "New Problem Posts Available";
-                var notificationBody = $"{problemPosts.Count} new problem posts have been added.";
-                await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, deviceToken);
-            }
+        //    if (!string.IsNullOrEmpty(deviceToken))
+        //    {
+        //        // Send notification to the user
+        //        var notificationTitle = "New Problem Posts Available";
+        //        var notificationBody = $"{problemPosts.Count} new problem posts have been added.";
+        //        await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, deviceToken,postId);
+        //    }
 
-            return Ok(problemPosts);
-        }
+        //    return Ok(problemPosts);
+        //}
     }
 }

@@ -33,11 +33,26 @@ namespace S_EDex365.API.Controllers
 
             return Ok(subjectDetails);
         }
-        [HttpPut("s/UpdateProblemFlag/{postId}")]
-        public async Task<ActionResult<List<ProblemPostAll>>> UpdateProblemFlag(Guid postId)
+        [HttpPost("s/UpdateProblemFlag/{userId}")]
+        public async Task<ActionResult<List<ProblemPostAll>>> UpdateProblemFlag(Guid userId, Guid postId)
         {
-            var updateDetails = await _teacherService.UpdateProblemFlagAsync(postId);
-            return Ok("This Task Accepted..");
+            try
+            {
+                // Call the service method
+                var updateDetails = await _teacherService.UpdateProblemFlagAsync(userId, postId);
+
+                if (updateDetails == null || !updateDetails.Any())
+                {
+                    return NotFound("No records found after updating.");
+                }
+
+                return Ok(updateDetails);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if necessary
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }
