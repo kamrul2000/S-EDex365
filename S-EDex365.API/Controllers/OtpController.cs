@@ -21,12 +21,14 @@ namespace S_EDex365.API.Controllers
         public async Task<ActionResult<UserResponse>> VerifyOtp([FromBody] OtpDto otpDto)
         {
             var otpDetails = await _service.UpdateOtpAsync(otpDto);
-
-            var result = new
+            if (otpDetails != null)
             {
-                Message = "Verifyed Otp..",
-            };
-            return Ok(result);
+                return Ok("Verifyed Otp..");
+            }
+            else
+            {
+                return Ok("Otp not Valid.");
+            }
         }
     }
 }

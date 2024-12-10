@@ -96,11 +96,11 @@ namespace S_EDex365.API.Controllers
 
 
         [HttpPost("s/ProblemsPost")]
-        public async Task<IActionResult> UploadProblemPost([FromForm] ProblemsPostDto problemsPost, [FromQuery] Guid userId)
+        public async Task<IActionResult> UploadProblemPost([FromForm] ProblemsPostDto problemsPost)
         {
             try
             {
-                if (problemsPost == null || userId == Guid.Empty)
+                if (problemsPost == null || problemsPost.UserId == Guid.Empty)
                 {
                     return BadRequest("Invalid input data.");
                 }
