@@ -63,5 +63,14 @@ namespace S_EDex365.API.Controllers
             return Ok(result);
         }
 
+        [HttpPut("s/ForgotPassword")]
+        public async Task<ActionResult> ForgotPassword(Guid userId,string oldPassWord,string newPassWord)
+        {
+            var result = await _authService.ForhotPasswordserAsync(userId,oldPassWord,newPassWord);
+            if (result ==null)
+                return NotFound("PassWord aren't Update....");
+            return Ok("PassWord is Update....");
+        }
+
     }
 }

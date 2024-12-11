@@ -42,6 +42,14 @@ namespace S_EDex365.API.Controllers
                 return NotFound("No problem posts found for the specified user");
             return Ok(result);
         }
+        [HttpPost("s/DeleteSkill")]
+        public async Task<IActionResult> DeleteSkill(Guid userId, Guid subId)
+        {
+            var result = await _subjectUpdateService.DeleteUserAsync(userId,subId);
+            if (result == null)
+                return NotFound("Subject are not Delete...");
+            return Ok("Skill are Deleted...");
+        }
 
 
     }

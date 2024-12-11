@@ -10,6 +10,7 @@ using S_EDex365.API.Models;
 using S_EDex365.Data.Interfaces;
 using S_EDex365.Data.Services;
 using S_EDex365.Model.Model;
+using System;
 using System.Data;
 using System.Net;
 using static System.Net.WebRequestMethods;
@@ -31,6 +32,36 @@ namespace S_EDex365.API.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<bool> ForhotPasswordserAsync(Guid userId, string oldPassWord, string newPassword)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var query = "select Password from Users where Id=@Id";
+                     var parameters1 = new DynamicParameters();
+                    parameters1.Add("Id", userId.ToString(), DbType.String);
+                    var password = await connection.QuerySingleOrDefaultAsync<string>(query, parameters1);
+                    if (password == oldPassWord)
+                    {
+                        var queryString = "update Users set Password=@Password where Id=@Id";
+                        var parameters = new DynamicParameters();
+                        parameters.Add("Password", newPassword.ToString(), DbType.String);
+                        parameters.Add("Id", userId, DbType.Guid);
+                        var success = await connection.ExecuteAsync(queryString, parameters);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<UserAllInformation>> GetAllUserInformationAsync(Guid userId)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -45,7 +76,7 @@ namespace S_EDex365.API.Services
                 var UserAllInformationList = await connection.QueryAsync<UserAllInformation>(query);
                 connection.Close();
 
-                var baseUrl = "https://www.api.edex365.com/profileImage/";
+                var baseUrl = "https://rrjp44mn-61214.asse.devtunnels.ms/profileImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var users in UserAllInformationList)
@@ -344,13 +375,13 @@ namespace S_EDex365.API.Services
 
 
 
-                    Guid? subjectId = !string.IsNullOrEmpty(userDtoUpdate.Subject.FirstOrDefault())
-                ? Guid.Parse(userDtoUpdate.Subject.FirstOrDefault())
-                : (Guid?)null;
+                //    Guid? subjectId = !string.IsNullOrEmpty(userDtoUpdate.Subject.FirstOrDefault())
+                //? Guid.Parse(userDtoUpdate.Subject.FirstOrDefault())
+                //: (Guid?)null;
 
-                    Guid? classId = !string.IsNullOrEmpty(userDtoUpdate.sClass.FirstOrDefault())
-                        ? Guid.Parse(userDtoUpdate.sClass.FirstOrDefault())
-                        : (Guid?)null;
+                    //Guid? classId = !string.IsNullOrEmpty(userDtoUpdate.sClass.FirstOrDefault())
+                    //    ? Guid.Parse(userDtoUpdate.sClass.FirstOrDefault())
+                    //    : (Guid?)null;
 
 
                     // Save the uploaded photo
@@ -368,21 +399,19 @@ namespace S_EDex365.API.Services
 
 
 
-                    var queryString = "update Users Set name=@name,email=@email,password=@password,School=@School,ClassId=@ClassId,Dob=@Dob,Updateby=@Updateby,subjectId=@subjectId, Image=@Image where id='" + userId + "'";
+                    var queryString = "update Users Set name=@name,email=@email,password=@password,School=@School,Dob=@Dob,Updateby=@Updateby, Image=@Image where id='" + userId + "'";
                     var parameters = new DynamicParameters();
                     parameters.Add("name", userDtoUpdate.Name, DbType.String);
                     parameters.Add("email", userDtoUpdate.Email, DbType.String);
                     parameters.Add("password", userDtoUpdate.Password, DbType.String);
                     parameters.Add("School", userDtoUpdate.School, DbType.String);
-                    parameters.Add("ClassId", classId, DbType.Guid);
                     parameters.Add("Dob", userDtoUpdate.Dob, DbType.String);
                     parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
-                    parameters.Add("subjectId", subjectId, DbType.Guid);
                     parameters.Add("Image", uniqueFileName, DbType.String); // Save the filename to the database
                     var success = await connection.ExecuteAsync(queryString, parameters);
 
                     string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://www.api.edex365.com/uploads/{uniqueFileName}"
+                        ? $"https://rrjp44mn-61214.asse.devtunnels.ms/uploads/{uniqueFileName}"
                         : null;
                     UserResponseUpdate userResponseUpdate = new UserResponseUpdate
                     {
@@ -391,8 +420,8 @@ namespace S_EDex365.API.Services
                         Password = userDtoUpdate.Password,
                         Dob = userDtoUpdate.Dob,
                         School = userDtoUpdate.School,
-                        sClass = userDtoUpdate.sClass,
-                        Subject = userDtoUpdate.Subject,// Return the full URL
+                        //sClass = userDtoUpdate.sClass,
+                        //Subject = userDtoUpdate.Subject,// Return the full URL
                         Image = fullPhotoUrl
                     };
 

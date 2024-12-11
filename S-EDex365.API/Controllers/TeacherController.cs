@@ -24,7 +24,7 @@ namespace S_EDex365.API.Controllers
             return Ok(subjectDetails);
         }
         [HttpGet("s/AllProblems/{userId}")]
-        public async Task<ActionResult<List<ProblemPostAll>>> GetProblems(Guid userId)
+        public async Task<ActionResult<List<ProblemList>>> GetProblems(Guid userId)
         {
             var subjectDetails = await _teacherService.GetAllPostByUserAsync(userId);
 
@@ -33,8 +33,8 @@ namespace S_EDex365.API.Controllers
 
             return Ok(subjectDetails);
         }
-        [HttpPost("s/UpdateProblemFlag/{userId}")]
-        public async Task<ActionResult<List<ProblemPostAll>>> UpdateProblemFlag(Guid userId, Guid postId)
+        [HttpPost("s/UpdateProblemFlag/{userId}/{postId}")]
+        public async Task<ActionResult<List<ProblemPostAll>>> UpdateProblemFlag(Guid userId,Guid postId)
         {
             try
             {
