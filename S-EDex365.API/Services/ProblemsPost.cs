@@ -91,7 +91,7 @@ namespace S_EDex365.API.Services
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
-                var baseUrl = "https://www.api.edex365.com/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -238,7 +238,7 @@ namespace S_EDex365.API.Services
 
                     // Prepend the base URL to the photo filename
                     string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://www.api.edex365.com/uploads/{uniqueFileName}"
+                        ? $"https://api.edex365.com/uploads/{uniqueFileName}"
                         : null;
 
                     // Prepare the response

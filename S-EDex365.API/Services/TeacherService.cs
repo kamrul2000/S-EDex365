@@ -202,7 +202,7 @@ namespace S_EDex365.API.Services
         //}
 
 
-        //private readonly string _basePhotoUrl = "https://www.api.edex365.com/uploads/";
+        //private readonly string _basePhotoUrl = "https://api.edex365.com/uploads/";
 
         public async Task<List<ProblemList>> GetAllPostByUserAsync(Guid userId)
         {
@@ -213,7 +213,7 @@ namespace S_EDex365.API.Services
                 var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId where Flag = 0";
 
                 var result = await connection.QueryAsync<ProblemList>(query);
-                var baseUrl = "https://rrjp44mn-61214.asse.devtunnels.ms/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)

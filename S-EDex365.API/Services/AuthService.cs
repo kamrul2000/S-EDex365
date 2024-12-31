@@ -76,7 +76,7 @@ namespace S_EDex365.API.Services
                 var UserAllInformationList = await connection.QueryAsync<UserAllInformation>(query);
                 connection.Close();
 
-                var baseUrl = "https://rrjp44mn-61214.asse.devtunnels.ms/profileImage/";
+                var baseUrl = "https://api.edex365.com/profileImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var users in UserAllInformationList)
@@ -411,7 +411,7 @@ namespace S_EDex365.API.Services
                     var success = await connection.ExecuteAsync(queryString, parameters);
 
                     string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://rrjp44mn-61214.asse.devtunnels.ms/uploads/{uniqueFileName}"
+                        ? $"https://api.edex365.com/uploads/{uniqueFileName}"
                         : null;
                     UserResponseUpdate userResponseUpdate = new UserResponseUpdate
                     {
