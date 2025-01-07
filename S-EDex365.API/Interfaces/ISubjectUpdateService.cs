@@ -6,5 +6,6 @@ namespace S_EDex365.API.Interfaces
     {
         Task<SubjectResponseUpdate> UpdateSubjectAsync(SubjectDtoUpdate subjectDtoUpdate);
         Task<List<SubjectResponseUpdate>> GetAllSubjectResponseUpdateAsync(Guid userId);
+        Task<bool> DeleteUserAsync(Guid userId,Guid subId);
     }
 }

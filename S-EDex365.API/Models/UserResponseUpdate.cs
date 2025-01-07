@@ -8,7 +8,7 @@
         public DateTime Dob { get; set; }
         public string School { get; set; } = string.Empty;
         public string Image {  get; set; }
-        public List<string> sClass { get; set; } = new List<string>();
-        public List<string> Subject { get; set; } = new List<string>();
+        //public List<string> sClass { get; set; } = new List<string>();
+        //public List<string> Subject { get; set; } = new List<string>();
     }
 }

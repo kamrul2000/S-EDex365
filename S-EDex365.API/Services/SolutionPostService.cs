@@ -29,7 +29,7 @@ namespace S_EDex365.API.Services
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
 
-                var baseUrl = "https://www.api.edex365.com/solutionImage/";
+                var baseUrl = "https://api.edex365.com/solutionImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in SolutionShowList)
@@ -133,7 +133,7 @@ namespace S_EDex365.API.Services
                     // Prepare the response
                     SolutionPostResponse solutionPostResponse = new SolutionPostResponse
                     {
-                        Photo = $"https://www.api.edex365.com/solutionImage/{uniqueFileName}"
+                        Photo = $"https://api.edex365.com/solutionImage/{uniqueFileName}"
                     };
 
                     return solutionPostResponse;

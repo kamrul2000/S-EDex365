@@ -91,7 +91,7 @@ namespace S_EDex365.API.Services
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
-                var baseUrl = "https://www.api.edex365.com/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -216,9 +216,9 @@ namespace S_EDex365.API.Services
                     // Insert the problem post into the database
                     var queryString = @"
             INSERT INTO ProblemsPost 
-            (id, subjectId, topic, classId, Description, Photo, UserId, Status, GetDateby, Updateby) OUTPUT INSERTED.Id 
+            (id, subjectId, topic, classId, Description, Photo, UserId, Status, Flag,GetDateby, Updateby) OUTPUT INSERTED.Id 
             VALUES 
-            (@id, @subjectId, @topic, @classId, @Description, @Photo, @UserId, @Status, @GetDateby, @Updateby)";
+            (@id, @subjectId, @topic, @classId, @Description, @Photo, @UserId, @Status, @Flag,@GetDateby, @Updateby)";
 
                     var parameters = new DynamicParameters();
                     var problemsPostId = Guid.NewGuid();
@@ -230,6 +230,7 @@ namespace S_EDex365.API.Services
                     parameters.Add("Photo", uniqueFileName, DbType.String); // Save the filename to the database
                     parameters.Add("UserId", problemsPost.UserId, DbType.Guid);
                     parameters.Add("status", 1, DbType.Boolean);
+                    parameters.Add("status", 0, DbType.Boolean);
                     parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
                     parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
 
@@ -237,7 +238,7 @@ namespace S_EDex365.API.Services
 
                     // Prepend the base URL to the photo filename
                     string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://www.api.edex365.com/uploads/{uniqueFileName}"
+                        ? $"https://api.edex365.com/uploads/{uniqueFileName}"
                         : null;
 
                     // Prepare the response

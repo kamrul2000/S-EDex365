@@ -15,6 +15,31 @@ namespace S_EDex365.API.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        public async Task<bool> DeleteUserAsync(Guid userId,Guid subId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var queryString = "delete from TeacherSkill where UserId=@UserId and SubjectId=@SubjectId";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("UserId", userId.ToString(), DbType.String);
+                    parameters.Add("SubjectId", subId.ToString(), DbType.String);
+                    var success = await connection.ExecuteAsync(queryString, parameters);
+                    if (success > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<SubjectResponseUpdate>> GetAllSubjectResponseUpdateAsync(Guid userId)
         {
             using (var connection = new SqlConnection(_connectionString))

@@ -148,56 +148,83 @@ namespace S_EDex365.API.Services
 
 
 
-        private readonly string _basePhotoUrl = "https://www.api.edex365.com/uploads/";
+        //private readonly string _basePhotoUrl = "https://www.api.edex365.com/uploads/";
 
-        public async Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId)
+        //public async Task<List<ProblemPostAll>> GetAllPostByUserAsync(Guid userId)
+        //{
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        await connection.OpenAsync();
+
+        //        // Get all SubjectIds for the specified UserId
+        //        var query = @"SELECT t1.SubjectId FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Users t3 ON t1.UserId = t3.Id  WHERE t3.Id = @Id";
+        //        //var subjectIds = (await connection.QueryAsync<string>(query, new { Id = userId })).ToList();
+        //        var subjectIds = (await connection.QueryAsync<Guid>(query, new { Id = userId })).ToList();
+
+
+        //        if (!subjectIds.Any())
+        //        {
+        //            return new List<ProblemPostAll>(); // Return an empty list if no SubjectIds are found
+        //        }
+
+        //        // Initialize an empty list to collect all problem posts
+        //        var problemPostList = new List<ProblemPostAll>();
+
+        //        // Iterate over each SubjectId
+        //        foreach (var subjectId in subjectIds)
+        //        {
+        //            // Get the list of UserIds who have the same SubjectId
+        //            query = @"SELECT t1.UserId FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Users t3 ON t1.UserId = t3.Id WHERE t1.SubjectId = @SubjectId";
+        //            var userIdList = (await connection.QueryAsync<Guid>(query, new { SubjectId = subjectId })).ToList();
+
+        //            // Define the query for getting the problem posts for each user and each SubjectId
+        //            query = @"SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId join RecivedProblem t4 on t1.Id=t4.ProblemsPostId WHERE t4.UserId = @UserId";
+
+
+        //            // Retrieve problem posts for each user and add them to the list
+        //            foreach (var currentUserId in userIdList)
+        //            {
+        //                if (currentUserId == userId)
+        //                {
+        //                    var userPosts = (await connection.QueryAsync<ProblemPostAll>(query, new { SubjectId = subjectId, UserId = currentUserId })).ToList();
+        //                    foreach (var post in userPosts)
+        //                    {
+        //                        post.Photo = $"{_basePhotoUrl}{post.Photo}";
+        //                    }
+        //                    problemPostList.AddRange(userPosts);
+        //                }
+
+        //            }
+        //        }
+
+        //        return problemPostList;
+        //    }
+        //}
+
+
+        //private readonly string _basePhotoUrl = "https://api.edex365.com/uploads/";
+
+        public async Task<List<ProblemList>> GetAllPostByUserAsync(Guid userId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
-                // Get all SubjectIds for the specified UserId
-                var query = @"SELECT t1.SubjectId FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Users t3 ON t1.UserId = t3.Id  WHERE t3.Id = @Id";
-                //var subjectIds = (await connection.QueryAsync<string>(query, new { Id = userId })).ToList();
-                var subjectIds = (await connection.QueryAsync<Guid>(query, new { Id = userId })).ToList();
+                var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId where Flag = 0";
 
+                var result = await connection.QueryAsync<ProblemList>(query);
+                var baseUrl = "https://api.edex365.com/uploads/";
 
-                if (!subjectIds.Any())
+                // Update the Photo property with the full URL
+                foreach (var problem in result)
                 {
-                    return new List<ProblemPostAll>(); // Return an empty list if no SubjectIds are found
-                }
-
-                // Initialize an empty list to collect all problem posts
-                var problemPostList = new List<ProblemPostAll>();
-
-                // Iterate over each SubjectId
-                foreach (var subjectId in subjectIds)
-                {
-                    // Get the list of UserIds who have the same SubjectId
-                    query = @"SELECT t1.UserId FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Users t3 ON t1.UserId = t3.Id WHERE t1.SubjectId = @SubjectId";
-                    var userIdList = (await connection.QueryAsync<Guid>(query, new { SubjectId = subjectId })).ToList();
-
-                    // Define the query for getting the problem posts for each user and each SubjectId
-                    query = @"SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId join RecivedProblem t4 on t1.Id=t4.ProblemsPostId WHERE t4.UserId = @UserId";
-
-
-                    // Retrieve problem posts for each user and add them to the list
-                    foreach (var currentUserId in userIdList)
+                    if (!string.IsNullOrEmpty(problem.Photo))
                     {
-                        if (currentUserId == userId)
-                        {
-                            var userPosts = (await connection.QueryAsync<ProblemPostAll>(query, new { SubjectId = subjectId, UserId = currentUserId })).ToList();
-                            foreach (var post in userPosts)
-                            {
-                                post.Photo = $"{_basePhotoUrl}{post.Photo}";
-                            }
-                            problemPostList.AddRange(userPosts);
-                        }
-
+                        problem.Photo = baseUrl + problem.Photo;
                     }
                 }
 
-                return problemPostList;
+                return result.ToList();
             }
         }
 
