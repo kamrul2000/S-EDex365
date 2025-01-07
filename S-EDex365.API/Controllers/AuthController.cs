@@ -62,6 +62,10 @@ namespace S_EDex365.API.Controllers
                 return NotFound("No problem posts found for the specified user");
             return Ok(result);
         }
-
+        [HttpGet("GetServerDateTime")]
+        public async Task<ActionResult<string>> GetServerDateTime()
+        {
+            return DateTime.Now.ToString();
+        }
     }
 }
