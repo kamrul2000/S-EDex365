@@ -72,5 +72,10 @@ namespace S_EDex365.API.Controllers
             return Ok("PassWord is Update....");
         }
 
+        [HttpGet("GetServerDateTime")]
+        public async Task<ActionResult<string>> GetServerDateTime()
+        {
+            return DateTime.Now.ToString();
+        }
     }
 }
