@@ -230,7 +230,7 @@ namespace S_EDex365.API.Services
                     parameters.Add("Photo", uniqueFileName, DbType.String); // Save the filename to the database
                     parameters.Add("UserId", problemsPost.UserId, DbType.Guid);
                     parameters.Add("status", 1, DbType.Boolean);
-                    parameters.Add("status", 0, DbType.Boolean);
+                    parameters.Add("flag", 0, DbType.Boolean);
                     parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
                     parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
 
