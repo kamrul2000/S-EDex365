@@ -43,7 +43,7 @@ namespace S_EDex365.API.Controllers
 
         [Route("s/Update")]
         [HttpPut]
-        public async Task<ActionResult<UserResponseUpdate>> Signup([FromForm] UserDtoUpdate userDtoUpdate)
+        public async Task<ActionResult<UserResponseUpdate>> Update([FromForm] UserDtoUpdate userDtoUpdate)
         {
             var updateDetails = await _authService.UpdateUserAsync(userDtoUpdate);
             var result = new
@@ -63,10 +63,10 @@ namespace S_EDex365.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("s/ForgotPassword")]
-        public async Task<ActionResult> ForgotPassword(Guid userId,string oldPassWord,string newPassWord)
+        [HttpPut("s/UpdatePassword")]
+        public async Task<ActionResult> UpdatePassword(Guid userId,string oldPassWord,string newPassWord)
         {
-            var result = await _authService.ForhotPasswordserAsync(userId,oldPassWord,newPassWord);
+            var result = await _authService.UpdatePasswordserAsync(userId,oldPassWord,newPassWord);
             if (result ==null)
                 return NotFound("PassWord aren't Update....");
             return Ok("PassWord is Update....");

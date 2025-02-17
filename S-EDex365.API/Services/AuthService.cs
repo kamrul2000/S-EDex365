@@ -32,7 +32,7 @@ namespace S_EDex365.API.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> ForhotPasswordserAsync(Guid userId, string oldPassWord, string newPassword)
+        public async Task<bool> UpdatePasswordserAsync(Guid userId, string oldPassWord, string newPassword)
         {
             try
             {
@@ -395,51 +395,74 @@ namespace S_EDex365.API.Services
                         {
                             await userDtoUpdate.Image.CopyToAsync(fileStream);
                         }
+
+                        var queryString = "update Users Set name=@name,email=@email,password=@password,School=@School,Dob=@Dob,Updateby=@Updateby, Image=@Image where id='" + userId + "'";
+                        var parameters = new DynamicParameters();
+                        parameters.Add("name", userDtoUpdate.Name, DbType.String);
+                        parameters.Add("email", userDtoUpdate.Email, DbType.String);
+                        parameters.Add("password", userDtoUpdate.Password, DbType.String);
+                        parameters.Add("School", userDtoUpdate.School, DbType.String);
+                        parameters.Add("Dob", userDtoUpdate.Dob, DbType.String);
+                        parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                        parameters.Add("Image", uniqueFileName, DbType.String); // Save the filename to the database
+                        var success = await connection.ExecuteAsync(queryString, parameters);
+
+                        string fullPhotoUrl = uniqueFileName != null
+                            ? $"https://api.edex365.com/uploads/{uniqueFileName}"
+                            : null;
+
+                        UserResponseUpdate userResponseUpdate = new UserResponseUpdate
+                        {
+                            Name = userDtoUpdate.Name,
+                            Email = userDtoUpdate.Email,
+                            Password = userDtoUpdate.Password,
+                            Dob = userDtoUpdate.Dob,
+                            School = userDtoUpdate.School,
+                            //sClass = userDtoUpdate.sClass,
+                            //Subject = userDtoUpdate.Subject,// Return the full URL
+                            Image = fullPhotoUrl
+                        };
+                        return userResponseUpdate;
+                    }
+                    else
+                    {
+                        var queryString = "update Users Set name=@name,email=@email,password=@password,School=@School,Dob=@Dob,Updateby=@Updateby where id='" + userId + "'";
+                        var parameters = new DynamicParameters();
+                        parameters.Add("name", userDtoUpdate.Name, DbType.String);
+                        parameters.Add("email", userDtoUpdate.Email, DbType.String);
+                        parameters.Add("password", userDtoUpdate.Password, DbType.String);
+                        parameters.Add("School", userDtoUpdate.School, DbType.String);
+                        parameters.Add("Dob", userDtoUpdate.Dob, DbType.String);
+                        parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                        //parameters.Add("Image", uniqueFileName, DbType.String); // Save the filename to the database
+                        var success = await connection.ExecuteAsync(queryString, parameters);
+
+
+                        var imgUrl = "select image from Users where id=@Id ";
+                        var parameters1=new DynamicParameters();
+                        parameters1.Add("Id",userId, DbType.Guid);
+
+                        var url=await connection.ExecuteScalarAsync(imgUrl, parameters1);
+
+                        string fullPhotoUrl = url != null
+                            ? $"https://api.edex365.com/uploads/{url}"
+                            : null;
+
+                        UserResponseUpdate userResponseUpdate = new UserResponseUpdate
+                        {
+                            Name = userDtoUpdate.Name,
+                            Email = userDtoUpdate.Email,
+                            Password = userDtoUpdate.Password,
+                            Dob = userDtoUpdate.Dob,
+                            School = userDtoUpdate.School,
+                            //sClass = userDtoUpdate.sClass,
+                            //Subject = userDtoUpdate.Subject,// Return the full URL
+                            Image = fullPhotoUrl
+                        };
+                        return userResponseUpdate;
                     }
 
-
-
-                    var queryString = "update Users Set name=@name,email=@email,password=@password,School=@School,Dob=@Dob,Updateby=@Updateby, Image=@Image where id='" + userId + "'";
-                    var parameters = new DynamicParameters();
-                    parameters.Add("name", userDtoUpdate.Name, DbType.String);
-                    parameters.Add("email", userDtoUpdate.Email, DbType.String);
-                    parameters.Add("password", userDtoUpdate.Password, DbType.String);
-                    parameters.Add("School", userDtoUpdate.School, DbType.String);
-                    parameters.Add("Dob", userDtoUpdate.Dob, DbType.String);
-                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
-                    parameters.Add("Image", uniqueFileName, DbType.String); // Save the filename to the database
-                    var success = await connection.ExecuteAsync(queryString, parameters);
-
-                    string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://api.edex365.com/uploads/{uniqueFileName}"
-                        : null;
-                    UserResponseUpdate userResponseUpdate = new UserResponseUpdate
-                    {
-                        Name = userDtoUpdate.Name,
-                        Email = userDtoUpdate.Email,
-                        Password = userDtoUpdate.Password,
-                        Dob = userDtoUpdate.Dob,
-                        School = userDtoUpdate.School,
-                        //sClass = userDtoUpdate.sClass,
-                        //Subject = userDtoUpdate.Subject,// Return the full URL
-                        Image = fullPhotoUrl
-                    };
-
-                    //if (success > 0)
-                    //{
-
-                    //    UserResponseUpdate userResponseUpdate = new UserResponseUpdate();
-                    //    userResponseUpdate.Name = userDtoUpdate.Name;
-                    //    userResponseUpdate.Email = userDtoUpdate.Email;
-                    //    userResponseUpdate.Password = userDtoUpdate.Password;
-                    //    userResponseUpdate.Dob = userDtoUpdate.Dob;
-                    //    userResponseUpdate.School = userDtoUpdate.School;
-                    //    userResponseUpdate.sClass = userDtoUpdate.sClass;
-                    //    userResponseUpdate.Subject = userDtoUpdate.Subject;
-                    //    userResponseUpdate.Image = userDtoUpdate.Image;
-                    //    return userResponseUpdate;
-                    //}
-                    return userResponseUpdate; ;
+                    
 
 
                 }

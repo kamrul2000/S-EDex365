@@ -39,7 +39,7 @@ namespace S_EDex365.API.Controllers
         {
             var result = await _subjectUpdateService.GetAllSubjectResponseUpdateAsync(userId);
             if (result.Count == 0)
-                return NotFound("No problem posts found for the specified user");
+                return Ok("No problem posts found for the specified userss");
             return Ok(result);
         }
         [HttpPost("s/DeleteSkill")]

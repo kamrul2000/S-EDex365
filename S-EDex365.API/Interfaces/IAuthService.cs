@@ -11,6 +11,6 @@ namespace S_EDex365.API.Interfaces
             Task<UserResponse> InsertUserAsync(UserDto user);
             Task<UserResponseUpdate> UpdateUserAsync(UserDtoUpdate userDtoUpdate);
         Task<List<UserAllInformation>> GetAllUserInformationAsync(Guid userId);
-        Task<bool> ForhotPasswordserAsync(Guid userId,string oldPassWord,string newPassword);
+        Task<bool> UpdatePasswordserAsync(Guid userId,string oldPassWord,string newPassword);
     }
 }

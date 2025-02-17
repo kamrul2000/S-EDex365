@@ -29,6 +29,7 @@ builder.Services.AddScoped<ISubjectUpdateService, SubjectUpdateService>();
 builder.Services.AddScoped<ITeacherApprovalService, TeacherApprovalService>();
 builder.Services.AddScoped<IFirebaseNotificationService, FirebaseNotificationService>();
 builder.Services.AddScoped<ITeacherNotificationService, TeacherNotificationService>();
+builder.Services.AddScoped<IStudentDashBoard, StudentDashBoard>();
 
 
 

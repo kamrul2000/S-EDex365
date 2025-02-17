@@ -33,6 +33,18 @@ namespace S_EDex365.API.Controllers
 
             return Ok(subjectDetails);
         }
+
+        [HttpGet("s/GetAllAcceptProblem/{userId}")]
+        public async Task<ActionResult<List<ProblemList>>> GetAllAcceptProblemsAsync(Guid userId)
+        {
+            var subjectDetails = await _teacherService.GetAllProblemsAsync(userId);
+
+            if (subjectDetails.Count == 0)
+                return NotFound();
+
+            return Ok(subjectDetails);
+        }
+
         [HttpPost("s/UpdateProblemFlag/{userId}/{postId}")]
         public async Task<ActionResult<List<ProblemPostAll>>> UpdateProblemFlag(Guid userId,Guid postId)
         {

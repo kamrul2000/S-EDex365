@@ -202,7 +202,7 @@ namespace S_EDex365.API.Services
         //}
 
 
-        //private readonly string _basePhotoUrl = "https://api.edex365.com/uploads/";
+        //private readonly string _basePhotoUrl = "https://d7hftt7g-44395.asse.devtunnels.ms/uploads/";
 
         public async Task<List<ProblemList>> GetAllPostByUserAsync(Guid userId)
         {
@@ -228,7 +228,29 @@ namespace S_EDex365.API.Services
             }
         }
 
+        public async Task<List<ProblemList>> GetAllProblemsAsync(Guid userId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
 
+                var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN RecivedProblem t4 on t4.ProblemsPostId=t1.Id where t4.UserId='"+ userId +"' ";
+
+                var result = await connection.QueryAsync<ProblemList>(query);
+                var baseUrl = "https://api.edex365.com/uploads/";
+
+                // Update the Photo property with the full URL
+                foreach (var problem in result)
+                {
+                    if (!string.IsNullOrEmpty(problem.Photo))
+                    {
+                        problem.Photo = baseUrl + problem.Photo;
+                    }
+                }
+
+                return result.ToList();
+            }
+        }
 
         public async Task<List<ProblemList>> UpdateProblemFlagAsync(Guid userId, Guid postId)
         {
