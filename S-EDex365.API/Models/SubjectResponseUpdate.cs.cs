@@ -2,6 +2,7 @@
 {
     public class SubjectResponseUpdate
     {
+        public Guid Id { get; set; }
         public List<string> Subject { get; set; } = new List<string>();
     }
 }

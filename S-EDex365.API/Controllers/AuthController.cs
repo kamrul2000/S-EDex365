@@ -67,8 +67,8 @@ namespace S_EDex365.API.Controllers
         public async Task<ActionResult> UpdatePassword(Guid userId,string oldPassWord,string newPassWord)
         {
             var result = await _authService.UpdatePasswordserAsync(userId,oldPassWord,newPassWord);
-            if (result ==null)
-                return NotFound("PassWord aren't Update....");
+            if (!result) // If false, return NotFound
+                return NotFound("Password isn't updated. Old password is incorrect.");
             return Ok("PassWord is Update....");
         }
 

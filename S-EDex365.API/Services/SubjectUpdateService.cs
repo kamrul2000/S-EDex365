@@ -46,19 +46,20 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                // Query to select SubjectId from TeacherSkill for the given userId
-                var queryString = "SELECT t2.SubjectName FROM TeacherSkill t1 join subject t2 on t1.SubjectId=t2.id WHERE t1.UserId = @UserId";
-                var skillList = await connection.QueryAsync<string>(queryString, new { UserId = userId });
+                // Query to select Id and SubjectName from the Subject table for the given userId
+                var queryString = "SELECT t2.Id, t2.SubjectName FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id WHERE t1.UserId = @UserId";
+                var skillList = await connection.QueryAsync<(Guid Id, string SubjectName)>(queryString, new { UserId = userId });
 
                 // Create a list to hold the SubjectResponseUpdate objects
                 var responseList = new List<SubjectResponseUpdate>();
 
                 // Populate the SubjectResponseUpdate list
-                foreach (var subjectId in skillList)
+                foreach (var skill in skillList)
                 {
                     responseList.Add(new SubjectResponseUpdate
                     {
-                        Subject = new List<string> { subjectId.ToString() } // Add the SubjectId to the Subject list
+                        Id = skill.Id, // Assign the correct Id
+                        Subject = new List<string> { skill.SubjectName } // Assign the SubjectName correctly
                     });
                 }
 
@@ -69,7 +70,8 @@ namespace S_EDex365.API.Services
 
 
 
-        
+
+
 
 
         public async Task<SubjectResponseUpdate> UpdateSubjectAsync(SubjectDtoUpdate subjectDtoUpdate)
