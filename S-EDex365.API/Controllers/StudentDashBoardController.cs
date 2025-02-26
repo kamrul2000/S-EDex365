@@ -21,13 +21,13 @@ namespace S_EDex365.API.Controllers
 
             // Fetch and store the correct count
             var totalProblem = await _studentDashBoard.GetAllTotalProblemAsync(userId);
-            model.TotalProblem = totalProblem?.Count() ?? 0;
+            model.TotalProblem = totalProblem;
 
             var totalPending = await _studentDashBoard.GetAllPendingProblemAsync(userId);
-            model.PendingProblem = totalPending?.Count() ?? 0;
+            model.PendingProblem = totalPending;
 
             var totalSolution = await _studentDashBoard.GetAllSolutionAsync(userId);
-            model.Solution = totalSolution?.Count() ?? 0;
+            model.Solution = totalSolution;
 
            
 

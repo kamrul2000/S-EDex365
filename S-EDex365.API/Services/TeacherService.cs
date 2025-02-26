@@ -19,12 +19,33 @@ namespace S_EDex365.API.Services
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
-                var queryString = "select p.id,p.classId,p.SubjectId,p.Topic,p.Description,p.Photo from ProblemsPost p inner join Users u on p.Subjectid=u.Subjectid ";
-                var query = string.Format(queryString);
-                var ProblemPostList = await connection.QueryAsync<ProblemPostAll>(query);
-                connection.Close();
-                return ProblemPostList.ToList();
+                await connection.OpenAsync();
+
+                var queryString = @"
+            SELECT 
+                p.Id,
+                s.SubjectName AS Subject,
+                c.ClassName AS sClass,
+                p.Topic,
+                p.Description,
+                p.Photo 
+            FROM ProblemsPost p
+            INNER JOIN Users u ON p.SubjectId = u.SubjectId
+            INNER JOIN Subject s ON p.SubjectId = s.Id
+            INNER JOIN Class c ON p.ClassId = c.Id";
+
+                var problemPostList = await connection.QueryAsync<ProblemPostAll>(queryString);
+
+                var baseUrl = "https://api.edex365.com/uploads/";
+                foreach (var problem in problemPostList)
+                {
+                    if (!string.IsNullOrEmpty(problem.Photo))
+                    {
+                        problem.Photo = baseUrl + problem.Photo;
+                    }
+                }
+
+                return problemPostList.ToList();
             }
         }
 

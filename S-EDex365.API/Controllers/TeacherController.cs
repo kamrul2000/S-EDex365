@@ -40,7 +40,7 @@ namespace S_EDex365.API.Controllers
             var subjectDetails = await _teacherService.GetAllProblemsAsync(userId);
 
             if (subjectDetails.Count == 0)
-                return NotFound();
+                return Ok(subjectDetails);
 
             return Ok(subjectDetails);
         }

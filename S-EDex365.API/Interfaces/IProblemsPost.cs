@@ -8,5 +8,8 @@ namespace S_EDex365.API.Interfaces
         Task<List<ProblemPostAll>> GetAllUserAsync(Guid userId);
 
         Task<(Guid postId, ProblemsPostResponse response)> InsertProblemPostAsync(ProblemsPostDto problemsPost);
+        Task<List<ProblemPostAll>> GetPendingUserAsync(Guid userId);
+        Task<List<ProblemPostAll>> GetSolutionUserAsync(Guid userId);
+        Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId);
     }
 }

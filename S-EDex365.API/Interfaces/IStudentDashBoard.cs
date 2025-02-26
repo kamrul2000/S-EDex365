@@ -2,8 +2,8 @@
 {
     public interface IStudentDashBoard
     {
-        Task<string?> GetAllTotalProblemAsync(Guid userId);
-        Task<string?> GetAllSolutionAsync(Guid userId);
-        Task<string?> GetAllPendingProblemAsync(Guid userId);
+        Task<int> GetAllTotalProblemAsync(Guid userId);
+        Task<int> GetAllSolutionAsync(Guid userId);
+        Task<int> GetAllPendingProblemAsync(Guid userId);
     }
 }

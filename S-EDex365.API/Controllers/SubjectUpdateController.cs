@@ -42,14 +42,32 @@ namespace S_EDex365.API.Controllers
                 return Ok("No problem posts found for the specified userss");
             return Ok(result);
         }
+
         [HttpPost("s/DeleteSkill")]
-        public async Task<IActionResult> DeleteSkill(Guid userId, Guid subId)
+        public async Task<IActionResult> DeleteSkill(Guid userId, [FromBody] List<Guid> subIds)
         {
-            var result = await _subjectUpdateService.DeleteUserAsync(userId,subId);
-            if (result == null)
-                return NotFound("Subject are not Delete...");
-            return Ok("Skill are Deleted...");
+            if (subIds == null || subIds.Count == 0)
+            {
+                return BadRequest("No subjects provided for deletion.");
+            }
+            var result = await _subjectUpdateService.DeleteUserAsync(userId, subIds);
+
+            if (!result)
+            {
+                return NotFound("Subjects could not be deleted.");
+            }
+
+            return Ok("skill are deleted...");
         }
+
+        //[HttpPost("s/DeleteSkill")]
+        //public async Task<IActionResult> DeleteSkill(Guid userId, Guid subId)
+        //{
+        //    var result = await _subjectUpdateService.DeleteUserAsync(userId,subId);
+        //    if (result == null)
+        //        return NotFound("Subject are not Delete...");
+        //    return Ok("Skill are Deleted...");
+        //}
 
 
     }

@@ -91,6 +91,81 @@ namespace S_EDex365.API.Services
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
+
+                var baseUrl = "https://api.edex365.com/uploads/";
+
+                // Update the Photo property with the full URL
+                foreach (var problem in result)
+                {
+                    if (!string.IsNullOrEmpty(problem.Photo))
+                    {
+                        problem.Photo = baseUrl + problem.Photo;
+                    }
+                }
+
+                return result.ToList();
+            }
+        }
+
+        public async Task<List<ProblemPostAll>> GetPendingUserAsync(Guid userId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.Id NOT IN (SELECT ProblemPostId FROM SolutionPost) and t1.UserId =@UserId ";
+
+                var parameters = new { UserId = userId };
+
+                var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
+
+                var baseUrl = "https://api.edex365.com/uploads/";
+
+                // Update the Photo property with the full URL
+                foreach (var problem in result)
+                {
+                    if (!string.IsNullOrEmpty(problem.Photo))
+                    {
+                        problem.Photo = baseUrl + problem.Photo;
+                    }
+                }
+
+                return result.ToList();
+            }
+        }
+
+        public async Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.id = @Id";
+
+                var parameters = new { Id = postId };
+
+                var result = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(query, parameters);
+                if (result != null && !string.IsNullOrEmpty(result.Photo))
+                {
+                    result.Photo = "https://api.edex365.com/uploads/" + result.Photo;
+                }
+
+                return result;
+            }
+        }
+
+        public async Task<List<ProblemPostAll>> GetSolutionUserAsync(Guid userId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId JOIN Class t4 ON t4.Id = t2.ClassId where StudentId= @UserId";
+
+                var parameters = new { UserId = userId };
+
+                var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
+
                 var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
@@ -107,79 +182,6 @@ namespace S_EDex365.API.Services
         }
 
 
-
-
-
-
-        //public async Task<ProblemsPostResponse> InsertProblemPostAsync(ProblemsPostDto problemsPost)
-        //{
-        //    try
-        //    {
-        //        using (var connection = new SqlConnection(_connectionString))
-        //        {
-        //            connection.Open();
-
-        //            Guid? subjectId = !string.IsNullOrEmpty(problemsPost.Subject.FirstOrDefault())
-        //        ? Guid.Parse(problemsPost.Subject.FirstOrDefault())
-        //        : (Guid?)null;
-        //            //var subjectId = problemsPost.Subject.FirstOrDefault();
-        //            //var querySubject = "SELECT SubjectName FROM Subject WHERE id = @SubjectId";
-        //            //var SubjectName = await connection.QueryFirstOrDefaultAsync<string>(querySubject, new { SubjectId = subjectId });
-
-        //            Guid? classId = !string.IsNullOrEmpty(problemsPost.Class.FirstOrDefault())
-        //        ? Guid.Parse(problemsPost.Class.FirstOrDefault())
-        //        : (Guid?)null;
-
-        //            //var classId = problemsPost.Class.FirstOrDefault();
-        //            //var queryClass = "SELECT ClassName FROM Class WHERE id = @ClassId";
-        //            //var ClassName = await connection.QueryFirstOrDefaultAsync<string>(queryClass, new { ClassId = classId });
-
-
-        //            // Save the uploaded photo
-        //            string uniqueFileName = null;
-        //            if (problemsPost.Photo != null)
-        //            {
-        //                string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads"); // Ensure that "uploads" directory exists
-        //                uniqueFileName = Guid.NewGuid().ToString() + "_" + problemsPost.Photo.FileName;
-        //                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-        //                using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //                {
-        //                    await problemsPost.Photo.CopyToAsync(fileStream);
-        //                }
-        //            }
-
-        //            var queryString = "insert into ProblemsPost (id,subjectId,topic,classId,Description,Photo,UserId,Status,GetDateby,Updateby) values ";
-        //            queryString += "( @id,@subjectId,@topic,@classId,@Description,@Photo,@UserId,@Status,@GetDateby,@Updateby)";
-        //            var parameters = new DynamicParameters();
-        //            var problemsPostId = Guid.NewGuid();
-        //            parameters.Add("id", problemsPostId, DbType.Guid);
-        //            parameters.Add("subjectId", subjectId, DbType.Guid);
-        //            parameters.Add("topic", problemsPost.Topic, DbType.String);
-        //            parameters.Add("classId", classId, DbType.Guid);
-        //            parameters.Add("Description", problemsPost.Description, DbType.String);
-        //            parameters.Add("Photo", uniqueFileName, DbType.String); // Save the filename to the database
-        //            parameters.Add("UserId", problemsPost.UserId, DbType.Guid);
-        //            parameters.Add("status", 1, DbType.Boolean);
-        //            parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
-        //            parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
-        //            var success = await connection.ExecuteAsync(queryString, parameters);
-
-        //            ProblemsPostResponse problemsPostResponse = new ProblemsPostResponse
-        //            {
-        //                Subject = problemsPost.Subject,
-        //                Topic = problemsPost.Topic,
-        //                //Class = problemsPost.Class,
-        //                Description = problemsPost.Description,
-        //                Photo = uniqueFileName // Return the filename or the full URL if required
-        //            };
-        //            return problemsPostResponse;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
 
 
 

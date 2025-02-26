@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
@@ -116,6 +117,8 @@ namespace S_EDex365.API.Controllers
                 // Retrieve all posts by the user
                 var problemPosts = await _teacherService.GetStudentProblemAsync(postId);
 
+                
+
                 // Retrieve the userIds based on postId
                 var (devicePostId, userIds) = await _teacherService.GetStudentProblemAsync(postId);
 
@@ -124,6 +127,8 @@ namespace S_EDex365.API.Controllers
                     return NotFound("No users found for the given SubjectId.");
                 }
 
+                var problemList = await _notificationService.GetAllInfo(postId);
+                var problemDetails = JsonConvert.DeserializeObject<ProblemNotificationValue>(problemList);
                 // Use foreach to iterate over userIds and process each user
                 foreach (var userIdItem in userIds)
                 {
@@ -135,7 +140,7 @@ namespace S_EDex365.API.Controllers
                         // Send a notification to the user
                         var notificationTitle = "Welcome";
                         var notificationBody = "New Task Added";
-                        await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, deviceToken, postId);
+                        await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, deviceToken, postId, problemDetails.Photo, problemDetails.SubjectName, problemDetails.Description);
                        
                     }
                     
@@ -164,12 +169,39 @@ namespace S_EDex365.API.Controllers
 
 
         [HttpGet("s/AllProblemsPost/{userId}")]
-        public async Task<ActionResult<List<ProblemPostAll>>> GetAllClass(Guid userId)
+        public async Task<ActionResult<List<ProblemPostAll>>> GetAllProblems(Guid userId)
         {
             var problemPostDetails = await _problemsPost.GetAllUserAsync(userId);
             if (problemPostDetails.Count == 0)
                 return NotFound("No problem posts found for the specified user");
             return Ok(problemPostDetails);
+        }
+        [HttpGet("s/AllPendingPost/{userId}")]
+        public async Task<ActionResult<List<ProblemPostAll>>> GetAllPending(Guid userId)
+        {
+            var problemPostDetails = await _problemsPost.GetPendingUserAsync(userId);
+            if (problemPostDetails.Count == 0)
+                return NotFound("No problem posts found for the specified user");
+            return Ok(problemPostDetails);
+        }
+        [HttpGet("s/AllSolutionsPost/{userId}")]
+        public async Task<ActionResult<List<ProblemPostAll>>> GetAllSolution(Guid userId)
+        {
+            var problemPostDetails = await _problemsPost.GetSolutionUserAsync(userId);
+            if (problemPostDetails.Count == 0)
+                return NotFound("No problem posts found for the specified user");
+            return Ok(problemPostDetails);
+        }
+
+        [HttpGet("s/ProblemDetails/{postId}")]
+        public async Task<ActionResult<ProblemPostAll>> ProblemDetails(Guid postId)
+        {
+            var problemPostDetail = await _problemsPost.GetPostDetailsUserAsync(postId);
+
+            if (problemPostDetail == null)
+                return NotFound("No problem post found for the specified user");
+
+            return Ok(problemPostDetail);
         }
     }
 }

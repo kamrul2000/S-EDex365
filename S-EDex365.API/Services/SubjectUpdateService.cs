@@ -15,30 +15,72 @@ namespace S_EDex365.API.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<bool> DeleteUserAsync(Guid userId,Guid subId)
+        //public async Task<bool> DeleteUserAsync(Guid userId,Guid subId)
+        //{
+        //    try
+        //    {
+        //        using (var connection = new SqlConnection(_connectionString))
+        //        {
+        //            connection.Open();
+        //            var queryString = "delete from TeacherSkill where UserId=@UserId and SubjectId=@SubjectId";
+        //            var parameters = new DynamicParameters();
+        //            parameters.Add("UserId", userId.ToString(), DbType.String);
+        //            parameters.Add("SubjectId", subId.ToString(), DbType.String);
+        //            var success = await connection.ExecuteAsync(queryString, parameters);
+        //            if (success > 0)
+        //            {
+        //                return true;
+        //            }
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+
+        public async Task<bool> DeleteUserAsync(Guid userId, List<Guid> subIds)
         {
+            if (subIds == null || subIds.Count == 0)
+            {
+                return false;
+            }
+
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    connection.Open();
-                    var queryString = "delete from TeacherSkill where UserId=@UserId and SubjectId=@SubjectId";
+                    await connection.OpenAsync();
+
+                    // Create parameterized IN clause dynamically
+                    var subIdParams = string.Join(",", subIds.Select((id, index) => $"@SubId{index}"));
+
+                    var queryString = $"DELETE FROM TeacherSkill WHERE UserId = @UserId AND SubjectId IN ({subIdParams})";
+
                     var parameters = new DynamicParameters();
-                    parameters.Add("UserId", userId.ToString(), DbType.String);
-                    parameters.Add("SubjectId", subId.ToString(), DbType.String);
-                    var success = await connection.ExecuteAsync(queryString, parameters);
-                    if (success > 0)
+                    parameters.Add("UserId", userId, DbType.Guid);
+
+                    // Add each GUID individually as a parameter
+                    for (int i = 0; i < subIds.Count; i++)
                     {
-                        return true;
+                        parameters.Add($"SubId{i}", subIds[i], DbType.Guid);
                     }
-                    return false;
+
+                    var success = await connection.ExecuteAsync(queryString, parameters);
+
+                    return success > 0;
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
             }
         }
+
+
 
         public async Task<List<SubjectResponseUpdate>> GetAllSubjectResponseUpdateAsync(Guid userId)
         {
