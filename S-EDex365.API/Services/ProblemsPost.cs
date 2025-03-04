@@ -86,7 +86,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.UserId = @UserId";
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.UserId = @UserId";
 
                 var parameters = new { UserId = userId };
 
@@ -101,6 +101,7 @@ namespace S_EDex365.API.Services
                     {
                         problem.Photo = baseUrl + problem.Photo;
                     }
+
                 }
 
                 return result.ToList();
@@ -113,7 +114,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.Id NOT IN (SELECT ProblemPostId FROM SolutionPost) and t1.UserId =@UserId ";
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.Id NOT IN (SELECT ProblemPostId FROM SolutionPost) and t1.UserId =@UserId ";
 
                 var parameters = new { UserId = userId };
 
@@ -140,7 +141,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.id = @Id";
+                var query = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.id = @Id";
 
                 var parameters = new { Id = postId };
 
@@ -160,7 +161,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId JOIN Class t4 ON t4.Id = t2.ClassId where StudentId= @UserId";
+                var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId JOIN Class t4 ON t4.Id = t2.ClassId where StudentId= @UserId";
 
                 var parameters = new { UserId = userId };
 

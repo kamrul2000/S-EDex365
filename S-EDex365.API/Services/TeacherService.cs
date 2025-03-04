@@ -28,7 +28,7 @@ namespace S_EDex365.API.Services
                 c.ClassName AS sClass,
                 p.Topic,
                 p.Description,
-                p.Photo 
+                p.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby 
             FROM ProblemsPost p
             INNER JOIN Users u ON p.SubjectId = u.SubjectId
             INNER JOIN Subject s ON p.SubjectId = s.Id

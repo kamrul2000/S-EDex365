@@ -173,7 +173,7 @@ namespace S_EDex365.API.Controllers
         {
             var problemPostDetails = await _problemsPost.GetAllUserAsync(userId);
             if (problemPostDetails.Count == 0)
-                return NotFound("No problem posts found for the specified user");
+                return Ok("No problem posts found for the specified user");
             return Ok(problemPostDetails);
         }
         [HttpGet("s/AllPendingPost/{userId}")]
@@ -181,7 +181,7 @@ namespace S_EDex365.API.Controllers
         {
             var problemPostDetails = await _problemsPost.GetPendingUserAsync(userId);
             if (problemPostDetails.Count == 0)
-                return NotFound("No problem posts found for the specified user");
+                return Ok("No problem posts found for the specified user");
             return Ok(problemPostDetails);
         }
         [HttpGet("s/AllSolutionsPost/{userId}")]
@@ -189,7 +189,7 @@ namespace S_EDex365.API.Controllers
         {
             var problemPostDetails = await _problemsPost.GetSolutionUserAsync(userId);
             if (problemPostDetails.Count == 0)
-                return NotFound("No problem posts found for the specified user");
+                return Ok("No problem posts found for the specified user");
             return Ok(problemPostDetails);
         }
 
@@ -199,7 +199,7 @@ namespace S_EDex365.API.Controllers
             var problemPostDetail = await _problemsPost.GetPostDetailsUserAsync(postId);
 
             if (problemPostDetail == null)
-                return NotFound("No problem post found for the specified user");
+                return Ok("No problem post found for the specified user");
 
             return Ok(problemPostDetail);
         }

@@ -8,5 +8,6 @@
         public string sClass { get; set; }
         public string Description { get; set; }
         public string Photo { get; set; }
+        public DateTime GetDateby { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace S_EDex365.API.Controllers
             var subjectDetails = await _teacherService.GetAllPostByUserAsync(userId);
 
             if (subjectDetails.Count == 0)
-                return NotFound();
+                return Ok();
 
             return Ok(subjectDetails);
         }

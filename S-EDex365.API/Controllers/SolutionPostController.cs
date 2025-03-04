@@ -21,7 +21,7 @@ namespace S_EDex365.API.Controllers
         {
             var subjectDetails = await _solutionPostService.GetAllSolutionAsync(postId);
             if (subjectDetails.Count == 0)
-                return NotFound();
+                return Ok();
             return Ok(subjectDetails);
         }
 
