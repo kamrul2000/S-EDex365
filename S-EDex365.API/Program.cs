@@ -30,6 +30,7 @@ builder.Services.AddScoped<ITeacherApprovalService, TeacherApprovalService>();
 builder.Services.AddScoped<IFirebaseNotificationService, FirebaseNotificationService>();
 builder.Services.AddScoped<ITeacherNotificationService, TeacherNotificationService>();
 builder.Services.AddScoped<IStudentDashBoard, StudentDashBoard>();
+builder.Services.AddScoped<IWalletService, WalletService>();
 
 
 
