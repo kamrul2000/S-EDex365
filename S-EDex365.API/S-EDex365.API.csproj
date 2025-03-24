@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\academicImage\" />
+    <Folder Include="wwwroot\cvFile\" />
     <Folder Include="wwwroot\profileImage\" />
     <Folder Include="wwwroot\solutionImage\" />
     <Folder Include="wwwroot\uploads\" />

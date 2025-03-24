@@ -12,5 +12,8 @@ namespace S_EDex365.API.Interfaces
             Task<UserResponseUpdate> UpdateUserAsync(UserDtoUpdate userDtoUpdate);
         Task<List<UserAllInformation>> GetAllUserInformationAsync(Guid userId);
         Task<bool> UpdatePasswordserAsync(Guid userId,string oldPassWord,string newPassword);
+        Task<bool> ForgotPasswordSendOTPAsync(ForgotPasswordSendOTP forgotPasswordSendOTP);
+        Task<bool> ForgotPasswordVerifyOTPAsync(ForgotPasswordUpdateOTP forgotPasswordUpdateOTP);
+        Task<bool> ForgotPasswordConfirmAsync(ForgotPasswordConfirm forgotPasswordConfirm);
     }
 }

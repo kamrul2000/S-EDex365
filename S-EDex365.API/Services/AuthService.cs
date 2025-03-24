@@ -180,8 +180,42 @@ namespace S_EDex365.API.Services
                         //if (userObj != null && userObj.Length > 0)
                         //    return false;
 
-                        var queryString = "insert into Users (id,name,mobileno,email,status,password,Dob,GetDateby,Updateby,UserTypeId,otp,Aproval) values ";
-                        queryString += "( @id,@name,@mobileno,@email,@status,@password,@Dob,@GetDateby,@Updateby,@UserTypeId,@otp,@Aproval)";
+                        string uniqueImageFileName = null;
+
+                        string uploadsFolder = Path.Combine(_environment.WebRootPath, "profileImage"); // Ensure that "uploads" directory exists
+                        uniqueImageFileName = Guid.NewGuid().ToString() + "_" + user.Image.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueImageFileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await user.Image.CopyToAsync(fileStream);
+                        }
+
+                        string uniqueAcademicImageFileName = null;
+
+                        string uploadsAcademicImageFolder = Path.Combine(_environment.WebRootPath, "academicImage"); // Ensure that "uploads" directory exists
+                        uniqueAcademicImageFileName = Guid.NewGuid().ToString() + "_" + user.AcademicImage.FileName;
+                        string filePathAcademicImage = Path.Combine(uploadsAcademicImageFolder, uniqueAcademicImageFileName);
+                        using (var fileStream = new FileStream(filePathAcademicImage, FileMode.Create))
+                        {
+                            await user.AcademicImage.CopyToAsync(fileStream);
+                        }
+
+                        string uniqueCvFileName = null;
+
+                        string uploadsCvFolder = Path.Combine(_environment.WebRootPath, "cvFile"); // Ensure that "uploads" directory exists
+                        uniqueCvFileName = Guid.NewGuid().ToString() + "_" + user.CV.FileName;
+                        string filePathCv = Path.Combine(uploadsCvFolder, uniqueCvFileName);
+                        using (var fileStream = new FileStream(filePathCv, FileMode.Create))
+                        {
+                            await user.CV.CopyToAsync(fileStream);
+                        }
+
+
+
+
+
+                        var queryString = "insert into Users (id,name,mobileno,email,status,password,Dob,GetDateby,Updateby,UserTypeId,otp,Aproval,cv,academicImage,image) values ";
+                        queryString += "( @id,@name,@mobileno,@email,@status,@password,@Dob,@GetDateby,@Updateby,@UserTypeId,@otp,@Aproval,@cv,@academicImage,@image)";
                         var parameters = new DynamicParameters();
                         var userId = Guid.NewGuid();
                         parameters.Add("id", userId, DbType.Guid);
@@ -198,8 +232,50 @@ namespace S_EDex365.API.Services
                         parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
                         parameters.Add("UserTypeId", roleId, DbType.Guid);
                         parameters.Add("Aproval", 0, DbType.Boolean);
+                        parameters.Add("cv", uniqueCvFileName, DbType.String);
+                        parameters.Add("academicImage", uniqueAcademicImageFileName, DbType.String);
+                        parameters.Add("image", uniqueImageFileName, DbType.String);
                         //parameters.Add("subjectId", subjectId, DbType.Guid);
                         var success = await connection.ExecuteAsync(queryString, parameters);
+
+                        //foreach (var item in user.Subject)
+                        //{
+                        //    // If no record exists, insert a new one
+                        //    string insertQuery = "INSERT INTO TeacherSkill (Id, UserId, SubjectId,GetDateby,Updateby) VALUES (@Id, @UserId, @SubjectId,@GetDateby,@Updateby)";
+                        //    SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
+                        //    Guid newId = Guid.NewGuid(); // Generate new ID for each row
+                        //    insertCommand.Parameters.AddWithValue("@Id", newId);
+                        //    insertCommand.Parameters.AddWithValue("@UserId", userId);
+                        //    insertCommand.Parameters.AddWithValue("@SubjectId", user.Subject);
+                        //    insertCommand.Parameters.AddWithValue("@GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                        //    insertCommand.Parameters.AddWithValue("@Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                        //    //await insertCommand.ExecuteNonQueryAsync();
+                        //    var successs = await connection.ExecuteAsync(insertQuery, insertCommand);
+                        //}
+
+
+                        foreach (var item in user.Subject)
+                        {
+                            string insertQuery = @"
+        INSERT INTO TeacherSkill (Id, UserId, SubjectId, GetDateby, Updateby) 
+        VALUES (@Id, @UserId, @SubjectId, @GetDateby, @Updateby)";
+
+                            Guid newId = Guid.NewGuid(); // Generate a new ID for each row
+
+                            var parameterss = new
+                            {
+                                Id = newId,
+                                UserId = userId,
+                                SubjectId = item, // Use the current subject ID
+                                GetDateby = DateTime.Now.ToString("yyyy-MM-dd"),
+                                Updateby = DateTime.Now.ToString("yyyy-MM-dd")
+                            };
+
+                            await connection.ExecuteAsync(insertQuery, parameterss);
+                        }
+
+
 
                         foreach (var item in user.Role)
                         {
@@ -221,6 +297,18 @@ namespace S_EDex365.API.Services
                                 client.DownloadString(url);
                             }
                         }
+
+
+                        string fullImageUrl = uniqueImageFileName != null
+                            ? $"https://4cd0cfsl-44395.inc1.devtunnels.ms/uploads/{uniqueImageFileName}"
+                            : null;
+                        string fullAcademicImageUrl = uniqueAcademicImageFileName != null
+                            ? $"https://4cd0cfsl-44395.inc1.devtunnels.ms/uploads/{uniqueAcademicImageFileName}"
+                            : null;
+                        string fullCvUrl = uniqueCvFileName != null
+                            ? $"https://4cd0cfsl-44395.inc1.devtunnels.ms/uploads/{uniqueCvFileName}"
+                            : null;
+
                         UserResponse userResponse = new UserResponse();
                         userResponse.Name = user.Name;
                         userResponse.MobileNo = user.MobileNo;
@@ -230,9 +318,12 @@ namespace S_EDex365.API.Services
                         userResponse.Dob = user.Dob;
                         //userResponse.School = user.School;
                         //userResponse.Class = user.Class;
-                        //userResponse.Subject = user.Subject;
+                        userResponse.Subject = user.Subject;
                         userResponse.Role = user.Role;
                         userResponse.Id = userId;
+                        userResponse.Image = fullImageUrl;
+                        userResponse.AcademicImage = fullAcademicImageUrl;
+                        userResponse.CV = fullCvUrl;
                         return userResponse;
                     }
                     else
@@ -463,6 +554,110 @@ namespace S_EDex365.API.Services
                     }
 
                     
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> ForgotPasswordSendOTPAsync(ForgotPasswordSendOTP forgotPasswordSendOTP)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    
+
+                    var query = "SELECT COUNT(1) FROM Users WHERE MobileNo = @MobileNo";
+                    var count = await connection.ExecuteScalarAsync<int>(query, new { MobileNo = forgotPasswordSendOTP.MobileNo });
+
+                    if (count > 0)
+                    {
+                        connection.Open();
+                        var random = new Random();
+                        var otp = random.Next(100000, 999999).ToString();
+
+                        var deviceQueryString = "update Users set OTP=@OTP where MobileNo=@MobileNo";
+                        var parameters = new DynamicParameters();
+                        parameters.Add("OTP", otp, DbType.String);
+                        parameters.Add("MobileNo", forgotPasswordSendOTP.MobileNo, DbType.String);
+                        var success = await connection.ExecuteAsync(deviceQueryString, parameters);
+                        if (success > 0)
+                        {
+
+                            using (WebClient client = new WebClient())
+                            {
+                                var domain = "https://";
+                                var message = "Edex365 Forgot Password OTP Number is " + otp + " ";
+                                string url = "" + domain + "bulksmsbd.net/api/smsapi?api_key=AQVhdExRIVugmhs0fsNE&type=text&number=" + forgotPasswordSendOTP.MobileNo + "&senderid=8809617620256&message=" + message + "";
+                                client.DownloadString(url);
+                            }
+                        }
+                        return true;
+
+                    }
+                    
+                    return false;
+
+
+
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> ForgotPasswordVerifyOTPAsync(ForgotPasswordUpdateOTP forgotPasswordUpdateOTP)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+
+
+                    var query = "SELECT OTP FROM Users WHERE MobileNo = @MobileNo";
+                    var OTP = await connection.ExecuteScalarAsync<string>(query, new { MobileNo = forgotPasswordUpdateOTP.MobileNo });
+
+                    if (OTP== forgotPasswordUpdateOTP.OTP)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> ForgotPasswordConfirmAsync(ForgotPasswordConfirm forgotPasswordConfirm)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+
+
+
+                        var deviceQueryString = "update Users set Password=@Password where MobileNo=@MobileNo";
+                        var parameters = new DynamicParameters();
+                        parameters.Add("Password", forgotPasswordConfirm.Password, DbType.String);
+                        parameters.Add("MobileNo", forgotPasswordConfirm.MobileNo, DbType.String);
+                        var success = await connection.ExecuteAsync(deviceQueryString, parameters);
+                    if (success > 0)
+                    {
+                        return true;
+                    }
+
+                    return false;
+
 
 
                 }

@@ -30,7 +30,8 @@ namespace S_EDex365.API.Controllers
         }
         [Route("s/Signup")]
         [HttpPost]
-        public async Task<ActionResult<UserResponse>> Signup([FromBody] UserDto userDto)
+        //public async Task<ActionResult<UserResponse>> Signup([FromBody] UserDto userDto)
+            public async Task<ActionResult<UserResponse>> Signup([FromForm] UserDto userDto)
         {
             var signupDetails=await _authService.InsertUserAsync(userDto);
             var result = new
@@ -70,6 +71,33 @@ namespace S_EDex365.API.Controllers
             if (!result) // If false, return NotFound
                 return NotFound("Password isn't updated. Old password is incorrect.");
             return Ok("PassWord is Update....");
+        }
+        [HttpPut("s/ForgotPasswordSendOTP")]
+        public async Task<ActionResult> ForgotPasswordSendOTP(ForgotPasswordSendOTP forgotPasswordSendOTP)
+        {
+            var result = await _authService.ForgotPasswordSendOTPAsync(forgotPasswordSendOTP);
+            if (!result)
+                return NotFound(new { message = "Phone Number is not Correct..." });
+
+            return Ok(new { message = "Success" });
+        }
+        [HttpPut("s/ForgotPasswordVerifyOTP")]
+        public async Task<ActionResult> ForgotPasswordVerifyOTP(ForgotPasswordUpdateOTP forgotPasswordUpdateOTP)
+        {
+            var result = await _authService.ForgotPasswordVerifyOTPAsync(forgotPasswordUpdateOTP);
+            if (!result)
+                return NotFound(new { message = "OTP is not Correct..." });
+
+            return Ok(new { message = "Success" });
+        }
+        [HttpPut("s/ForgotPasswordConfirm")]
+        public async Task<ActionResult> ForgotPasswordConfirm(ForgotPasswordConfirm forgotPasswordConfirm)
+        {
+            var result = await _authService.ForgotPasswordConfirmAsync(forgotPasswordConfirm);
+            if (!result)
+                return NotFound(new { message = "Faild..." });
+
+            return Ok(new { message = "Success" });
         }
 
         [HttpGet("GetServerDateTime")]
