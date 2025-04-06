@@ -28,19 +28,51 @@ namespace S_EDex365.API.Controllers
 
             return BadRequest(new { Ok = false, Message = "Username and Password does not march" });
         }
+        //[Route("s/Signup")]
+        //[HttpPost]
+        ////public async Task<ActionResult<UserResponse>> Signup([FromBody] UserDto userDto)
+        //    public async Task<ActionResult<UserResponse>> Signup([FromForm] UserDto userDto)
+        //{
+        //    var signupDetails=await _authService.InsertUserAsync(userDto);
+        //    var result = new
+        //    {
+        //        Message = "Successfully Submit",
+        //        signupDetails= signupDetails
+        //    };
+        //    return Ok(result);
+        //}
+
         [Route("s/Signup")]
         [HttpPost]
-        //public async Task<ActionResult<UserResponse>> Signup([FromBody] UserDto userDto)
-            public async Task<ActionResult<UserResponse>> Signup([FromForm] UserDto userDto)
+        public async Task<ActionResult<UserResponse>> Signup([FromForm] UserDto userDto)
         {
-            var signupDetails=await _authService.InsertUserAsync(userDto);
-            var result = new
+            if (userDto == null)
             {
-                Message = "Successfully Submit",
-                signupDetails= signupDetails
-            };
-            return Ok(result);
+                return BadRequest(new { Message = "Invalid request data" });
+            }
+
+            try
+            {
+                var signupDetails = await _authService.InsertUserAsync(userDto);
+                if (signupDetails == null)
+                {
+                    return BadRequest(new { Message = "Signup failed. User might already exist." });
+                }
+
+                var result = new
+                {
+                    Message = "Successfully Submitted",
+                    SignupDetails = signupDetails
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred", Error = ex.Message });
+            }
         }
+
 
         [Route("s/Update")]
         [HttpPut]

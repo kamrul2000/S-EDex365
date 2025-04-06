@@ -294,19 +294,19 @@ namespace S_EDex365.API.Services
                                 var domain = "https://";
                                 var message = "Edex365 OTP Number is " + otp + " ";
                                 string url = "" + domain + "bulksmsbd.net/api/smsapi?api_key=AQVhdExRIVugmhs0fsNE&type=text&number=" + user.MobileNo + "&senderid=8809617620256&message=" + message + "";
-                                client.DownloadString(url);
+                                //client.DownloadString(url);
                             }
                         }
 
 
                         string fullImageUrl = uniqueImageFileName != null
-                            ? $"https://4cd0cfsl-44395.inc1.devtunnels.ms/uploads/{uniqueImageFileName}"
+                            ? $"https://r0gbkh57-44395.inc1.devtunnels.ms/profileImage/{uniqueImageFileName}"
                             : null;
                         string fullAcademicImageUrl = uniqueAcademicImageFileName != null
-                            ? $"https://4cd0cfsl-44395.inc1.devtunnels.ms/uploads/{uniqueAcademicImageFileName}"
+                            ? $"https://r0gbkh57-44395.inc1.devtunnels.ms/academicImage/{uniqueAcademicImageFileName}"
                             : null;
                         string fullCvUrl = uniqueCvFileName != null
-                            ? $"https://4cd0cfsl-44395.inc1.devtunnels.ms/uploads/{uniqueCvFileName}"
+                            ? $"https://r0gbkh57-44395.inc1.devtunnels.ms/cvFile/{uniqueCvFileName}"
                             : null;
 
                         UserResponse userResponse = new UserResponse();

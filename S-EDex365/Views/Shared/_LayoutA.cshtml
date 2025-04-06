@@ -16,6 +16,26 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.5/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+    <style>
+        /* Minimized sidebar style */
+        .aside-menu.minimized {
+            width: 50px; /* Sidebar stays visible but smaller */
+            transition: width 0.3s ease;
+        }
+
+            /* Only hide menu links/content, not the whole sidebar */
+            .aside-menu.minimized .menu-content {
+                display: none;
+            }
+
+            /* Optional: hide link text but show icons (if using icons) */
+            .aside-menu.minimized .menu-link-text {
+                display: none;
+            }
+
+
+    </style>
 </head>
 <body>
     <div class="preLoader"></div>
@@ -126,5 +146,13 @@
     <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" asp-append-version="true"></script>
     @*    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" asp-append-version="true"></script>*@
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        
+        $(document).ready(function () {
+            $('[data-toggle="aside-menu"]').on('click', function () {
+                $('.aside-menu').toggleClass('minimized');
+            });
+        });
+    </script>
 </body>
 </html>

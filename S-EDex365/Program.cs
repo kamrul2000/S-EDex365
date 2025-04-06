@@ -18,6 +18,7 @@ builder.Services.AddScoped<IUserVMService, UserVMService>();
 builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
 builder.Services.AddScoped<IStudentDashboardService, StudentDashboardService>();
 builder.Services.AddScoped<IContactMeService, ContactMeService>();
+builder.Services.AddScoped<IPostTypeService, PostTypeService>();
 
 
 

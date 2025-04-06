@@ -29,6 +29,7 @@
     --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace
 }
 
+
 *, :after, :before {
     box-sizing: border-box
 }
@@ -19443,7 +19444,7 @@ iframe {
         }
 
 .app-aside-dark .stacked-menu > .menu > .menu-item.has-active > .menu-link {
-    background-color: hsla(0,0%,100%,.025)
+    background-color: #28a745
 }
 
 .app-aside-dark .stacked-menu > .menu > .menu-item > .menu-link {
