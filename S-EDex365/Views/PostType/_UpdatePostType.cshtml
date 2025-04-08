@@ -1,0 +1,64 @@
+﻿@model S_EDex365.Model.Model.PostType
+
+<div class="col-12 mt-2 mt-3">
+    <input hidden id="postTypeId" value="@Model.Id" />
+    <div class="form-group">
+        <label> Name</label>
+        <input type="text" name="name" class="form-control" value="@Model.Name" id="name" placeholder="Enter Post Type Name....">
+    </div>
+</div>
+<div class="col-12 mt-2">
+    <div class="form-group">
+        <label for="status">Status</label><br />
+        <input name="statusId" type="checkbox" id="statusId" />
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <button id="submitBtn" class="btn btn-primary form-control">Submit</button>
+</div>
+<div class="col-12 mt-2 mb-3">
+    <button id="closeBtn" class="btn btn-warning form-control">Closed</button>
+</div>
+
+<script>
+
+    if ('@Model.Status' == 'True') {
+        $("#statusId").attr('checked', 'checked')
+    }
+    $("#submitBtn").click(function () {
+        var statusValue = false;
+        if ($("#statusId").is(':checked')) {
+            statusValue = true;
+        }
+        var data = {
+            id: $("#postTypeId").val(),
+            Name: $("#name").val(),
+            status: statusValue
+        };
+
+        $.ajax({
+            url: "/PostType/UpdatePostTypePartail",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.result == true) {
+                    $("#modalContent").html('');
+                    $('#myModal').modal('hide');
+                    dataTable.ajax.reload();
+                    toastr.success("Successfully  Updated")
+                }
+                else {
+                    toastr.error("Something went wrong")
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+    $("#closeBtn").click(function () {
+        $('#myModal').modal('hide');
+    });
+</script>

@@ -2,6 +2,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutA.cshtml";
 }
+
 <div class="content-wrapper">
     <span class="d-none" id="messageBox"></span>
     <br />
@@ -17,11 +18,11 @@
         <div class="col-12 row">
 
             <div class="col-md-2 mt-2">
-                <button type="button" id="addBtn" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" id="addBtn" class="btn form-control" style="background-color: green; color: white;"><i class="fa fa-plus"></i> Add</button>
             </div>
         </div>
         <div class="col-12 mt-2 table-responsive">
-            <table id="tblData" class="table table-striped table-bordered" style="width:100%">
+            <table id="tblData" class="table table-striped table-bordered" style="width:100%;">
                 <thead class="thead-light">
                     <tr class="table-info">
                         <th>SL</th>
@@ -99,7 +100,6 @@
                             return `<div class="text-center">
                                                         <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
                                                         <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
-                                                        <button type="button" class="btn btn-primary permissionBtn" data-id="${data}" ><i class="fas fa-plus"></i></button>
                                                     </div>`;
                         }, "width": "30%"
                     }
@@ -117,7 +117,7 @@
                 url: "/PostType/UpdatePostType",
                 type: "GET",
                 data: {
-                    serviceId: $(this).attr("data-id")
+                    postTypeId: $(this).attr("data-id")
                 },
                 success: function (response) {
                     $("#modalContent").html(response);
@@ -128,6 +128,24 @@
             });
             $('#myModal').modal('show');
         });
+
+        // $(document).on('click', '.modalBtn', function () {
+        //     var postTypeId = $(this).data("id");  // Get the correct data-id (postTypeId)
+
+        //     $.ajax({
+        //         url: "/PostType/UpdatePostType",
+        //         type: "GET",
+        //         data: { serviceId: postTypeId },  // Pass the correct serviceId (postTypeId)
+        //         success: function (response) {
+        //             $("#modalContent").html(response); // Load the partial view into the modal
+        //         },
+        //         error: function (er) {
+        //             alert("Error: " + er);
+        //         }
+        //     });
+
+        //     $('#myModal').modal('show');
+        // });
 
         
         $(document).on('click', '#addBtn', function () {
@@ -165,7 +183,7 @@
                         });
                         dataTable.ajax.reload();
                     }).fail(function (xhr) {
-                        toastr.error("Role Can Not Delete");
+                        toastr.error("Post Type Can Not Delete");
                     })
                 }
             })

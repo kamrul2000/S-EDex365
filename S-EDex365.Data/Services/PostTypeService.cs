@@ -32,10 +32,29 @@ namespace S_EDex365.Data.Services
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var queryString = "select id,name,(case when status=1 then 'Active' else 'InActive' end) StatusName from PostType where name<>'Super Admin' and name<> 'Admin' order by name  ";
+                    var queryString = "select id,name,status,(case when status=1 then 'Active' else 'InActive' end) StatusName from PostType order by name  ";
                     var query = string.Format(queryString);
                     var roleList = await connection.QueryAsync<PostType>(query);
                     return roleList.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<PostType> GetPostTypeByIdAsync(Guid postTypeId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var queryString = "select * from PostType where id='{0}' order by name  ";
+                    var query = string.Format(queryString, postTypeId);
+                    var postType = await connection.QueryFirstOrDefaultAsync<PostType>(query);
+                    return postType;
                 }
             }
             catch (Exception ex)
@@ -62,7 +81,7 @@ namespace S_EDex365.Data.Services
                     var parameters = new DynamicParameters();
                     parameters.Add("id", Guid.NewGuid().ToString(), DbType.String);
                     parameters.Add("name", postType.Name, DbType.String);
-                    parameters.Add("status", 1, DbType.Boolean);
+                    parameters.Add("status", postType.Status, DbType.Int32);
                     parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"), DbType.String);
                     parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"), DbType.String);
                     var success = await connection.ExecuteAsync(queryString, parameters);
@@ -79,9 +98,31 @@ namespace S_EDex365.Data.Services
             }
         }
 
-        public Task<bool> UpdatePostTypeAsync(PostType postType)
+        public async Task<bool> UpdatePostTypeAsync(PostType postType)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var queryString = "update PostType set name=@name,status=@status where id=@id";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("name", postType.Name, DbType.String);
+                    parameters.Add("status", postType.Status, DbType.Int32);
+                    parameters.Add("id", postType.Id.ToString(), DbType.String);
+                    var success = await connection.ExecuteAsync(queryString, parameters);
+                    if (success > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

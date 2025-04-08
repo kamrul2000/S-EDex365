@@ -6,8 +6,10 @@
 </div>
 <div class="col-12 mt-2">
     <div class="form-group">
-        <label> Status</label>
-        <input type="checkbox" checked class="form-control" id="status">
+        @* <label> Status</label>
+        <input type="checkbox" checked class="form-control" id="status"> *@
+        <label for="status">Status</label><br />
+        <input type="checkbox" id="status" />
     </div>
 </div>
 
@@ -20,10 +22,17 @@
 
 <script>
     $("#submitBtn").click(function () {
-        var data = {
-            Name: $("#name").val(),
-            status: 1
-        };
+        // var data = {
+        //     Name: $("#name").val(),
+        //     status: 1
+        // };
+        
+            var data = {
+                Name: $("#name").val(),
+                status: $("#status").prop("checked") ? 1 : 0
+            };
+
+            console.log(data); 
 
         $.ajax({
             url: "/PostType/InsertPostType",
@@ -37,7 +46,7 @@
                     toastr.success("Successfully  Created")
                 }
                 else {
-                    toastr.error("Something went wrong")
+                    toastr.error("This Name is available")
                 }
             },
             error: function (er) {

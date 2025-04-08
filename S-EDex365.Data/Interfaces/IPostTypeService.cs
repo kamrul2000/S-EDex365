@@ -11,6 +11,7 @@ namespace S_EDex365.Data.Interfaces
     {
         Task<List<PostType>> GetAllPostTypeAsync();
         Task<bool> InsertPostTypeAsync(PostType postType);
+        Task<PostType> GetPostTypeByIdAsync(Guid postTypeId);
         Task<bool> UpdatePostTypeAsync(PostType postType);
         Task<bool> DeletePostTypeAsync(PostType postType);
     }

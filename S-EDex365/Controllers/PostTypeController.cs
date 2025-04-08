@@ -40,5 +40,24 @@ namespace S_EDex365.Controllers
             }
 
         }
+        public async Task<IActionResult> UpdatePostType(Guid postTypeId)
+        {
+            var serviceAndPart = await _postTypeService.GetPostTypeByIdAsync(postTypeId);
+            return PartialView("_UpdatePostType", serviceAndPart);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePostTypePartail(PostType model)
+        {
+            try
+            {
+                var success = await _postTypeService.UpdatePostTypeAsync(model);
+                return Json(new { result = success });
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
