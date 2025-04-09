@@ -13,6 +13,6 @@ namespace S_EDex365.Data.Interfaces
         Task<bool> InsertPostTypeAsync(PostType postType);
         Task<PostType> GetPostTypeByIdAsync(Guid postTypeId);
         Task<bool> UpdatePostTypeAsync(PostType postType);
-        Task<bool> DeletePostTypeAsync(PostType postType);
+        Task<bool> DeletePostTypeAsync(Guid postTypeId);
     }
 }

@@ -59,5 +59,18 @@ namespace S_EDex365.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> DeletePostType(Guid postTypeId)
+        {
+            try
+            {
+                var result = await _postTypeService.DeletePostTypeAsync(postTypeId);
+                return Json(new { result });
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

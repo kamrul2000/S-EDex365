@@ -27,14 +27,15 @@
         $("#statusId").attr('checked', 'checked')
     }
     $("#submitBtn").click(function () {
-        var statusValue = false;
-        if ($("#statusId").is(':checked')) {
-            statusValue = true;
-        }
+        // var statusValue = false;
+        // if ($("#statusId").is(':checked')) {
+        //     statusValue = true;
+        // }
+        
         var data = {
             id: $("#postTypeId").val(),
             Name: $("#name").val(),
-            status: statusValue
+            status: $("#statusId").prop("checked") ? 1 : 0
         };
 
         $.ajax({

@@ -12,24 +12,24 @@ using System.Threading.Tasks;
 
 namespace S_EDex365.Data.Services
 {
-    public class PostTypeService : IPostTypeService
+    public class PostTypeDetailsService : IPostTypeDetailsService
     {
         private readonly string _connectionString;
-        public PostTypeService(IConfiguration configuration)
+        public PostTypeDetailsService(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException(nameof(_connectionString));
         }
-        public async Task<bool> DeletePostTypeAsync(Guid postTypeId)
+        public async Task<bool> DeletePostTypeDetailsAsync(Guid postTypeDetailsId)
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var queryString = "delete from PostType where id=@id";
+                    var queryString = "delete from PostTypeDetails where id=@id";
                     var parameters = new DynamicParameters();
-                    parameters.Add("id", postTypeId.ToString(), DbType.String);
+                    parameters.Add("id", postTypeDetailsId.ToString(), DbType.String);
                     var success = await connection.ExecuteAsync(queryString, parameters);
                     if (success > 0)
                     {
@@ -51,10 +51,10 @@ namespace S_EDex365.Data.Services
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var queryString = "select id,name,status,(case when status=1 then 'Active' else 'InActive' end) StatusName from PostType order by name  ";
+                    var queryString = "select id,name from PostType order by name  ";
                     var query = string.Format(queryString);
-                    var roleList = await connection.QueryAsync<PostType>(query);
-                    return roleList.ToList();
+                    var detailsList = await connection.QueryAsync<PostType>(query);
+                    return detailsList.ToList();
                 }
             }
             catch (Exception ex)
@@ -63,17 +63,17 @@ namespace S_EDex365.Data.Services
             }
         }
 
-        public async Task<PostType> GetPostTypeByIdAsync(Guid postTypeId)
+        public async Task<List<PostTypeDetails>> GetAllPostTypeDetailsAsync()
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var queryString = "select * from PostType where id='{0}' order by name  ";
-                    var query = string.Format(queryString, postTypeId);
-                    var postType = await connection.QueryFirstOrDefaultAsync<PostType>(query);
-                    return postType;
+                    var queryString = "select id,name,status,(case when status=1 then 'Active' else 'InActive' end) StatusName from PostTypeDetails order by name  ";
+                    var query = string.Format(queryString);
+                    var detailsList = await connection.QueryAsync<PostTypeDetails>(query);
+                    return detailsList.ToList();
                 }
             }
             catch (Exception ex)
@@ -82,7 +82,26 @@ namespace S_EDex365.Data.Services
             }
         }
 
-        public async Task<bool> InsertPostTypeAsync(PostType postType)
+        public async Task<PostTypeDetails> GetPostTypeDetailsByIdAsync(Guid postTypeDetailsId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var queryString = "select * from PostTypeDetails where id='{0}' order by name  ";
+                    var query = string.Format(queryString, postTypeDetailsId);
+                    var postTypeDetails = await connection.QueryFirstOrDefaultAsync<PostTypeDetails>(query);
+                    return postTypeDetails;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> InsertPostTypeDetailsAsync(PostTypeDetails postTypeDetails)
         {
             try
             {
@@ -90,17 +109,18 @@ namespace S_EDex365.Data.Services
                 {
                     connection.Open();
 
-                    var queryString = "select name from PostType where lower(name)='{0}' ";
-                    var query = string.Format(queryString, postType.Name.ToLower());
+                    var queryString = "select name from PostTypeDetails where lower(name)='{0}' ";
+                    var query = string.Format(queryString, postTypeDetails.Name.ToLower());
                     var roleObj = await connection.QueryFirstOrDefaultAsync<string>(query);
                     if (roleObj != null && roleObj.Length > 0)
                         return false;
-                    queryString = "insert into PostType (id,name,status,GetDateby,Updateby) values ";
-                    queryString += "( @id,@name,@status,@GetDateby,@Updateby)";
+                    queryString = "insert into PostTypeDetails (id,name,PostTypeId,status,GetDateby,Updateby) values ";
+                    queryString += "( @id,@name,@PostTypeId,@status,@GetDateby,@Updateby)";
                     var parameters = new DynamicParameters();
-                    parameters.Add("id", Guid.NewGuid().ToString(), DbType.String);
-                    parameters.Add("name", postType.Name, DbType.String);
-                    parameters.Add("status", postType.Status, DbType.Int32);
+                    parameters.Add("id", Guid.NewGuid(), DbType.Guid);
+                    parameters.Add("name", postTypeDetails.Name, DbType.String);
+                    parameters.Add("PostTypeId", postTypeDetails.PostTypeId, DbType.Guid);
+                    parameters.Add("status", postTypeDetails.Status, DbType.Int32);
                     parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"), DbType.String);
                     parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"), DbType.String);
                     var success = await connection.ExecuteAsync(queryString, parameters);
@@ -117,7 +137,7 @@ namespace S_EDex365.Data.Services
             }
         }
 
-        public async Task<bool> UpdatePostTypeAsync(PostType postType)
+        public async Task<bool> UpdatePostTypeDetailsAsync(PostTypeDetails postTypeDetails)
         {
             try
             {
@@ -125,11 +145,12 @@ namespace S_EDex365.Data.Services
                 {
                     connection.Open();
 
-                    var queryString = "update PostType set name=@name,status=@status where id=@id";
+                    var queryString = "update PostTypeDetails set name=@name,status=@status,PostTypeId=@PostTypeId where id=@id";
                     var parameters = new DynamicParameters();
-                    parameters.Add("name", postType.Name, DbType.String);
-                    parameters.Add("status", postType.Status, DbType.Int32);
-                    parameters.Add("id", postType.Id.ToString(), DbType.String);
+                    parameters.Add("name", postTypeDetails.Name, DbType.String);
+                    parameters.Add("status", postTypeDetails.Status, DbType.Int32);
+                    parameters.Add("id", postTypeDetails.Id.ToString(), DbType.String);
+                    parameters.Add("PostTypeId", postTypeDetails.PostTypeId.ToString(), DbType.String);
                     var success = await connection.ExecuteAsync(queryString, parameters);
                     if (success > 0)
                     {

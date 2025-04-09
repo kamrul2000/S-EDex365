@@ -1,14 +1,16 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutA.cshtml";
 }
+
 
 <div class="content-wrapper">
     <span class="d-none" id="messageBox"></span>
     <br />
     <div class="row">
         <div class="col-12">
-            <h2 class="text-primary text-center">Post Type List</h2>
+            <h2 class="text-primary text-center">Post Type Details List</h2>
         </div>
     </div>
 
@@ -27,6 +29,7 @@
                     <tr class="table-info">
                         <th>SL</th>
                         <th>Name</th>
+                        <th>D. Name</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -83,7 +86,7 @@
         function loadDataTable() {
             dataTable = $("#tblData").DataTable({
                 "ajax": {
-                    "url": "/PostType/GetAllPostType"
+                    "url": "/PostTypeDetails/GetAllPostTypeDetails"
                 },
                 "columns": [
                     {
@@ -92,16 +95,17 @@
                             return meta.row + 1;
                         }
                     },
-                    { "data": "name", "width": "40%" },
+                    { "data": "name", "width": "30%" },
+                    { "data": "d.name", "width": "30%" },
                     { "data": "statusName", "width": "20%" },
                     {
                         "data": "id",
                         "render": function (data) {
                             return `<div class="text-center">
-                                                        <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
-                                                    </div>`;
-                        }, "width": "30%"
+                                                                <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
+                                                                <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
+                                                            </div>`;
+                        }, "width": "20%"
                     }
                 ]
             });
@@ -114,10 +118,10 @@
 
         $(document).on('click', '.modalBtn', function () {
             $.ajax({
-                url: "/PostType/UpdatePostType",
+                url: "/PostTypeDetails/UpdatePostTypeDetails",
                 type: "GET",
                 data: {
-                    postTypeId: $(this).attr("data-id")
+                    postTypeDetailsId: $(this).attr("data-id")
                 },
                 success: function (response) {
                     $("#modalContent").html(response);
@@ -147,10 +151,10 @@
         //     $('#myModal').modal('show');
         // });
 
-        
+
         $(document).on('click', '#addBtn', function () {
             $.ajax({
-                url: "/PostType/AddPostType",
+                url: "/PostTypeDetails/AddPostTypeDetails",
                 type: "GET",
                 success: function (response) {
                     $("#addContent").html(response);
@@ -172,10 +176,10 @@
             }).then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url: '@Url.Action("DeletePostType", "PostType")',
+                        url: '@Url.Action("DeletePostTypeDetails", "PostTypeDetails")',
                         type: "POST",
                         data: {
-                            postTypeId: $(this).attr("data-id")
+                            postTypeDetailsId: $(this).attr("data-id")
                         }
                     }).done(function (response) {
                         swal("Successfully Deleted", {
@@ -190,3 +194,4 @@
         });
     </script>
 }
+
