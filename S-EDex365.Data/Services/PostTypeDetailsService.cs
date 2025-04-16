@@ -70,7 +70,7 @@ namespace S_EDex365.Data.Services
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var queryString = "select id,name,status,(case when status=1 then 'Active' else 'InActive' end) StatusName from PostTypeDetails order by name  ";
+                    var queryString = "select t1.id,t2.Name as d_name,t1.name,t1.status,(case when t1.status=1 then 'Active' else 'InActive' end) StatusName from PostTypeDetails t1 Join PostType t2 on t1.PostTypeId=t2.Id order by t1.name  ";
                     var query = string.Format(queryString);
                     var detailsList = await connection.QueryAsync<PostTypeDetails>(query);
                     return detailsList.ToList();
