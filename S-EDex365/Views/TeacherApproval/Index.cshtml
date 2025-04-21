@@ -70,10 +70,27 @@
     </div>
 </div>
 
+<div class="modal fade" id="academicImageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img id="modalAcademicImage" src="" class="img-fluid rounded" alt="Academic Image" />
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 @section Scripts {
     <script>
+        $(document).on("click", ".academic-img-click", function () {
+            var fullSrc = $(this).data("fullsrc");
+            $("#modalAcademicImage").attr("src", fullSrc);
+            $("#academicImageModal").modal("show");
+        });
+
+
         var dataTable;
         $(document).ready(function () {
             loadDataTable();
@@ -99,7 +116,7 @@
                     { "data": "name", "width": "20%" },
                     { "data": "mobileNo", "width": "10%" },
                     { "data": "email", "width": "10%" },
-                    // { "data": "image", "width": "10%" },
+                    //new
                     {
                         "data": "image",
                         "render": function (data) {
@@ -129,14 +146,84 @@
                         "render": function (data) {
                             if (data) {
                                 return `<a href="https://api.edex365.com/cvFile/${data}" class="btn btn-outline-primary btn-sm" download>
-                                <i class="fa-solid fa-download"></i> Download
-                            </a>`;
+                                        <i class="fa-solid fa-download"></i> Download
+                                    </a>`;
                             } else {
                                 return 'No CV';
                             }
                         },
                         "width": "10%"
                     },
+                    //End
+
+
+
+
+                    // { "data": "image", "width": "10%" },
+
+                    //old
+
+                    // {
+                    //     "data": "image",
+                    //     "render": function (data) {
+                    //         if (data) {
+                    //             return `
+                    //                     <img src="https://4kxjq0c9-44395.asse.devtunnels.ms/profileImage/${data}"
+                    //                  alt="Image"
+                    //                  width="50"
+                    //                  height="50"
+                    //                  class="img-thumbnail academic-img-click"
+                    //                  style="object-fit: cover; cursor: pointer;"
+                    //                          data-fullsrc="https://4kxjq0c9-44395.asse.devtunnels.ms/profileImage/${data}" />
+                    //         `;
+                    //         } else {
+                    //             return '<span class="text-muted">No Image</span>';
+                    //         }
+                    //     },
+                    //     "width": "10%"
+                    // },
+                    // {
+                    //     "data": "academicImage",
+                    //     "render": function (data) {
+                    //         if (data) {
+                    //             return `
+                    //     <img src="https://4kxjq0c9-44395.asse.devtunnels.ms/academicImage/${data}"
+                    //          alt="Image"
+                    //          width="50"
+                    //          height="50"
+                    //          class="img-thumbnail academic-img-click"
+                    //          style="object-fit: cover; cursor: pointer;"
+                    //          data-fullsrc="https://4kxjq0c9-44395.asse.devtunnels.ms/academicImage/${data}" />
+                    // `;
+                    //         } else {
+                    //             return '<span class="text-muted">No Image</span>';
+                    //         }
+                    //     },
+                    //     "width": "10%"
+                    // },
+                    // {
+                    //     "data": "cv",
+                    //     "render": function (data) {
+                    //         if (data) {
+                    //             return `
+                    //     <a href="https://4kxjq0c9-44395.asse.devtunnels.ms/cvFile/${data}"
+                    //        class="btn btn-outline-primary btn-sm"
+                    //        target="_blank"
+                    //        rel="noopener"
+                    //        style="white-space: nowrap;">
+                    //         <i class="fa-solid fa-download"></i> Download
+                    //     </a>
+                    // `;
+                    //         } else {
+                    //             return '<span class="text-muted">No CV</span>';
+                    //         }
+                    //     },
+                    //     "width": "10%"
+                    // },
+
+
+                    //old end
+
                     { "data": "subjectNames", "width": "10%" },
                     {
                         "data": "id",

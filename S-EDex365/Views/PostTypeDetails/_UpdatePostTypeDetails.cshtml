@@ -1,7 +1,15 @@
-﻿@model S_EDex365.Model.Model.PostType
+﻿@model S_EDex365.Model.Model.PostTypeDetails
 
 <div class="col-12 mt-2 mt-3">
     <input hidden id="postTypeId" value="@Model.Id" />
+    <div class="form-group">
+        <label>DName</label>
+        <select asp-for="PostTypeId" asp-items="ViewBag.PostTypeDetailsList" class="form-control" required>
+            <option disabled value="">--Select Types--</option>
+        </select>
+    </div>
+</div>
+<div class="col-12 mt-2 mt-3">
     <div class="form-group">
         <label> Name</label>
         <input type="text" name="name" class="form-control" value="@Model.Name" id="name" placeholder="Enter Post Type Name....">
@@ -35,11 +43,12 @@
         var data = {
             id: $("#postTypeId").val(),
             Name: $("#name").val(),
+            PostTypeId: $("#PostTypeId").val(),
             status: $("#statusId").prop("checked") ? 1 : 0
         };
 
         $.ajax({
-            url: "/PostType/UpdatePostTypePartail",
+            url: "/PostTypeDetails/UpdatePostTypeDetailsPartail",
             type: "POST",
             data: data,
             success: function (response) {

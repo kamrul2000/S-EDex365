@@ -49,8 +49,16 @@ namespace S_EDex365.Controllers
         }
         public async Task<IActionResult> UpdatePostTypeDetails(Guid postTypeDetailsId)
         {
+            
             var serviceAndPart = await _postTypeDetailsService.GetPostTypeDetailsByIdAsync(postTypeDetailsId);
-            return PartialView("_UpdatePostType", serviceAndPart);
+            var postTypedetailsList = await _postTypeDetailsService.GetAllPostTypeAsync();
+            ViewBag.PostTypeDetailsList = postTypedetailsList.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = x.Id == serviceAndPart.PostTypeId
+            });
+            return PartialView("_UpdatePostTypeDetails", serviceAndPart);
         }
 
         [HttpPost]

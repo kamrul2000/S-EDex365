@@ -300,13 +300,13 @@ namespace S_EDex365.API.Services
 
 
                         string fullImageUrl = uniqueImageFileName != null
-                            ? $"https://r0gbkh57-44395.inc1.devtunnels.ms/profileImage/{uniqueImageFileName}"
+                            ? $"https://4kxjq0c9-19090.asse.devtunnels.ms/profileImage/{uniqueImageFileName}"
                             : null;
                         string fullAcademicImageUrl = uniqueAcademicImageFileName != null
-                            ? $"https://r0gbkh57-44395.inc1.devtunnels.ms/academicImage/{uniqueAcademicImageFileName}"
+                            ? $"https://4kxjq0c9-19090.asse.devtunnels.ms/academicImage/{uniqueAcademicImageFileName}"
                             : null;
                         string fullCvUrl = uniqueCvFileName != null
-                            ? $"https://r0gbkh57-44395.inc1.devtunnels.ms/cvFile/{uniqueCvFileName}"
+                            ? $"https://4kxjq0c9-19090.asse.devtunnels.ms/cvFile/{uniqueCvFileName}"
                             : null;
 
                         UserResponse userResponse = new UserResponse();

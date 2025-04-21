@@ -33,7 +33,7 @@ namespace S_EDex365.Data.Services
                     var Id = await connection.QueryFirstOrDefaultAsync<Guid>(query1);
 
                     //var queryString = @"select Id,Name,MobileNo,Email from Users where Aproval=0 and UserTypeId='"+Id+"'";
-                    var queryString = @"SELECT t1.Id, t1.Name, t1.MobileNo, t1.Email, STUFF(( SELECT ',' + s.SubjectName FROM TeacherSkill t2 JOIN Subject s ON t2.SubjectId = s.Id WHERE t2.UserId = t1.Id FOR XML PATH(''), TYPE ).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS SubjectNames, t1.Image, t1.AcademicImage, t1.CV FROM Users t1 WHERE t1.Aproval = 0 AND t1.UserTypeId = '"+ Id +"' GROUP BY t1.Id, t1.Name, t1.MobileNo, t1.Email, t1.Image, t1.AcademicImage, t1.CV";
+                    var queryString = @"SELECT t1.Id, t1.Name, t1.MobileNo, t1.Email, STUFF(( SELECT ',' + s.SubjectName FROM TeacherSkill t2 JOIN Subject s ON t2.SubjectId = s.Id WHERE t2.UserId = t1.Id FOR XML PATH(''), TYPE ).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS SubjectNames, t1.Image, t1.AcademicImage, t1.CV FROM Users t1 WHERE t1.Aproval = 0 AND t1.UserTypeId = '" + Id + "' GROUP BY t1.Id, t1.Name, t1.MobileNo, t1.Email, t1.Image, t1.AcademicImage, t1.CV";
                     var query = string.Format(queryString);
                     var approvalList = await connection.QueryAsync<TeacherApproval>(query);
                     return approvalList.ToList();
@@ -44,6 +44,9 @@ namespace S_EDex365.Data.Services
                 throw;
             }
         }
+
+
+
 
         //public async Task<TeacherApproval> GetTeacherApprovaByIdAsync(Guid userId)
         //{

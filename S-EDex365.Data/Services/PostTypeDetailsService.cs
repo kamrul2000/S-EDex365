@@ -70,7 +70,7 @@ namespace S_EDex365.Data.Services
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var queryString = "select t1.id,t2.Name as d_name,t1.name,t1.status,(case when t1.status=1 then 'Active' else 'InActive' end) StatusName from PostTypeDetails t1 Join PostType t2 on t1.PostTypeId=t2.Id order by t1.name  ";
+                    var queryString = "select t1.id,t2.Name as d_name,t2.Id as PostTypeId,t1.name,t1.status,(case when t1.status=1 then 'Active' else 'InActive' end) StatusName from PostTypeDetails t1 Join PostType t2 on t1.PostTypeId=t2.Id order by t1.name  ";
                     var query = string.Format(queryString);
                     var detailsList = await connection.QueryAsync<PostTypeDetails>(query);
                     return detailsList.ToList();
@@ -145,12 +145,13 @@ namespace S_EDex365.Data.Services
                 {
                     connection.Open();
 
-                    var queryString = "update PostTypeDetails set name=@name,status=@status,PostTypeId=@PostTypeId where id=@id";
+                    var queryString = "update PostTypeDetails set name=@name,PostTypeId=@PostTypeId,status=@status where id=@id";
                     var parameters = new DynamicParameters();
                     parameters.Add("name", postTypeDetails.Name, DbType.String);
+                    parameters.Add("PostTypeId", postTypeDetails.PostTypeId, DbType.Guid);
                     parameters.Add("status", postTypeDetails.Status, DbType.Int32);
                     parameters.Add("id", postTypeDetails.Id.ToString(), DbType.String);
-                    parameters.Add("PostTypeId", postTypeDetails.PostTypeId.ToString(), DbType.String);
+                    //parameters.Add("PostTypeId", postTypeDetails.PostTypeId.ToString(), DbType.String);
                     var success = await connection.ExecuteAsync(queryString, parameters);
                     if (success > 0)
                     {
