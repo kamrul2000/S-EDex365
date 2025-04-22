@@ -90,6 +90,10 @@ namespace S_EDex365.API.Services
                         throw new Exception("Invalid ProblemPostId.");
                     }
 
+                    var query = "UPDATE RecivedProblem SET SolutionPending = 0 WHERE ProblemsPostId = @ProblemsPostId";
+                    await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
+
+
                     // Save the uploaded photo
                     string uniqueFileName = null;
                     if (solutionPost.Photo != null && solutionPost.Photo.Length > 0)

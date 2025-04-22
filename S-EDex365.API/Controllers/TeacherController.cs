@@ -53,9 +53,14 @@ namespace S_EDex365.API.Controllers
                 // Call the service method
                 var updateDetails = await _teacherService.UpdateProblemFlagAsync(userId, postId);
 
-                if (updateDetails == null || !updateDetails.Any())
+                if (updateDetails == null)
                 {
-                    return NotFound("No records found after updating.");
+                    return Ok("Already Have a Task.");
+                }
+
+                if (!updateDetails.Any())
+                {
+                    return Ok("No records found after updating.");
                 }
 
                 return Ok(updateDetails);

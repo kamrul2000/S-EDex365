@@ -1,7 +1,9 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
+using S_EDex365.Model.Model;
 using System.Collections.Generic;
 using System.Data;
 
@@ -281,36 +283,46 @@ namespace S_EDex365.API.Services
                 {
                     await connection.OpenAsync();
 
-                    var query = "UPDATE ProblemsPost SET Flag = 1 WHERE Id = @PostId";
-                    await connection.ExecuteScalarAsync<Guid>(query, new { PostId = postId });
+                    var queryCount = "select COUNT(Id) from RecivedProblem where SolutionPending=1 and UserId=@UserId  ";
+                    var count = await connection.ExecuteScalarAsync<int>(queryCount, new { UserId = userId });
 
-                    // Insert into RecivedProblem
-                    var queryString = @"
-                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)"
-                    ;
+                    if (count == 0)
+                    {
+                        var query = "UPDATE ProblemsPost SET Flag = 1 WHERE Id = @PostId";
+                        await connection.ExecuteScalarAsync<Guid>(query, new { PostId = postId });
 
-                    //INSERT INTO RecivedProblem(id, UserId, ProblemsPostId, GetDateby, Updateby) OUTPUT INSERTED.Id VALUES(@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)";
+                        // Insert into RecivedProblem
+                        var queryString = @"
+                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby,SolutionPending) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby,@SolutionPending)"
+                        ;
 
-                    var parameters = new DynamicParameters();
-                    var newId = Guid.NewGuid();
-                    parameters.Add("id", newId, DbType.Guid);
-                    parameters.Add("UserId", userId, DbType.Guid);
-                    parameters.Add("ProblemsPostId", postId, DbType.Guid);
-                    parameters.Add("GetDateby", DateTime.Now, DbType.DateTime);
-                    parameters.Add("Updateby", DateTime.Now, DbType.DateTime);
+                        //INSERT INTO RecivedProblem(id, UserId, ProblemsPostId, GetDateby, Updateby) OUTPUT INSERTED.Id VALUES(@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)";
 
-                    // Execute the insertion
-                    await connection.ExecuteScalarAsync<Guid>(queryString, parameters);
+                        var parameters = new DynamicParameters();
+                        var newId = Guid.NewGuid();
+                        parameters.Add("id", newId, DbType.Guid);
+                        parameters.Add("UserId", userId, DbType.Guid);
+                        parameters.Add("ProblemsPostId", postId, DbType.Guid);
+                        parameters.Add("GetDateby", DateTime.Now, DbType.DateTime);
+                        parameters.Add("Updateby", DateTime.Now, DbType.DateTime);
+                        parameters.Add("SolutionPending", 1, DbType.Boolean);
 
-                    // Query to fetch updated data for PostReceived
-                    var fetchQuery = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,t1.Flag as Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId join RecivedProblem t4 on t1.Id=t4.ProblemsPostId WHERE t4.UserId = @UserId";
+                        // Execute the insertion
+                        await connection.ExecuteScalarAsync<Guid>(queryString, parameters);
 
-                    // Fetch and map results to PostReceived
-                    var result = await connection.QueryAsync<ProblemList>(
-                        fetchQuery,
-                        new { UserId = userId });
+                        // Query to fetch updated data for PostReceived
+                        var fetchQuery = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,t1.Flag as Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId join RecivedProblem t4 on t1.Id=t4.ProblemsPostId WHERE t4.UserId = @UserId";
 
-                    return result.ToList(); // Convert to List<PostReceived>
+                        // Fetch and map results to PostReceived
+                        var result = await connection.QueryAsync<ProblemList>(
+                            fetchQuery,
+                            new { UserId = userId });
+
+                        return result.ToList(); // Convert to List<PostReceived>
+                    }
+                    return null;
+
+                    
                 }
             }
             catch (Exception ex)
