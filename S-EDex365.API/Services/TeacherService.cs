@@ -293,7 +293,7 @@ namespace S_EDex365.API.Services
 
                         // Insert into RecivedProblem
                         var queryString = @"
-                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby,SolutionPending) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby,@SolutionPending)"
+                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby,SolutionPending,S_LastTime) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby,@SolutionPending,@S_LastTime)"
                         ;
 
                         //INSERT INTO RecivedProblem(id, UserId, ProblemsPostId, GetDateby, Updateby) OUTPUT INSERTED.Id VALUES(@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)";
@@ -306,6 +306,9 @@ namespace S_EDex365.API.Services
                         parameters.Add("GetDateby", DateTime.Now, DbType.DateTime);
                         parameters.Add("Updateby", DateTime.Now, DbType.DateTime);
                         parameters.Add("SolutionPending", 1, DbType.Boolean);
+                        //parameters.Add("S_LastTime", DateTime.Now.AddMinutes(20), DbType.DateTime);
+                        parameters.Add("S_LastTime", DateTime.Now.AddMinutes(20).ToString("HH:mm"), DbType.String);
+
 
                         // Execute the insertion
                         await connection.ExecuteScalarAsync<Guid>(queryString, parameters);

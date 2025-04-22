@@ -37,6 +37,9 @@ builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
 
+
+builder.Services.AddHostedService<PeriodicTaskService>();
+
 //Add Session
 builder.Services.AddSession(options =>
 {
