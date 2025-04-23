@@ -19,30 +19,47 @@ public class PeriodicTaskService : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            var now = DateTime.Now;
-
-            // Check if current time is 4:51 PM
-            if (now.Hour == 17 && now.Minute == 11)
+            try
             {
-                await RunQuery();
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Avoid multiple runs in the same minute
+                var connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+                using var connection = new SqlConnection(connectionString);
+                await connection.OpenAsync(stoppingToken); // ✅ open connection
+
+                var timeNow = DateTime.Now.ToString("HH:mm");
+                var query = @"SELECT ProblemsPostId FROM RecivedProblem 
+                          WHERE CONVERT(varchar(5), S_LastTime, 108) = @Time";
+
+                var result = await connection.QueryAsync<Guid>(query, new { Time = timeNow });
+
+                if (!result.Any())
+                {
+                    Console.WriteLine("No problems found at this time.");
+                }
+                else
+                {
+                    foreach (var id in result)
+                    {
+                        // Update SolutionPending in RecivedProblem
+                        var queryUpdate = "UPDATE RecivedProblem SET SolutionPending = 0 WHERE ProblemsPostId = @Id";
+                        await connection.ExecuteAsync(queryUpdate, new { Id = id });
+
+                        // Update Flag in ProblemsPost
+                        var queryProblemPost = "UPDATE ProblemsPost SET Flag = 0 WHERE Id = @PostId";
+                        await connection.ExecuteAsync(queryProblemPost, new { PostId = id }); // ✅ use ExecuteAsync
+                    }
+
+                    Console.WriteLine($"Updated {result.Count()} records at {timeNow}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ ERROR in background service: " + ex.Message);
+                // Optional: log the full stack trace or send to logging service
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken); // Check every 10 seconds
+            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
         }
     }
 
-    private async Task RunQuery()
-    {
-        var connectionString = _configuration.GetConnectionString("DefaultConnection");
-
-        using var connection = new SqlConnection(connectionString);
-
-        // how to collect User Id....
-        //select UserId from RecivedProblem where SolutionPending = 0
-
-
-        var query = "UPDATE ProblemsPost SET SolutionPending = 0 WHERE ProblemsPostId = 'DD0DF870-7AAE-4242-93A2-4A1221283703'";
-        await connection.ExecuteAsync(query);
-    }
 }
