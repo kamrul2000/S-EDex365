@@ -5,6 +5,8 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using S_EDex365.Model.Model;
+using System.Data;
 
 public class PeriodicTaskService : BackgroundService
 {
@@ -40,17 +42,72 @@ public class PeriodicTaskService : BackgroundService
                 {
                     foreach (var id in result)
                     {
-                        // Update SolutionPending in RecivedProblem
-                        var queryUpdate = "UPDATE RecivedProblem SET SolutionPending = 0 WHERE ProblemsPostId = @Id";
-                        await connection.ExecuteAsync(queryUpdate, new { Id = id });
+                        var queryFlagCheck = "select flag from RecivedProblem where ProblemsPostId= @Id";
+                        var check = await connection.ExecuteScalarAsync<int>(queryFlagCheck, new { Id = id });
+                        if (check==0)
+                        {
+                            // Update SolutionPending in RecivedProblem
+                            var queryUpdate = "UPDATE RecivedProblem SET SolutionPending = 0, Flag = 1, BlockFlag = 1, UnlockTime = @UnlockTime WHERE ProblemsPostId = @Id";
+                            var parameters = new DynamicParameters();
+                            parameters.Add("UnlockTime", DateTime.Now.AddMinutes(1440).ToString("HH:mm"), DbType.String);
+                            parameters.Add("Id", id); // ← Add Id here
+                            await connection.ExecuteAsync(queryUpdate, parameters);
 
-                        // Update Flag in ProblemsPost
-                        var queryProblemPost = "UPDATE ProblemsPost SET Flag = 0 WHERE Id = @PostId";
-                        await connection.ExecuteAsync(queryProblemPost, new { PostId = id }); // ✅ use ExecuteAsync
+                            //var queryFlag = "UPDATE RecivedProblem SET Flag = 1 WHERE ProblemsPostId = @Id";
+                            //await connection.ExecuteAsync(queryFlag, new { Id = id });
+
+
+
+                            // Update Flag in ProblemsPost
+                            var queryProblemPost = "UPDATE ProblemsPost SET Flag = 0 WHERE Id = @PostId";
+                            await connection.ExecuteAsync(queryProblemPost, new { PostId = id }); // ✅ use ExecuteAsync
+                        }
+                        
                     }
 
                     Console.WriteLine($"Updated {result.Count()} records at {timeNow}");
                 }
+
+                var timesNow = DateTime.Now.ToString("HH:mm");
+                var querys = @"SELECT ProblemsPostId FROM RecivedProblem 
+                          WHERE CONVERT(varchar(5), UnlockTime, 108) = @Time";
+
+                var results = await connection.QueryAsync<Guid>(querys, new { Time = timesNow });
+                if (!result.Any())
+                {
+                    Console.WriteLine("No problems found at this time.");
+                }
+                else
+                {
+                    foreach (var id in result)
+                    {
+                        var queryFlagCheck = "select flag from RecivedProblem where ProblemsPostId= @Id";
+                        var check = await connection.ExecuteScalarAsync<int>(queryFlagCheck, new { Id = id });
+                        if (check == 0)
+                        {
+                            // Update SolutionPending in RecivedProblem
+                            var queryUpdate = "UPDATE RecivedProblem SET SolutionPending = 0, Flag = 1, BlockFlag = 1, UnlockTime = @UnlockTime WHERE ProblemsPostId = @Id";
+                            var parameters = new DynamicParameters();
+                            parameters.Add("UnlockTime", DateTime.Now.AddMinutes(1440).ToString("HH:mm"), DbType.String);
+                            parameters.Add("Id", id); // ← Add Id here
+                            await connection.ExecuteAsync(queryUpdate, parameters);
+
+                            //var queryFlag = "UPDATE RecivedProblem SET Flag = 1 WHERE ProblemsPostId = @Id";
+                            //await connection.ExecuteAsync(queryFlag, new { Id = id });
+
+
+
+                            // Update Flag in ProblemsPost
+                            var queryProblemPost = "UPDATE ProblemsPost SET Flag = 0 WHERE Id = @PostId";
+                            await connection.ExecuteAsync(queryProblemPost, new { PostId = id }); // ✅ use ExecuteAsync
+                        }
+
+                    }
+
+                    Console.WriteLine($"Updated {result.Count()} records at {timeNow}");
+                }
+
+
             }
             catch (Exception ex)
             {
