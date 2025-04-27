@@ -15,21 +15,21 @@ namespace S_EDex365.API.Controllers
         {
             _teacherService = teacherService;
         }
-        [HttpGet("s/AllProblems")]
-        public async Task<ActionResult<List<ProblemPostAll>>> GetProblems()
-        {
-            var subjectDetails = await _teacherService.GetAllPostAsync();
-            if (subjectDetails.Count == 0)
-                return NotFound();
-            return Ok(subjectDetails);
-        }
+        //[HttpGet("s/AllProblems")]
+        //public async Task<ActionResult<List<ProblemPostAll>>> GetProblems()
+        //{
+        //    var subjectDetails = await _teacherService.GetAllPostAsync();
+        //    if (subjectDetails.Count == 0)
+        //        return NotFound();
+        //    return Ok(subjectDetails);
+        //}
         [HttpGet("s/AllProblems/{userId}")]
         public async Task<ActionResult<List<ProblemList>>> GetProblems(Guid userId)
         {
             var subjectDetails = await _teacherService.GetAllPostByUserAsync(userId);
 
             if (subjectDetails.Count == 0)
-                return Ok();
+                return Ok(new List<ProblemList>());
 
             return Ok(subjectDetails);
         }
@@ -58,10 +58,8 @@ namespace S_EDex365.API.Controllers
                     return Ok("Already Have a Task.");
                 }
 
-                if (!updateDetails.Any())
-                {
-                    return Ok("No records found after updating.");
-                }
+                if (updateDetails.Count == 0)
+                    return Ok("You are Blocked For ");
 
                 return Ok(updateDetails);
             }

@@ -192,23 +192,40 @@ namespace S_EDex365.API.Services
 
                         string uniqueAcademicImageFileName = null;
 
-                        string uploadsAcademicImageFolder = Path.Combine(_environment.WebRootPath, "academicImage"); // Ensure that "uploads" directory exists
-                        uniqueAcademicImageFileName = Guid.NewGuid().ToString() + "_" + user.AcademicImage.FileName;
-                        string filePathAcademicImage = Path.Combine(uploadsAcademicImageFolder, uniqueAcademicImageFileName);
-                        using (var fileStream = new FileStream(filePathAcademicImage, FileMode.Create))
+
+                        if (_environment != null && user?.AcademicImage != null)
                         {
-                            await user.AcademicImage.CopyToAsync(fileStream);
+                            string uploadsAcademicImageFolder = Path.Combine(_environment.WebRootPath, "academicImage"); // Ensure that "uploads" directory exists
+                            uniqueAcademicImageFileName = Guid.NewGuid().ToString() + "_" + user.AcademicImage.FileName;
+                            string filePathAcademicImage = Path.Combine(uploadsAcademicImageFolder, uniqueAcademicImageFileName);
+                            using (var fileStream = new FileStream(filePathAcademicImage, FileMode.Create))
+                            {
+                                await user.AcademicImage.CopyToAsync(fileStream);
+                            }
+                        }
+                        else
+                        {
+                            uniqueAcademicImageFileName = "Null";
                         }
 
                         string uniqueCvFileName = null;
 
-                        string uploadsCvFolder = Path.Combine(_environment.WebRootPath, "cvFile"); // Ensure that "uploads" directory exists
-                        uniqueCvFileName = Guid.NewGuid().ToString() + "_" + user.CV.FileName;
-                        string filePathCv = Path.Combine(uploadsCvFolder, uniqueCvFileName);
-                        using (var fileStream = new FileStream(filePathCv, FileMode.Create))
+                        if (_environment != null && user?.CV != null)
                         {
-                            await user.CV.CopyToAsync(fileStream);
+                            string uploadsCvFolder = Path.Combine(_environment.WebRootPath, "cvFile"); // Ensure that "uploads" directory exists
+                            uniqueCvFileName = Guid.NewGuid().ToString() + "_" + user.CV.FileName;
+                            string filePathCv = Path.Combine(uploadsCvFolder, uniqueCvFileName);
+                            using (var fileStream = new FileStream(filePathCv, FileMode.Create))
+                            {
+                                await user.CV.CopyToAsync(fileStream);
+                            }
                         }
+                        else
+                        {
+                            uniqueCvFileName = "Null";
+                        }
+
+                        
 
 
 
