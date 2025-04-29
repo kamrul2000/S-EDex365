@@ -31,6 +31,8 @@ builder.Services.AddScoped<IFirebaseNotificationService, FirebaseNotificationSer
 builder.Services.AddScoped<ITeacherNotificationService, TeacherNotificationService>();
 builder.Services.AddScoped<IStudentDashBoard, StudentDashBoard>();
 builder.Services.AddScoped<IWalletService, WalletService>();
+builder.Services.AddScoped<ICommunicationService, CommunicationService>();
+builder.Services.AddScoped<IPostTypeService,PostTypeService>();
 
 
 

@@ -2,8 +2,7 @@
 {
     public class CommunicationDto
     {
-        public Guid Id { get; set; }
-        public string VoiceUrl { get; set; }
+        public IFormFile VoiceUrl { get; set; }
         public string Text { get; set; }
     }
 }

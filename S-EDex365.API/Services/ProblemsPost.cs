@@ -135,25 +135,111 @@ namespace S_EDex365.API.Services
             }
         }
 
-        public async Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId)
+        //public async Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId, Guid userId)
+        //{
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        await connection.OpenAsync();
+
+        //        var query = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.id = @Id";
+
+        //        var parameters = new { Id = postId };
+
+        //        var result = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(query, parameters);
+        //        if (result != null && !string.IsNullOrEmpty(result.Photo))
+        //        {
+        //            result.Photo = "https://api.edex365.com/uploads/" + result.Photo;
+        //        }
+
+
+        //        var queryType = @"select t2.Name,t1.UserId from Communication t1 JOIN Roles t2 on t2.Id=t1.UserType where ProblemPostId='" + postId+"'";
+
+        //        var type = await connection.QueryFirstOrDefaultAsync<string>(query, parameters);
+
+        //        if (type.Trim() == "Teacher")
+        //        {
+        //            var queryTChat = @"select Id as Id, VoiceUrl as VoiceUrl,Text as Text,UserId as UserId,ProblemPostId as ProblemPostId from Communication where UserId='" + userId + "' and ProblemPostId='" + postId + "'";
+
+        //            var parametersTChat = new { Id = postId };
+        //            var resultTChat = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(queryTChat, parametersTChat);
+        //        }
+        //        else if (type.Trim() == "Student")
+        //        {
+        //            var querySChat = @"select Id as Id, VoiceUrl as VoiceUrl,Text as Text,UserId as UserId,ProblemPostId as ProblemPostId from Communication where UserId='" + userId + "' and ProblemPostId='" + postId + "'";
+
+        //            var parameterSChat = new { Id = postId };
+        //            var resultSChat = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(querySChat, parameterSChat);
+        //        }
+
+
+
+
+
+
+
+        //        return result;
+        //    }
+        //}
+
+
+
+        public async Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId, Guid userId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
-                var query = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.id = @Id";
+                // 1. Get the Post Details
+                var queryPost = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.Id = @Id";
 
-                var parameters = new { Id = postId };
+                var result = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(queryPost, new { Id = postId });
 
-                var result = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(query, parameters);
-                if (result != null && !string.IsNullOrEmpty(result.Photo))
+                if (result == null)
+                    return null;
+
+                if (!string.IsNullOrEmpty(result.Photo))
                 {
                     result.Photo = "https://api.edex365.com/uploads/" + result.Photo;
                 }
 
+                var queryType = @"SELECT t2.Name AS Type, t1.UserId FROM Communication t1 JOIN Roles t2 ON t2.Id = t1.UserType WHERE t1.ProblemPostId = @ProblemPostId";
+
+                var userTypes = await connection.QueryAsync<UserTypeInfo>(queryType, new { ProblemPostId = postId });
+
+                foreach (var user in userTypes)
+                {
+                    Console.WriteLine($"Type: {user.Type}, UserId: {user.UserId}");
+
+
+                    if (user.Type.Trim().Equals("Teacher", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Fetch Teacher Chat
+                        //var queryTeacherChat = @"SELECT VoiceUrl, Text FROM Communication WHERE UserId = '"+ user.UserId + "' AND ProblemPostId = @ProblemPostId";
+
+                        var queryTeacherChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
+
+                        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryTeacherChat, new {ProblemPostId = postId });
+
+                        result.TeacherChats = teacherChats.ToList();
+                    }
+                    else if (user.Type.Trim().Equals("Student", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Fetch Student Chat
+                        var queryStudentChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
+
+                        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryStudentChat, new { ProblemPostId = postId });
+
+                        result.StudentChats = teacherChats.ToList();
+                    }
+                }
+
+                
+
                 return result;
             }
         }
+
+
 
         public async Task<List<ProblemPostAll>> GetSolutionUserAsync(Guid userId)
         {
@@ -161,7 +247,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId JOIN Class t4 ON t4.Id = t2.ClassId where StudentId= @UserId";
+                var query = @"select top 1 t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId JOIN Class t4 ON t4.Id = t2.ClassId where StudentId= @UserId";
 
                 var parameters = new { UserId = userId };
 
@@ -193,6 +279,8 @@ namespace S_EDex365.API.Services
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
+
+
 
                     // Parsing the subjectId and classId from the DTO
                     Guid? subjectId = !string.IsNullOrEmpty(problemsPost.Subject.FirstOrDefault())

@@ -128,8 +128,8 @@ namespace S_EDex365.API.Services
                     parameters.Add("Photo", uniqueFileName, DbType.String); // Save the file name in DB
                     parameters.Add("StudentId", userId, DbType.Guid);
                     parameters.Add("Status", 1, DbType.Boolean);
-                    parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
-                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                    parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     parameters.Add("ProblemPostId", postId, DbType.Guid);
 
                     var success = await connection.ExecuteAsync(queryString, parameters);
@@ -137,7 +137,7 @@ namespace S_EDex365.API.Services
                     // Prepare the response
                     SolutionPostResponse solutionPostResponse = new SolutionPostResponse
                     {
-                        Photo = $"https://api.edex365.com/solutionImage/{uniqueFileName}"
+                        Photo = $"http://192.168.0.159:81/api/solutionImage/{uniqueFileName}"
                     };
 
                     return solutionPostResponse;

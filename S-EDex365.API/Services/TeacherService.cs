@@ -91,7 +91,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,t1.Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN RecivedProblem t4 on t4.ProblemsPostId=t1.Id where t4.UserId='"+ userId +"' ";
+                var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,t1.Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id JOIN Class t3 ON t3.Id = t1.ClassId JOIN RecivedProblem t4 on t4.ProblemsPostId=t1.Id where t1.Flag=1 and  t4.UserId='" + userId +"' ";
 
                 var result = await connection.QueryAsync<ProblemList>(query);
                 var baseUrl = "https://api.edex365.com/uploads/";
