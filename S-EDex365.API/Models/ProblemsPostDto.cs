@@ -2,6 +2,7 @@
 {
     public class ProblemsPostDto
     {
+        public Guid PostTypeId { get; set; }
         public List<string> Subject { get; set; } = new List<string>();
         public string Topic { get; set; } = string.Empty;
         public List<string> sClass { get; set; } = new List<string>();

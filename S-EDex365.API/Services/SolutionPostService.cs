@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
+using S_EDex365.API.Models.Payment;
 using System.Data;
 
 namespace S_EDex365.API.Services
@@ -92,6 +93,33 @@ namespace S_EDex365.API.Services
 
                     var query = "UPDATE RecivedProblem SET SolutionPending = 0 WHERE ProblemsPostId = @ProblemsPostId";
                     await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
+
+
+                    var queryExisting = "SELECT Amount FROM Balance WHERE UserId = @UserId";
+                    var parametersExisting = new DynamicParameters();
+                    parametersExisting.Add("UserId", userId, DbType.Guid);
+
+                    decimal existingAmount = await connection.QueryFirstOrDefaultAsync<decimal>(queryExisting, parametersExisting);
+
+
+                    // 1. Get the existing amount
+                    var queryProblemsPost = "SELECT Amount FROM ProblemsPost WHERE Id = @Id";
+                    var parametersProblemsPost = new DynamicParameters();
+                    parametersProblemsPost.Add("Id", postId, DbType.Guid);
+
+                    decimal existingProblemsPost = await connection.QueryFirstOrDefaultAsync<decimal>(queryProblemsPost, parametersProblemsPost);
+
+                    // 2. Add the new amount to the existing one
+                    decimal updatedAmount = existingAmount - existingProblemsPost ;
+
+                    // 3. Update the Balance table with the new total
+                    var queryBalance = "UPDATE Balance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
+                    var parametersBalance = new DynamicParameters();
+                    parametersBalance.Add("UserId", userId);
+                    parametersBalance.Add("Amount", updatedAmount);
+                    parametersBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                    var successs = await connection.ExecuteAsync(queryBalance, parametersBalance);
 
 
                     // Save the uploaded photo

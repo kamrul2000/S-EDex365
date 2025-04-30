@@ -21,64 +21,7 @@ namespace S_EDex365.API.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        //public async Task<List<ProblemPostAll>> GetAllUserAsync(Guid userId)
-        //{
-        //    using (var connection = new SqlConnection(_connectionString))
-        //    {
-        //        connection.Open();
-        //        var queryString = "select t1.Id,t2.SubjectName,t1.Topic,t3.ClassName,Description,Photo from ProblemsPost t1 join Subject t2 on t2.Id=t1.SubjectId join Class t3 on t3.Id=t1.ClassId where UserId=@UserId ";
-        //        var query = string.Format(queryString);
-        //        var parameters = new { UserId = userId };
-        //        var ProblemPostList = await connection.QueryAsync<ProblemPostAll>(query, parameters);
-        //        connection.Close();
-        //        return ProblemPostList.ToList();
-        //    }
-        //}
-
-
-
-        //Correct
-
-        //public async Task<List<ProblemPostAll>> GetAllUserAsync(Guid userId)
-        //{
-        //    using (var connection = new SqlConnection(_connectionString))
-        //    {
-        //        await connection.OpenAsync();
-
-        //        var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName, t3.ClassName FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.UserId = @UserId";
-
-        //        var lookup = new Dictionary<Guid, ProblemPostAll>();
-
-        //        var result = await connection.QueryAsync<ProblemPostAll, string, string, ProblemPostAll>(
-        //            query,
-        //            (problem, subjectName, className) =>
-        //            {
-        //                if (!lookup.TryGetValue(problem.Id, out var problemPost))
-        //                {
-        //                    problemPost = problem;
-        //                    lookup.Add(problem.Id, problemPost);
-        //                }
-
-        //                if (!string.IsNullOrEmpty(subjectName) && !problemPost.Subject.Contains(subjectName))
-        //                {
-        //                    problemPost.Subject.Add(subjectName);
-        //                }
-
-        //                if (!string.IsNullOrEmpty(className) && !problemPost.Class.Contains(className))
-        //                {
-        //                    problemPost.Class.Add(className);
-        //                }
-
-        //                return problemPost;
-        //            },
-        //            new { UserId = userId },
-        //            splitOn: "SubjectName,ClassName"
-        //        );
-
-        //        return lookup.Values.ToList();
-        //    }
-        //}
-
+        
 
         public async Task<List<ProblemPostAll>> GetAllUserAsync(Guid userId)
         {
@@ -282,6 +225,8 @@ namespace S_EDex365.API.Services
 
 
 
+                    Guid? postTypeId = problemsPost.PostTypeId != Guid.Empty ? problemsPost.PostTypeId : (Guid?)null;
+
                     // Parsing the subjectId and classId from the DTO
                     Guid? subjectId = !string.IsNullOrEmpty(problemsPost.Subject.FirstOrDefault())
                         ? Guid.Parse(problemsPost.Subject.FirstOrDefault())
@@ -290,6 +235,31 @@ namespace S_EDex365.API.Services
                     Guid? classId = !string.IsNullOrEmpty(problemsPost.sClass.FirstOrDefault())
                         ? Guid.Parse(problemsPost.sClass.FirstOrDefault())
                         : (Guid?)null;
+
+                    decimal Amount = 0;
+
+                    var query = "select S_Name from PostTypeDetails where Id=@Id";
+                    var parametersType = new DynamicParameters();
+                    parametersType.Add("Id", postTypeId, DbType.Guid);
+                    var type = await connection.QueryFirstOrDefaultAsync<string>(query, parametersType);
+
+                    if (type.Trim() == "Bangla")
+                    {
+                        var queryBangla = "select Amount from Class where Id=@Id";
+                        var parametersBangla = new DynamicParameters();
+                        parametersBangla.Add("Id", classId, DbType.Guid);
+                        Amount = await connection.QueryFirstOrDefaultAsync<decimal>(queryBangla, parametersBangla);
+                    }
+                    else if (type.Trim() == "English")
+                    {
+                        var queryEnglish = "select Amount from EnglishMediumClass where Id=@Id";
+                        var parametersEnglish = new DynamicParameters();
+                        parametersEnglish.Add("Id", classId, DbType.Guid);
+                        Amount = await connection.QueryFirstOrDefaultAsync<decimal>(queryEnglish, parametersEnglish);
+                    }
+
+
+
 
                     // Save the uploaded photo
                     string uniqueFileName = null;
@@ -307,9 +277,9 @@ namespace S_EDex365.API.Services
                     // Insert the problem post into the database
                     var queryString = @"
             INSERT INTO ProblemsPost 
-            (id, subjectId, topic, classId, Description, Photo, UserId, Status, Flag,GetDateby, Updateby) OUTPUT INSERTED.Id 
+            (id, subjectId, topic, classId, Description, Photo, UserId, Status, Flag,GetDateby, Updateby,PostTypeId,Amount) OUTPUT INSERTED.Id 
             VALUES 
-            (@id, @subjectId, @topic, @classId, @Description, @Photo, @UserId, @Status, @Flag,@GetDateby, @Updateby)";
+            (@id, @subjectId, @topic, @classId, @Description, @Photo, @UserId, @Status, @Flag,@GetDateby, @Updateby,@PostTypeId,@Amount)";
 
                     var parameters = new DynamicParameters();
                     var problemsPostId = Guid.NewGuid();
@@ -317,11 +287,13 @@ namespace S_EDex365.API.Services
                     parameters.Add("subjectId", subjectId, DbType.Guid);
                     parameters.Add("topic", problemsPost.Topic, DbType.String);
                     parameters.Add("classId", classId, DbType.Guid);
+                    parameters.Add("PostTypeId", postTypeId, DbType.Guid);
                     parameters.Add("Description", problemsPost.Description, DbType.String);
                     parameters.Add("Photo", uniqueFileName, DbType.String); // Save the filename to the database
                     parameters.Add("UserId", problemsPost.UserId, DbType.Guid);
                     parameters.Add("status", 1, DbType.Boolean);
                     parameters.Add("flag", 0, DbType.Boolean);
+                    parameters.Add("Amount", Amount, DbType.Decimal);
                     parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
                     parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
 
