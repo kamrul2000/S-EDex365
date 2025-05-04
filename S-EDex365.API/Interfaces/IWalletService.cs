@@ -7,5 +7,6 @@ namespace S_EDex365.API.Interfaces
     {
         Task<bool> InsertWalletAsync(PaymentResponse paymentResponse,Guid userId);
         Task<StudentWallet> GetStudentWalletAsync(Guid userId);
+        Task<TeacherWallet> GetTeacherWalletAsync(Guid userId);
     }
 }

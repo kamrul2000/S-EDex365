@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Azure;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
@@ -126,7 +127,7 @@ namespace S_EDex365.API.Services
 
 
 
-        public async Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId, Guid userId)
+        public async Task<ProblemPostAll> GetPostDetailsUserAsync(Guid postId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -274,48 +275,73 @@ namespace S_EDex365.API.Services
                         }
                     }
 
-                    // Insert the problem post into the database
-                    var queryString = @"
-            INSERT INTO ProblemsPost 
-            (id, subjectId, topic, classId, Description, Photo, UserId, Status, Flag,GetDateby, Updateby,PostTypeId,Amount) OUTPUT INSERTED.Id 
-            VALUES 
-            (@id, @subjectId, @topic, @classId, @Description, @Photo, @UserId, @Status, @Flag,@GetDateby, @Updateby,@PostTypeId,@Amount)";
 
-                    var parameters = new DynamicParameters();
-                    var problemsPostId = Guid.NewGuid();
-                    parameters.Add("id", problemsPostId, DbType.Guid);
-                    parameters.Add("subjectId", subjectId, DbType.Guid);
-                    parameters.Add("topic", problemsPost.Topic, DbType.String);
-                    parameters.Add("classId", classId, DbType.Guid);
-                    parameters.Add("PostTypeId", postTypeId, DbType.Guid);
-                    parameters.Add("Description", problemsPost.Description, DbType.String);
-                    parameters.Add("Photo", uniqueFileName, DbType.String); // Save the filename to the database
-                    parameters.Add("UserId", problemsPost.UserId, DbType.Guid);
-                    parameters.Add("status", 1, DbType.Boolean);
-                    parameters.Add("flag", 0, DbType.Boolean);
-                    parameters.Add("Amount", Amount, DbType.Decimal);
-                    parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
-                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                    var queryExisting = "SELECT Amount FROM Balance WHERE UserId = @UserId";
+                    var parametersExisting = new DynamicParameters();
+                    parametersExisting.Add("UserId", problemsPost.UserId, DbType.Guid);
 
-                    var postId = await connection.ExecuteScalarAsync<Guid>(queryString, parameters);
+                    decimal existingAmount = await connection.QueryFirstOrDefaultAsync<decimal>(queryExisting, parametersExisting);
 
-                    // Prepend the base URL to the photo filename
-                    string fullPhotoUrl = uniqueFileName != null
-                        ? $"https://api.edex365.com/uploads/{uniqueFileName}"
-                        : null;
 
-                    // Prepare the response
-                    ProblemsPostResponse problemsPostResponse = new ProblemsPostResponse
+                    var queryProblempost = "SELECT ISNULL(SUM(Amount), 0) FROM ProblemsPost WHERE UserId = @UserId  and ForWallet=0";
+                    var parametersProblempost = new DynamicParameters();
+                    parametersProblempost.Add("UserId", problemsPost.UserId, DbType.Guid);
+
+                    decimal problempostExistingAmount = await connection.QueryFirstOrDefaultAsync<decimal>(queryProblempost, parametersProblempost);
+
+                    decimal updatedAmount = Amount + problempostExistingAmount;
+
+
+                    if (existingAmount > updatedAmount)
                     {
-                        Subject = problemsPost.Subject,
-                        Topic = problemsPost.Topic,
-                        sClass = problemsPost.sClass,
-                        Description = problemsPost.Description,
-                        Photo = fullPhotoUrl, // Return the full URL
-                        UserId = problemsPost.UserId
-                    };
 
-                    return (postId, problemsPostResponse);
+                        // Insert the problem post into the database
+                        var queryString = @"
+            INSERT INTO ProblemsPost 
+            (id, subjectId, topic, classId, Description, Photo, UserId, Status, Flag,ForWallet,GetDateby, Updateby,PostTypeId,Amount) OUTPUT INSERTED.Id 
+            VALUES 
+            (@id, @subjectId, @topic, @classId, @Description, @Photo, @UserId, @Status, @Flag,@ForWallet,@GetDateby, @Updateby,@PostTypeId,@Amount)";
+
+                        var parameters = new DynamicParameters();
+                        var problemsPostId = Guid.NewGuid();
+                        parameters.Add("id", problemsPostId, DbType.Guid);
+                        parameters.Add("subjectId", subjectId, DbType.Guid);
+                        parameters.Add("topic", problemsPost.Topic, DbType.String);
+                        parameters.Add("classId", classId, DbType.Guid);
+                        parameters.Add("PostTypeId", postTypeId, DbType.Guid);
+                        parameters.Add("Description", problemsPost.Description, DbType.String);
+                        parameters.Add("Photo", uniqueFileName, DbType.String); // Save the filename to the database
+                        parameters.Add("UserId", problemsPost.UserId, DbType.Guid);
+                        parameters.Add("status", 1, DbType.Boolean);
+                        parameters.Add("flag", 0, DbType.Boolean);
+                        parameters.Add("ForWallet", 0, DbType.Boolean);
+                        parameters.Add("Amount", Amount, DbType.Decimal);
+                        parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                        parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                        var postId = await connection.ExecuteScalarAsync<Guid>(queryString, parameters);
+
+                        // Prepend the base URL to the photo filename
+                        string fullPhotoUrl = uniqueFileName != null
+                            ? $"https://api.edex365.com/uploads/{uniqueFileName}"
+                            : null;
+
+                        // Prepare the response
+                        ProblemsPostResponse problemsPostResponse = new ProblemsPostResponse
+                        {
+                            Subject = problemsPost.Subject,
+                            Topic = problemsPost.Topic,
+                            sClass = problemsPost.sClass,
+                            Description = problemsPost.Description,
+                            Photo = fullPhotoUrl, // Return the full URL
+                            UserId = problemsPost.UserId
+                        };
+
+                        return (postId, problemsPostResponse);
+                    }
+                    return (Guid.Empty, null);
+
+
                 }
             }
             catch (Exception ex)

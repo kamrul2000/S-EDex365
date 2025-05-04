@@ -21,10 +21,34 @@ namespace S_EDex365.API.Services
         {
             using (var connection = new SqlConnection(_connectionString))
             {
+
+                var queryProblemsPost = "Select ISNULL(SUM(Amount), 0) from ProblemsPost where UserId=@UserId and ForWallet=0";
+                var parametersProblemsPost = new DynamicParameters();
+                parametersProblemsPost.Add("UserId", userId, DbType.Guid);
+
+                decimal existingProblemsPost = await connection.QueryFirstOrDefaultAsync<decimal>(queryProblemsPost, parametersProblemsPost);
+
+                
+
+
                 var query = "SELECT ISNULL(SUM(Amount), 0) FROM Balance WHERE UserId = @UserId";
                 var amount = await connection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
 
-                return new StudentWallet { Balance = amount };
+                decimal updatedAmount = amount - existingProblemsPost;
+
+                return new StudentWallet { Balance = updatedAmount };
+            }
+        }
+
+        public async Task<TeacherWallet> GetTeacherWalletAsync(Guid userId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+
+                var query = "SELECT ISNULL(SUM(Amount), 0) FROM TeacherBalance WHERE UserId = @UserId";
+                var amount = await connection.ExecuteScalarAsync<decimal>(query, new { UserId = userId });
+
+                return new TeacherWallet { Balance = amount };
             }
         }
 

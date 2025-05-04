@@ -121,10 +121,10 @@ namespace S_EDex365.API.Controllers
             return Ok(problemPostDetails);
         }
 
-        [HttpGet("s/ProblemDetails/{postId}/{userId}")]
-        public async Task<ActionResult<ProblemPostAll>> ProblemDetails(Guid postId,Guid userId)
+        [HttpGet("s/ProblemDetails/{postId}")]
+        public async Task<ActionResult<ProblemPostAll>> ProblemDetails(Guid postId)
         {
-            var problemPostDetail = await _problemsPost.GetPostDetailsUserAsync(postId, userId);
+            var problemPostDetail = await _problemsPost.GetPostDetailsUserAsync(postId);
 
             if (problemPostDetail == null)
                 return Ok("No problem post found for the specified user");
