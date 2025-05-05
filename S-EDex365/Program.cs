@@ -20,6 +20,7 @@ builder.Services.AddScoped<IStudentDashboardService, StudentDashboardService>();
 builder.Services.AddScoped<IContactMeService, ContactMeService>();
 builder.Services.AddScoped<IPostTypeService, PostTypeService>();
 builder.Services.AddScoped<IPostTypeDetailsService, PostTypeDetailsService>();
+builder.Services.AddScoped<IBanglaClassService, BanglaClassService>();
 
 
 
