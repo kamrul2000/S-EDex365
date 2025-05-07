@@ -126,7 +126,7 @@ namespace S_EDex365.API.Services
 
                         if (count == 0)
                         {
-                            var query = "UPDATE ProblemsPost SET Flag = 1 WHERE Id = @PostId";
+                            var query = "UPDATE ProblemsPost SET Flag = 1,TaskPending=1 WHERE Id = @PostId";
                             await connection.ExecuteScalarAsync<Guid>(query, new { PostId = postId });
 
                             // Insert into RecivedProblem

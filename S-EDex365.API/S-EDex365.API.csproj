@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\academicImage\" />
     <Folder Include="wwwroot\cvFile\" />
+    <Folder Include="wwwroot\claimRecording\" />
     <Folder Include="wwwroot\recording\" />
     <Folder Include="wwwroot\profileImage\" />
     <Folder Include="wwwroot\solutionImage\" />

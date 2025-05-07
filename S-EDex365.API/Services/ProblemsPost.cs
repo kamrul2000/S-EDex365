@@ -58,7 +58,7 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.Id NOT IN (SELECT ProblemPostId FROM SolutionPost) and t1.UserId =@UserId ";
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.TaskPending=1 and t1.UserId =@UserId ";
 
                 var parameters = new { UserId = userId };
 
@@ -143,41 +143,117 @@ namespace S_EDex365.API.Services
 
                 if (!string.IsNullOrEmpty(result.Photo))
                 {
-                    result.Photo = "https://api.edex365.com/uploads/" + result.Photo;
+                    result.Photo = "http://192.168.0.238:81/uploads/" + result.Photo;
                 }
 
                 var queryType = @"SELECT t2.Name AS Type, t1.UserId FROM Communication t1 JOIN Roles t2 ON t2.Id = t1.UserType WHERE t1.ProblemPostId = @ProblemPostId";
 
                 var userTypes = await connection.QueryAsync<UserTypeInfo>(queryType, new { ProblemPostId = postId });
 
+
+
                 foreach (var user in userTypes)
                 {
                     Console.WriteLine($"Type: {user.Type}, UserId: {user.UserId}");
 
-
                     if (user.Type.Trim().Equals("Teacher", StringComparison.OrdinalIgnoreCase))
                     {
-                        // Fetch Teacher Chat
-                        //var queryTeacherChat = @"SELECT VoiceUrl, Text FROM Communication WHERE UserId = '"+ user.UserId + "' AND ProblemPostId = @ProblemPostId";
+                        var queryTeacherChat = @"SELECT VoiceUrl, Text, GetDate,
+                                        CASE WHEN VoiceUrl IS NULL THEN Text
+                                             WHEN Text IS NULL THEN VoiceUrl
+                                             ELSE Text + '' + VoiceUrl
+                                        END AS Message
+                                 FROM Communication
+                                 WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
 
-                        var queryTeacherChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
+                        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryTeacherChat, new { ProblemPostId = postId });
 
-                        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryTeacherChat, new {ProblemPostId = postId });
+                        foreach (var chat in teacherChats)
+                        {
+                            if (!string.IsNullOrEmpty(chat.VoiceUrl))
+                            {
+                                var fullUrl = "http://192.168.0.238:81/recording/" + chat.VoiceUrl;
+
+                                // Update Message to full URL if it's just the voice filename
+                                if (!string.IsNullOrEmpty(chat.Message) && chat.Message == chat.VoiceUrl)
+                                {
+                                    chat.Message = fullUrl;
+                                }
+
+                                // Set VoiceUrl to null so it's removed from the output
+                                chat.VoiceUrl = null;
+                            }
+                        }
 
                         result.TeacherChats = teacherChats.ToList();
                     }
                     else if (user.Type.Trim().Equals("Student", StringComparison.OrdinalIgnoreCase))
                     {
-                        // Fetch Student Chat
-                        var queryStudentChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
+                        var queryStudentChat = @"SELECT VoiceUrl, Text, GetDate,
+                                        CASE WHEN VoiceUrl IS NULL THEN Text
+                                             WHEN Text IS NULL THEN VoiceUrl
+                                             ELSE Text + '' + VoiceUrl
+                                        END AS Message
+                                 FROM Communication
+                                 WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
 
-                        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryStudentChat, new { ProblemPostId = postId });
+                        var studentChats = await connection.QueryAsync<CommunicationResponse>(queryStudentChat, new { ProblemPostId = postId });
 
-                        result.StudentChats = teacherChats.ToList();
+                        foreach (var chat in studentChats)
+                        {
+                            if (!string.IsNullOrEmpty(chat.VoiceUrl))
+                            {
+                                var fullUrl = "http://192.168.0.238:81/recording/" + chat.VoiceUrl;
+
+                                // Update Message to full URL if it's just the voice filename
+                                if (!string.IsNullOrEmpty(chat.Message) && chat.Message == chat.VoiceUrl)
+                                {
+                                    chat.Message = fullUrl;
+                                }
+
+                                // Set VoiceUrl to null so it's removed from the output
+                                chat.VoiceUrl = null;
+                            }
+                        }
+
+                        result.StudentChats = studentChats.ToList();
                     }
                 }
 
-                
+
+
+
+
+
+
+                //foreach (var user in userTypes)
+                //{
+                //    Console.WriteLine($"Type: {user.Type}, UserId: {user.UserId}");
+
+
+                //    if (user.Type.Trim().Equals("Teacher", StringComparison.OrdinalIgnoreCase))
+                //    {
+                //        // Fetch Teacher Chat
+                //        //var queryTeacherChat = @"SELECT VoiceUrl, Text FROM Communication WHERE UserId = '"+ user.UserId + "' AND ProblemPostId = @ProblemPostId";
+
+                //        var queryTeacherChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
+
+                //        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryTeacherChat, new {ProblemPostId = postId });
+
+                //        result.TeacherChats = teacherChats.ToList();
+                //    }
+                //    else if (user.Type.Trim().Equals("Student", StringComparison.OrdinalIgnoreCase))
+                //    {
+                //        // Fetch Student Chat
+                //        var queryStudentChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
+
+                //        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryStudentChat, new { ProblemPostId = postId });
+
+                //        result.StudentChats = teacherChats.ToList();
+                //    }
+                //}
+
+
 
                 return result;
             }

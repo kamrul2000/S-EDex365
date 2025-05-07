@@ -33,6 +33,7 @@ builder.Services.AddScoped<IStudentDashBoard, StudentDashBoard>();
 builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<ICommunicationService, CommunicationService>();
 builder.Services.AddScoped<IPostTypeService,PostTypeService>();
+builder.Services.AddScoped<IEnglishClassService,EnglishClassService>();
 
 
 

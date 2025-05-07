@@ -95,7 +95,7 @@ namespace S_EDex365.API.Services
                     await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
 
 
-                    var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1 WHERE Id = @Id";
+                    var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
                     await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = postId });
 
                     var queryExisting = "SELECT Amount FROM Balance WHERE UserId = @UserId";
@@ -140,7 +140,7 @@ namespace S_EDex365.API.Services
                         var parametersTeacherBalance = new DynamicParameters();
                         var IdBalance = Guid.NewGuid().ToString();
                         parametersTeacherBalance.Add("id", IdBalance, DbType.String);
-                        parametersTeacherBalance.Add("UserId", userId);
+                        parametersTeacherBalance.Add("UserId", solutionPost.TeacherId);
                         parametersTeacherBalance.Add("Amount", updatedTeacherAmount);
                         parametersTeacherBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
                         var successsTeacherBalance = await connection.ExecuteAsync(queryTeacherBalance, parametersTeacherBalance);
@@ -150,7 +150,7 @@ namespace S_EDex365.API.Services
                         // 3. Update the Balance table with the new total
                         var queryTeacherBalanceUpdate = "UPDATE TeacherBalance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
                         var parametersTeacherBalanceUpdate = new DynamicParameters();
-                        parametersTeacherBalanceUpdate.Add("UserId", userId);
+                        parametersTeacherBalanceUpdate.Add("UserId", solutionPost.TeacherId);
                         parametersTeacherBalanceUpdate.Add("Amount", updatedAmount);
                         parametersTeacherBalanceUpdate.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
 
