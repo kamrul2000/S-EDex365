@@ -30,13 +30,13 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.UserId = @UserId";
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, COALESCE(t3.ClassName, t4.ClassName) AS sClass, t1.Description, t1.Photo, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId LEFT JOIN Class t3 ON t3.Id = t1.ClassId LEFT JOIN EnglishMediumClass t4 ON t4.Id = t1.ClassId WHERE t1.UserId = @UserId";
 
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
 
-                var baseUrl = "https://api.edex365.com/uploads/";
+                var baseUrl = "http://192.168.0.238:81/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -58,13 +58,13 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.TaskPending=1 and t1.UserId =@UserId ";
+                var query = @" SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId LEFT JOIN Class t3 ON t3.Id = t1.ClassId LEFT JOIN EnglishMediumClass t4 ON t4.Id = t1.ClassId WHERE t1.TaskPending=1 and t1.UserId =@UserId ";
 
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
 
-                var baseUrl = "https://api.edex365.com/uploads/";
+                var baseUrl = "http://192.168.0.238:81/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -134,7 +134,7 @@ namespace S_EDex365.API.Services
                 await connection.OpenAsync();
 
                 // 1. Get the Post Details
-                var queryPost = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.Id = @Id";
+                var queryPost = @"SELECT t1.Id, t2.SubjectName AS Subject, t1.Topic, t3.ClassName AS sClass, t1.Description, t1.Photo, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId LEFT JOIN Class t3 ON t3.Id = t1.ClassId LEFT JOIN EnglishMediumClass t4 on t4.Id=t1.ClassId WHERE t1.Id = @Id";
 
                 var result = await connection.QueryFirstOrDefaultAsync<ProblemPostAll>(queryPost, new { Id = postId });
 
@@ -219,42 +219,6 @@ namespace S_EDex365.API.Services
                         result.StudentChats = studentChats.ToList();
                     }
                 }
-
-
-
-
-
-
-
-                //foreach (var user in userTypes)
-                //{
-                //    Console.WriteLine($"Type: {user.Type}, UserId: {user.UserId}");
-
-
-                //    if (user.Type.Trim().Equals("Teacher", StringComparison.OrdinalIgnoreCase))
-                //    {
-                //        // Fetch Teacher Chat
-                //        //var queryTeacherChat = @"SELECT VoiceUrl, Text FROM Communication WHERE UserId = '"+ user.UserId + "' AND ProblemPostId = @ProblemPostId";
-
-                //        var queryTeacherChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
-
-                //        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryTeacherChat, new {ProblemPostId = postId });
-
-                //        result.TeacherChats = teacherChats.ToList();
-                //    }
-                //    else if (user.Type.Trim().Equals("Student", StringComparison.OrdinalIgnoreCase))
-                //    {
-                //        // Fetch Student Chat
-                //        var queryStudentChat = @"SELECT VoiceUrl, Text, GetDate,CASE WHEN VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN VoiceUrl ELSE Text + '' + VoiceUrl END AS Message FROM Communication WHERE UserId = '" + user.UserId + "' AND ProblemPostId = @ProblemPostId";
-
-                //        var teacherChats = await connection.QueryAsync<CommunicationResponse>(queryStudentChat, new { ProblemPostId = postId });
-
-                //        result.StudentChats = teacherChats.ToList();
-                //    }
-                //}
-
-
-
                 return result;
             }
         }
@@ -267,13 +231,13 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @"select top 1 t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId JOIN Class t4 ON t4.Id = t2.ClassId where StudentId= @UserId";
+                var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 ON t4.Id = t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where StudentId= @UserId";
 
                 var parameters = new { UserId = userId };
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
 
-                var baseUrl = "https://api.edex365.com/uploads/";
+                var baseUrl = "http://192.168.0.238:81/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -399,7 +363,7 @@ namespace S_EDex365.API.Services
 
                         // Prepend the base URL to the photo filename
                         string fullPhotoUrl = uniqueFileName != null
-                            ? $"https://api.edex365.com/uploads/{uniqueFileName}"
+                            ? $"http://192.168.0.238:81/uploads/{uniqueFileName}"
                             : null;
 
                         // Prepare the response

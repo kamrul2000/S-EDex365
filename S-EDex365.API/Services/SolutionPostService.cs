@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
 using S_EDex365.API.Models.Payment;
+using S_EDex365.Model.Model;
 using System.Data;
 
 namespace S_EDex365.API.Services
@@ -30,7 +31,7 @@ namespace S_EDex365.API.Services
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
 
-                var baseUrl = "https://api.edex365.com/solutionImage/";
+                var baseUrl = "http://192.168.0.238:81/solutionImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in SolutionShowList)
@@ -44,33 +45,6 @@ namespace S_EDex365.API.Services
                 return SolutionShowList.ToList();
             }
         }
-
-        //public async Task<List<SolutionShowAll>> GetAllSolutionAsync(Guid userId)
-        //{
-        //    using (var connection = new SqlConnection(_connectionString))
-        //    {
-        //        await connection.OpenAsync();
-
-        //        //// Fetch the SubjectId based on userId
-        //        //var query = "SELECT CAST(SubjectId AS VARCHAR(36)) AS SubjectId FROM Users WHERE Id = @UserId";
-        //        //var subjectId = await connection.QueryFirstOrDefaultAsync<string>(query, new { UserId = userId });
-
-        //        // Query to get the problem posts
-        //        var queryString = @" SELECT t1.id,t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS Class FROM ProblemsPost t1 JOIN Subject t2 ON t2.Id = t1.SubjectId JOIN Class t3 ON t3.Id = t1.ClassId WHERE t1.SubjectId = @SubjectId";
-
-        //        var parameters = new { SubjectId = subjectId };
-        //        var problemPostList = (await connection.QueryAsync<ProblemPostAll>(queryString, parameters)).ToList();
-
-        //        // Add base URL to the Photo property
-        //        foreach (var post in problemPostList)
-        //        {
-        //            post.Photo = $"{_basePhotoUrl}{post.Photo}";
-        //        }
-
-        //        return problemPostList;
-        //    }
-        //}
-
         public async Task<SolutionPostResponse> InsertSolutionPostAsync(SolutionPostDto solutionPost, Guid postId)
         {
             try
@@ -115,47 +89,56 @@ namespace S_EDex365.API.Services
                     // 2. Add the new amount to the existing one
                     decimal updatedAmount = existingAmount - existingProblemsPost ;
 
-                    // 3. Update the Balance table with the new total
-                    var queryBalance = "UPDATE Balance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
-                    var parametersBalance = new DynamicParameters();
-                    parametersBalance.Add("UserId", userId);
-                    parametersBalance.Add("Amount", updatedAmount);
-                    parametersBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
 
-                    var successs = await connection.ExecuteAsync(queryBalance, parametersBalance);
+                    var queryCheck = "SELECT COUNT(1) FROM SolutionPost WHERE ProblemPostId = @ProblemPostId";
+                    var count = await connection.ExecuteScalarAsync<int>(queryCheck, new { ProblemPostId = postId });
 
-
-                    var queryExistingAmountTeacher = "SELECT Amount FROM TeacherBalance WHERE UserId = @UserId";
-                    var parametersExistingAmountTeacher = new DynamicParameters();
-                    parametersExistingAmountTeacher.Add("UserId", userId, DbType.Guid);
-
-                    decimal existingAmountTeacher = await connection.QueryFirstOrDefaultAsync<decimal>(queryExistingAmountTeacher, parametersExistingAmountTeacher);
-
-                    decimal updatedTeacherAmount = existingAmountTeacher + existingProblemsPost;
-
-                    if (updatedTeacherAmount > 0)
-                    {
-                        var queryTeacherBalance = "insert into TeacherBalance (id,UserId,Amount,GatDate) values ";
-                        queryTeacherBalance += "(@id,@UserId,@Amount,@GatDate)";
-                        var parametersTeacherBalance = new DynamicParameters();
-                        var IdBalance = Guid.NewGuid().ToString();
-                        parametersTeacherBalance.Add("id", IdBalance, DbType.String);
-                        parametersTeacherBalance.Add("UserId", solutionPost.TeacherId);
-                        parametersTeacherBalance.Add("Amount", updatedTeacherAmount);
-                        parametersTeacherBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
-                        var successsTeacherBalance = await connection.ExecuteAsync(queryTeacherBalance, parametersTeacherBalance);
-                    }
-                    else
+                    if (count <= 0)
                     {
                         // 3. Update the Balance table with the new total
-                        var queryTeacherBalanceUpdate = "UPDATE TeacherBalance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
-                        var parametersTeacherBalanceUpdate = new DynamicParameters();
-                        parametersTeacherBalanceUpdate.Add("UserId", solutionPost.TeacherId);
-                        parametersTeacherBalanceUpdate.Add("Amount", updatedAmount);
-                        parametersTeacherBalanceUpdate.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
+                        var queryBalance = "UPDATE Balance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
+                        var parametersBalance = new DynamicParameters();
+                        parametersBalance.Add("UserId", userId);
+                        parametersBalance.Add("Amount", updatedAmount);
+                        parametersBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
 
-                        var successsTeacherBalanceUpdate = await connection.ExecuteAsync(queryTeacherBalanceUpdate, parametersTeacherBalanceUpdate);
+                        var successs = await connection.ExecuteAsync(queryBalance, parametersBalance);
+
+
+                        var queryExistingAmountTeacher = "SELECT Amount FROM TeacherBalance WHERE UserId = @UserId";
+                        var parametersExistingAmountTeacher = new DynamicParameters();
+                        parametersExistingAmountTeacher.Add("UserId", userId, DbType.Guid);
+
+                        decimal existingAmountTeacher = await connection.QueryFirstOrDefaultAsync<decimal>(queryExistingAmountTeacher, parametersExistingAmountTeacher);
+
+                        decimal updatedTeacherAmount = existingAmountTeacher + existingProblemsPost;
+
+
+                        if (updatedTeacherAmount > 0)
+                        {
+                            var queryTeacherBalance = "insert into TeacherBalance (id,UserId,Amount,GatDate) values ";
+                            queryTeacherBalance += "(@id,@UserId,@Amount,@GatDate)";
+                            var parametersTeacherBalance = new DynamicParameters();
+                            var IdBalance = Guid.NewGuid().ToString();
+                            parametersTeacherBalance.Add("id", IdBalance, DbType.String);
+                            parametersTeacherBalance.Add("UserId", solutionPost.TeacherId);
+                            parametersTeacherBalance.Add("Amount", updatedTeacherAmount);
+                            parametersTeacherBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
+                            var successsTeacherBalance = await connection.ExecuteAsync(queryTeacherBalance, parametersTeacherBalance);
+                        }
+                        else
+                        {
+                            // 3. Update the Balance table with the new total
+                            var queryTeacherBalanceUpdate = "UPDATE TeacherBalance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
+                            var parametersTeacherBalanceUpdate = new DynamicParameters();
+                            parametersTeacherBalanceUpdate.Add("UserId", solutionPost.TeacherId);
+                            parametersTeacherBalanceUpdate.Add("Amount", updatedAmount);
+                            parametersTeacherBalanceUpdate.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                            var successsTeacherBalanceUpdate = await connection.ExecuteAsync(queryTeacherBalanceUpdate, parametersTeacherBalanceUpdate);
+                        }
                     }
+                    
 
                     
 
@@ -203,7 +186,7 @@ namespace S_EDex365.API.Services
                     // Prepare the response
                     SolutionPostResponse solutionPostResponse = new SolutionPostResponse
                     {
-                        Photo = $"http://192.168.0.159:81/api/solutionImage/{uniqueFileName}"
+                        Photo = $"http://192.168.0.238:81/api/solutionImage/{uniqueFileName}"
                     };
 
                     return solutionPostResponse;

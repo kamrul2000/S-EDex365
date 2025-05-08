@@ -60,15 +60,5 @@ namespace S_EDex365.API.Controllers
             return Ok("skill are deleted...");
         }
 
-        //[HttpPost("s/DeleteSkill")]
-        //public async Task<IActionResult> DeleteSkill(Guid userId, Guid subId)
-        //{
-        //    var result = await _subjectUpdateService.DeleteUserAsync(userId,subId);
-        //    if (result == null)
-        //        return NotFound("Subject are not Delete...");
-        //    return Ok("Skill are Deleted...");
-        //}
-
-
     }
 }

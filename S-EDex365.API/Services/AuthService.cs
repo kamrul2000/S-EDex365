@@ -76,7 +76,7 @@ namespace S_EDex365.API.Services
                 var UserAllInformationList = await connection.QueryAsync<UserAllInformation>(query);
                 connection.Close();
 
-                var baseUrl = "https://api.edex365.com/profileImage/";
+                var baseUrl = "http://192.168.0.238:81/profileImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var users in UserAllInformationList)
@@ -317,13 +317,13 @@ namespace S_EDex365.API.Services
 
 
                         string fullImageUrl = uniqueImageFileName != null
-                            ? $"https://4kxjq0c9-19090.asse.devtunnels.ms/profileImage/{uniqueImageFileName}"
+                            ? $"http://192.168.0.238:81/profileImage/{uniqueImageFileName}"
                             : null;
                         string fullAcademicImageUrl = uniqueAcademicImageFileName != null
-                            ? $"https://4kxjq0c9-19090.asse.devtunnels.ms/academicImage/{uniqueAcademicImageFileName}"
+                            ? $"http://192.168.0.238:81/academicImage/{uniqueAcademicImageFileName}"
                             : null;
                         string fullCvUrl = uniqueCvFileName != null
-                            ? $"https://4kxjq0c9-19090.asse.devtunnels.ms/cvFile/{uniqueCvFileName}"
+                            ? $"http://192.168.0.238:81/cvFile/{uniqueCvFileName}"
                             : null;
 
                         UserResponse userResponse = new UserResponse();
@@ -516,7 +516,7 @@ namespace S_EDex365.API.Services
                         var success = await connection.ExecuteAsync(queryString, parameters);
 
                         string fullPhotoUrl = uniqueFileName != null
-                            ? $"https://api.edex365.com/uploads/{uniqueFileName}"
+                            ? $"http://192.168.0.238:81/uploads/{uniqueFileName}"
                             : null;
 
                         UserResponseUpdate userResponseUpdate = new UserResponseUpdate
@@ -553,7 +553,7 @@ namespace S_EDex365.API.Services
                         var url=await connection.ExecuteScalarAsync(imgUrl, parameters1);
 
                         string fullPhotoUrl = url != null
-                            ? $"https://api.edex365.com/uploads/{url}"
+                            ? $"http://192.168.0.238:81/uploads/{url}"
                             : null;
 
                         UserResponseUpdate userResponseUpdate = new UserResponseUpdate
