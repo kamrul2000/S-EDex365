@@ -19,16 +19,6 @@ namespace S_EDex365.API.Controllers
             _teacherService = teacherService;
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        //[HttpGet("s/AllProblems/{userId}")]
-        //public async Task<ActionResult<List<ProblemList>>> GetProblems(Guid userId)
-        //{
-        //    var subjectDetails = await _teacherService.GetAllPostByUserAsync(userId);
-
-        //    if (subjectDetails.Count == 0)
-        //        return Ok("You are blocked for");
-
-        //    return Ok(subjectDetails);
-        //}
 
 
         [HttpGet("s/AllProblems/{userId}")]

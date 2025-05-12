@@ -34,6 +34,7 @@ builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<ICommunicationService, CommunicationService>();
 builder.Services.AddScoped<IPostTypeService,PostTypeService>();
 builder.Services.AddScoped<IEnglishClassService,EnglishClassService>();
+builder.Services.AddScoped<IClaimCommunicationService,ClaimCommunicationService>();
 
 
 
@@ -42,6 +43,7 @@ builder.Services.AddDistributedMemoryCache();
 
 
 builder.Services.AddHostedService<PeriodicTaskService>();
+builder.Services.AddHostedService<PaymentPeriodicTaskService>();
 
 //Add Session
 builder.Services.AddSession(options =>
