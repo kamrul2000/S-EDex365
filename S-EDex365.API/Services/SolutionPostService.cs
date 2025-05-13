@@ -26,7 +26,7 @@ namespace S_EDex365.API.Services
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var queryString = "select t1.Photo from SolutionPost t1 join ProblemsPost t2 on t1.ProblemPostId=t2.id where t2.id='"+ postId +"' ";
+                var queryString = "select t1.Id as Id,t1.Photo from SolutionPost t1 join ProblemsPost t2 on t1.ProblemPostId=t2.id where t2.id='" + postId +"' ";
                 var query = string.Format(queryString);
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();

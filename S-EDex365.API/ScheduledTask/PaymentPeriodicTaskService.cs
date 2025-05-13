@@ -83,7 +83,7 @@ public class PaymentPeriodicTaskService : BackgroundService
                         var queryCheck = "SELECT COUNT(1) FROM SolutionPost WHERE ProblemPostId = @ProblemPostId";
                         var count = await connection.ExecuteScalarAsync<int>(queryCheck, new { ProblemPostId = id });
 
-                        if (count <= 0)
+                        if (count > 0)
                         {
                             // 3. Update the Balance table with the new total
                             var queryBalance = "UPDATE Balance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
@@ -105,6 +105,9 @@ public class PaymentPeriodicTaskService : BackgroundService
                             decimal existingAmountTeacher = await connection.QueryFirstOrDefaultAsync<decimal>(queryExistingAmountTeacher, parametersExistingAmountTeacher);
 
                             decimal updatedTeacherAmount = existingAmountTeacher + existingProblemsPost;
+
+                            var queryUpdate = "UPDATE SolutionPost SET PaymentBlock = 0 WHERE ProblemPostId = @ProblemPostId";
+                            await connection.ExecuteScalarAsync<Guid>(queryUpdate, new { ProblemPostId = id });
 
 
                             if (updatedTeacherAmount > 0)

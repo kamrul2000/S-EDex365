@@ -34,7 +34,7 @@ namespace S_EDex365.API.Controllers
 
             if (result == null || result.Count == 0)
             {
-                return NotFound("No chat found for the specified solution.");
+                return Ok("[]");
             }
 
             return Ok(result);
