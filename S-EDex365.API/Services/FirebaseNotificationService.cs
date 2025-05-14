@@ -34,7 +34,7 @@ namespace S_EDex365.API.Services
         public async Task<string> SendNotificationAsync(string title, string body, string token, Guid postId, string photo, string subjectName, string description)
         {
 
-            var baseUrl = "http://192.168.0.238:81/uploads/";
+            var baseUrl = "https://api.edex365.com/uploads/";
 
             var img = photo;
                 if (!string.IsNullOrEmpty(img))

@@ -36,7 +36,7 @@ namespace S_EDex365.API.Services
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
 
-                var baseUrl = "http://192.168.0.238:81/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -64,7 +64,7 @@ namespace S_EDex365.API.Services
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
 
-                var baseUrl = "http://192.168.0.238:81/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -143,7 +143,7 @@ namespace S_EDex365.API.Services
 
                 if (!string.IsNullOrEmpty(result.Photo))
                 {
-                    result.Photo = "http://192.168.0.238:81/uploads/" + result.Photo;
+                    result.Photo = "https://api.edex365.com/uploads/" + result.Photo;
                 }
 
                 var queryType = @"SELECT t2.Name AS Type, t1.UserId FROM Communication t1 JOIN Roles t2 ON t2.Id = t1.UserType WHERE t1.ProblemPostId = @ProblemPostId";
@@ -172,7 +172,7 @@ namespace S_EDex365.API.Services
                         {
                             if (!string.IsNullOrEmpty(chat.VoiceUrl))
                             {
-                                var fullUrl = "http://192.168.0.238:81/recording/" + chat.VoiceUrl;
+                                var fullUrl = "https://api.edex365.com/recording/" + chat.VoiceUrl;
 
                                 // Update Message to full URL if it's just the voice filename
                                 if (!string.IsNullOrEmpty(chat.Message) && chat.Message == chat.VoiceUrl)
@@ -203,7 +203,7 @@ namespace S_EDex365.API.Services
                         {
                             if (!string.IsNullOrEmpty(chat.VoiceUrl))
                             {
-                                var fullUrl = "http://192.168.0.238:81/recording/" + chat.VoiceUrl;
+                                var fullUrl = "https://api.edex365.com/recording/" + chat.VoiceUrl;
 
                                 // Update Message to full URL if it's just the voice filename
                                 if (!string.IsNullOrEmpty(chat.Message) && chat.Message == chat.VoiceUrl)
@@ -237,7 +237,7 @@ namespace S_EDex365.API.Services
 
                 var result = await connection.QueryAsync<ProblemPostAll>(query, parameters);
 
-                var baseUrl = "http://192.168.0.238:81/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -363,7 +363,7 @@ namespace S_EDex365.API.Services
 
                         // Prepend the base URL to the photo filename
                         string fullPhotoUrl = uniqueFileName != null
-                            ? $"http://192.168.0.238:81/uploads/{uniqueFileName}"
+                            ? $"https://api.edex365.com/uploads/{uniqueFileName}"
                             : null;
 
                         // Prepare the response

@@ -8,7 +8,7 @@ namespace S_EDex365.API.Services
     public class TeacherNotificationService : ITeacherNotificationService
     {
         private readonly string _connectionString;
-        private readonly string _basePhotoUrl = "http://192.168.0.238:81/uploads/";
+        private readonly string _basePhotoUrl = "https://api.edex365.com/uploads/";
         private readonly IFirebaseNotificationService _notificationService;
         public TeacherNotificationService(IConfiguration configuration, IFirebaseNotificationService notificationService)
         {

@@ -38,7 +38,7 @@ namespace S_EDex365.API.Services
 
                 var problemPostList = await connection.QueryAsync<ProblemPostAll>(queryString);
 
-                var baseUrl = "http://192.168.0.238:81/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
                 foreach (var problem in problemPostList)
                 {
                     if (!string.IsNullOrEmpty(problem.Photo))
@@ -67,7 +67,7 @@ namespace S_EDex365.API.Services
                 var query = @" select t1.Id, t1.Topic, t1.Description, t1.Photo , t2.SubjectName AS Subject, t3.ClassName AS sClass,Flag from ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id LEFT JOIN Class t3 ON t3.Id = t1.ClassId Left JOIN EnglishMediumClass t5 on t5.Id=t1.ClassId JOIN TeacherSkill t4 on t4.SubjectId=t1.SubjectId where Flag = 0 and t4.UserId='" + userId + "'";
 
                     var result = await connection.QueryAsync<ProblemList>(query);
-                    var baseUrl = "http://192.168.0.238:81/uploads/";
+                    var baseUrl = "https://api.edex365.com/uploads/";
 
                     // Update the Photo property with the full URL
                     foreach (var problem in result)
@@ -93,7 +93,7 @@ namespace S_EDex365.API.Services
                 var query = @" SELECT t1.Id, t1.Topic, t1.Description, t1.Photo, t2.SubjectName AS Subject, t3.ClassName AS sClass,t1.Flag FROM ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id LEFT JOIN Class t3 ON t3.Id = t1.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t1.ClassId JOIN RecivedProblem t4 on t4.ProblemsPostId=t1.Id where t1.Flag=1 and t4.SolutionPending=1 and t4.UserId='" + userId +"' ";
 
                 var result = await connection.QueryAsync<ProblemList>(query);
-                var baseUrl = "http://192.168.0.238:81/uploads/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in result)
@@ -118,7 +118,7 @@ namespace S_EDex365.API.Services
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
 
-                var baseUrl = "http://192.168.0.238:81/solutionImage/";
+                var baseUrl = "https://api.edex365.com/solutionImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in SolutionShowList)
@@ -143,7 +143,7 @@ namespace S_EDex365.API.Services
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
 
-                var baseUrl = "http://192.168.0.238:81/solutionImage/";
+                var baseUrl = "https://api.edex365.com/solutionImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in SolutionShowList)

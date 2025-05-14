@@ -31,7 +31,7 @@ namespace S_EDex365.API.Services
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
 
-                var baseUrl = "http://192.168.0.238:81/solutionImage/";
+                var baseUrl = "https://api.edex365.com/solutionImage/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in SolutionShowList)
@@ -65,8 +65,8 @@ namespace S_EDex365.API.Services
                         throw new Exception("Invalid ProblemPostId.");
                     }
 
-                    //var query = "UPDATE RecivedProblem SET SolutionPending = 0,S_LastTime=NULL WHERE ProblemsPostId = @ProblemsPostId";
-                    //await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
+                    var query = "UPDATE RecivedProblem SET SolutionPending = 0,S_LastTime=NULL WHERE ProblemsPostId = @ProblemsPostId";
+                    await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
 
 
                     //var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
@@ -188,7 +188,7 @@ namespace S_EDex365.API.Services
                     // Prepare the response
                     SolutionPostResponse solutionPostResponse = new SolutionPostResponse
                     {
-                        Photo = $"http://192.168.0.238:81/api/solutionImage/{uniqueFileName}"
+                        Photo = $"https://api.edex365.com/api/solutionImage/{uniqueFileName}"
                     };
 
                     return solutionPostResponse;

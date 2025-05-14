@@ -57,12 +57,12 @@ namespace S_EDex365.API.Services
                     {
                         if (!string.IsNullOrEmpty(chat.VoiceUrl))
                         {
-                            chat.VoiceUrl = "http://192.168.0.238:81/claimRecording/" + chat.VoiceUrl;
+                            chat.VoiceUrl = "https://api.edex365.com/claimRecording/" + chat.VoiceUrl;
                         }
 
                         if (!string.IsNullOrEmpty(chat.ImageUrl))
                         {
-                            chat.ImageUrl = "http://192.168.0.238:81/claimImage/" + chat.ImageUrl;
+                            chat.ImageUrl = "https://api.edex365.com/claimImage/" + chat.ImageUrl;
                         }
 
                         chat.Message = $"{chat.Text ?? ""} {(chat.VoiceUrl ?? "")} {(chat.ImageUrl ?? "")}".Trim();
