@@ -57,7 +57,7 @@ namespace S_EDex365.API.Services
                     {
                         if (!string.IsNullOrEmpty(chat.VoiceUrl))
                         {
-                            chat.VoiceUrl = "http://192.168.0.238:81/recording/" + chat.VoiceUrl;
+                            chat.VoiceUrl = "http://192.168.0.238:81/claimRecording/" + chat.VoiceUrl;
                         }
 
                         if (!string.IsNullOrEmpty(chat.ImageUrl))
