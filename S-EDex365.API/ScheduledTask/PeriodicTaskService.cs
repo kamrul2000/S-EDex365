@@ -44,7 +44,7 @@ public class PeriodicTaskService : BackgroundService
                     {
                         var queryFlagCheck = "select flag from RecivedProblem where ProblemsPostId= @Id";
                         var check = await connection.ExecuteScalarAsync<int>(queryFlagCheck, new { Id = id });
-                        if (check==0)
+                        if (check==1)
                         {
                             // Update SolutionPending in RecivedProblem
                             var queryUpdate = "UPDATE RecivedProblem SET SolutionPending = 0, Flag = 1, BlockFlag = 1, UnlockTime = @UnlockTime WHERE ProblemsPostId = @Id";
@@ -61,6 +61,11 @@ public class PeriodicTaskService : BackgroundService
                             // Update Flag in ProblemsPost
                             var queryProblemPost = "UPDATE ProblemsPost SET Flag = 0 WHERE Id = @PostId";
                             await connection.ExecuteAsync(queryProblemPost, new { PostId = id }); // ✅ use ExecuteAsync
+                            var queryUserId = "select UserId from RecivedProblem where ProblemsPostId= @Id";
+                            var checkUserId = await connection.ExecuteScalarAsync<int>(queryUserId, new { Id = id });
+
+                            var queryUserBLocked = "UPDATE Users SET UserBlocked = 1 WHERE Id = @Id";
+                            await connection.ExecuteAsync(queryUserBLocked, new { Id = checkUserId });
                         }
                         
                     }
@@ -89,6 +94,12 @@ public class PeriodicTaskService : BackgroundService
                             var parameters = new DynamicParameters();
                             parameters.Add("Id", id); // ← Add Id here
                             await connection.ExecuteAsync(queryUpdate, parameters);
+
+                            var queryUserId = "select UserId from RecivedProblem where ProblemsPostId= @Id";
+                            var checkUserId = await connection.ExecuteScalarAsync<int>(queryUserId, new { Id = id });
+
+                            var queryUserBLocked = "UPDATE Users SET UserBlocked = 0 WHERE Id = @Id";
+                            await connection.ExecuteAsync(queryUserBLocked, new { Id = checkUserId });
                         }
 
                     }

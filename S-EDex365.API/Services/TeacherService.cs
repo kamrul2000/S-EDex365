@@ -64,7 +64,7 @@ namespace S_EDex365.API.Services
                 //    return Enumerable.Empty<ProblemList>().ToList();
                 //}
 
-                var query = @" select t1.Id, t1.Topic, t1.Description, t1.Photo , t2.SubjectName AS Subject, t3.ClassName AS sClass,Flag from ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id LEFT JOIN Class t3 ON t3.Id = t1.ClassId Left JOIN EnglishMediumClass t5 on t5.Id=t1.ClassId JOIN TeacherSkill t4 on t4.SubjectId=t1.SubjectId where Flag = 0 and t4.UserId='" + userId + "'";
+                var query = @" select t1.Id, t1.Topic, t1.Description, t1.Photo , t2.SubjectName AS Subject, t3.ClassName AS sClass,Flag from ProblemsPost t1 JOIN Subject t2 ON t1.SubjectId = t2.Id LEFT JOIN Class t3 ON t3.Id = t1.ClassId Left JOIN EnglishMediumClass t5 on t5.Id=t1.ClassId JOIN TeacherSkill t4 on t4.SubjectId=t1.SubjectId JOIN Users t6 on t6.Id=t4.UserId where Flag = 0 and t4.UserId='" + userId + "' and t6.UserBlocked=0";
 
                     var result = await connection.QueryAsync<ProblemList>(query);
                     var baseUrl = "https://api.edex365.com/uploads/";
@@ -113,7 +113,7 @@ namespace S_EDex365.API.Services
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var queryString = "Select t2.Id,t2.Photo,t3.SubjectName AS Subject ,t2.Topic,COALESCE(t4.ClassName, t5.ClassName) AS sClass,t2.Description, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from RecivedProblem t1 join ProblemsPost t2 on t1.ProblemsPostId=t2.id join Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 on t4.Id=t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where t1.UserId='"+ userId + "' and t1.SolutionPending=0 ";
+                var queryString = "Select t2.Id,t2.Photo,t3.SubjectName AS Subject ,t2.Topic,COALESCE(t4.ClassName, t5.ClassName) AS sClass,t2.Description, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from RecivedProblem t1 join ProblemsPost t2 on t1.ProblemsPostId=t2.id join Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 on t4.Id=t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where t1.UserId='"+ userId + "' and t1.SolutionPending=0 and t1.BlockFlag is NULL and t1.S_LastTime is null and t1.Flag is null ";
                 var query = string.Format(queryString);
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();

@@ -69,8 +69,8 @@ namespace S_EDex365.API.Services
                     await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
 
 
-                    //var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
-                    //await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = postId });
+                    var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
+                    await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = postId });
 
                     //var queryExisting = "SELECT Amount FROM Balance WHERE UserId = @UserId";
                     //var parametersExisting = new DynamicParameters();

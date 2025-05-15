@@ -109,9 +109,47 @@
                 { "data": "studentName", "width": "10%" },
                 { "data": "phoneNumber", "width": "10%" },
                 { "data": "email", "width": "10%" },
-                { "data": "taskImage", "width": "10%" },
+                // { "data": "taskImage", "width": "10%" },
+                    {
+                        "data": "taskImage",
+                        "render": function (data) {
+                            if (data) {
+                                return `
+                                                                <img src="https://api.edex365.com/uploads/${data}"
+                                             alt="Image"
+                                             width="50"
+                                             height="50"
+                                             class="img-thumbnail academic-img-click"
+                                             style="object-fit: cover; cursor: pointer;"
+                                                                     data-fullsrc="https://api.edex365.com/uploads/${data}" />
+                                    `;
+                            } else {
+                                return '<span class="text-muted">No Image</span>';
+                            }
+                        },
+                        "width": "10%"
+                    },
                 { "data": "teacherName", "width": "10%" },
-                { "data": "solutionImage", "width": "10%" },
+                // { "data": "solutionImage", "width": "10%" },
+                    {
+                        "data": "solutionImage",
+                        "render": function (data) {
+                            if (data) {
+                                return `
+                                                                                <img src="https://api.edex365.com/solutionImage/${data}"
+                                                     alt="Image"
+                                                     width="50"
+                                                     height="50"
+                                                     class="img-thumbnail academic-img-click"
+                                                     style="object-fit: cover; cursor: pointer;"
+                                                                                     data-fullsrc="https://api.edex365.com/solutionImage/${data}" />
+                                            `;
+                            } else {
+                                return '<span class="text-muted">No Image</span>';
+                            }
+                        },
+                        "width": "10%"
+                    },
                 { "data": "getDateby", "width": "10%" },
                 {
                     "data": "id",

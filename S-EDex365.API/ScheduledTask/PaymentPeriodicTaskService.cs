@@ -55,12 +55,12 @@ public class PaymentPeriodicTaskService : BackgroundService
                             throw new Exception("Invalid ProblemPostId.");
                         }
 
-                        var querys = "UPDATE RecivedProblem SET SolutionPending = 0,S_LastTime=NULL WHERE ProblemsPostId = @ProblemsPostId";
-                        await connection.ExecuteScalarAsync<Guid>(querys, new { ProblemsPostId = id });
+                        //var querys = "UPDATE RecivedProblem SET SolutionPending = 0,S_LastTime=NULL WHERE ProblemsPostId = @ProblemsPostId";
+                        //await connection.ExecuteScalarAsync<Guid>(querys, new { ProblemsPostId = id });
 
 
-                        var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
-                        await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = id });
+                        //var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
+                        //await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = id });
 
                         var queryExisting = "SELECT Amount FROM Balance WHERE UserId = @UserId";
                         var parametersExisting = new DynamicParameters();

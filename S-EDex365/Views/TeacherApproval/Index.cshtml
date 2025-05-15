@@ -117,43 +117,45 @@
                     { "data": "mobileNo", "width": "10%" },
                     { "data": "email", "width": "10%" },
                     //new
-                    {
-                        "data": "image",
-                        "render": function (data) {
-                            if (data) {
-                                return `<img src="https://api.edex365.com/profileImage/${data}" alt="Image" width="50" height="50" style="object-fit: cover;" />`;
-                            } else {
-                                return 'No Image';
-                            }
-                        },
-                        "width": "10%"
-                    },
+                    // {
+                    //     "data": "image",
+                    //     "render": function (data) {
+                    //         if (data) {
+                    //             return `<img src="https://api.edex365.com/profileImage/${data}" alt="Image" width="50" height="50" style="object-fit: cover;" />`;
+                    //         } else {
+                    //             return 'No Image';
+                    //         }
+                    //     },
+                    //     "width": "10%"
+                    // },
+
                     // { "data": "academicImage", "width": "10%" },
-                    {
-                        "data": "academicImage",
-                        "render": function (data) {
-                            if (data) {
-                                return `<img src="https://api.edex365.com/academicImage/${data}" alt="Image" width="50" height="50" style="object-fit: cover;" />`;
-                            } else {
-                                return 'No Image';
-                            }
-                        },
-                        "width": "10%"
-                    },
+                    // {
+                    //     "data": "academicImage",
+                    //     "render": function (data) {
+                    //         if (data) {
+                    //             return `<img src="https://api.edex365.com/academicImage/${data}" alt="Image" width="50" height="50" style="object-fit: cover;" />`;
+                    //         } else {
+                    //             return 'No Image';
+                    //         }
+                    //     },
+                    //     "width": "10%"
+                    // },
                     // { "data": "cv", "width": "10%" },
-                    {
-                        "data": "cv",
-                        "render": function (data) {
-                            if (data) {
-                                return `<a href="https://api.edex365.com/cvFile/${data}" class="btn btn-outline-primary btn-sm" download>
-                                        <i class="fa-solid fa-download"></i> Download
-                                    </a>`;
-                            } else {
-                                return 'No CV';
-                            }
-                        },
-                        "width": "10%"
-                    },
+
+                    // {
+                    //     "data": "cv",
+                    //     "render": function (data) {
+                    //         if (data) {
+                    //             return `<a href="https://api.edex365.com/cvFile/${data}" class="btn btn-outline-primary btn-sm" download>
+                    //                     <i class="fa-solid fa-download"></i> Download
+                    //                 </a>`;
+                    //         } else {
+                    //             return 'No CV';
+                    //         }
+                    //     },
+                    //     "width": "10%"
+                    // },
                     //End
 
 
@@ -163,63 +165,63 @@
 
                     //old
 
-                    // {
-                    //     "data": "image",
-                    //     "render": function (data) {
-                    //         if (data) {
-                    //             return `
-                    //                     <img src="https://4kxjq0c9-44395.asse.devtunnels.ms/profileImage/${data}"
-                    //                  alt="Image"
-                    //                  width="50"
-                    //                  height="50"
-                    //                  class="img-thumbnail academic-img-click"
-                    //                  style="object-fit: cover; cursor: pointer;"
-                    //                          data-fullsrc="https://4kxjq0c9-44395.asse.devtunnels.ms/profileImage/${data}" />
-                    //         `;
-                    //         } else {
-                    //             return '<span class="text-muted">No Image</span>';
-                    //         }
-                    //     },
-                    //     "width": "10%"
-                    // },
-                    // {
-                    //     "data": "academicImage",
-                    //     "render": function (data) {
-                    //         if (data) {
-                    //             return `
-                    //     <img src="https://4kxjq0c9-44395.asse.devtunnels.ms/academicImage/${data}"
-                    //          alt="Image"
-                    //          width="50"
-                    //          height="50"
-                    //          class="img-thumbnail academic-img-click"
-                    //          style="object-fit: cover; cursor: pointer;"
-                    //          data-fullsrc="https://4kxjq0c9-44395.asse.devtunnels.ms/academicImage/${data}" />
-                    // `;
-                    //         } else {
-                    //             return '<span class="text-muted">No Image</span>';
-                    //         }
-                    //     },
-                    //     "width": "10%"
-                    // },
-                    // {
-                    //     "data": "cv",
-                    //     "render": function (data) {
-                    //         if (data) {
-                    //             return `
-                    //     <a href="https://4kxjq0c9-44395.asse.devtunnels.ms/cvFile/${data}"
-                    //        class="btn btn-outline-primary btn-sm"
-                    //        target="_blank"
-                    //        rel="noopener"
-                    //        style="white-space: nowrap;">
-                    //         <i class="fa-solid fa-download"></i> Download
-                    //     </a>
-                    // `;
-                    //         } else {
-                    //             return '<span class="text-muted">No CV</span>';
-                    //         }
-                    //     },
-                    //     "width": "10%"
-                    // },
+                    {
+                        "data": "image",
+                        "render": function (data) {
+                            if (data) {
+                                return `
+                                                <img src="https://api.edex365.com/profileImage/${data}"
+                                     alt="Image"
+                                     width="50"
+                                     height="50"
+                                     class="img-thumbnail academic-img-click"
+                                     style="object-fit: cover; cursor: pointer;"
+                                                     data-fullsrc="https://api.edex365.com/profileImage/${data}" />
+                            `;
+                            } else {
+                                return '<span class="text-muted">No Image</span>';
+                            }
+                        },
+                        "width": "10%"
+                    },
+                    {
+                        "data": "academicImage",
+                        "render": function (data) {
+                            if (data) {
+                                return `
+                                <img src="https://api.edex365.com/academicImage/${data}"
+                             alt="Image"
+                             width="50"
+                             height="50"
+                             class="img-thumbnail academic-img-click"
+                             style="object-fit: cover; cursor: pointer;"
+                                     data-fullsrc="https://api.edex365.com/academicImage/${data}" />
+                    `;
+                            } else {
+                                return '<span class="text-muted">No Image</span>';
+                            }
+                        },
+                        "width": "10%"
+                    },
+                    {
+                        "data": "cv",
+                        "render": function (data) {
+                            if (data) {
+                                return `
+                                <a href="https://api.edex365.com/cvFile/${data}"
+                           class="btn btn-outline-primary btn-sm"
+                           target="_blank"
+                           rel="noopener"
+                           style="white-space: nowrap;">
+                            <i class="fa-solid fa-download"></i> Download
+                        </a>
+                    `;
+                            } else {
+                                return '<span class="text-muted">No CV</span>';
+                            }
+                        },
+                        "width": "10%"
+                    },
 
 
                     //old end
