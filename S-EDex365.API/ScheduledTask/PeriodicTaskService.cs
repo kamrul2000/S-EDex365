@@ -62,7 +62,7 @@ public class PeriodicTaskService : BackgroundService
                             var queryProblemPost = "UPDATE ProblemsPost SET Flag = 0 WHERE Id = @PostId";
                             await connection.ExecuteAsync(queryProblemPost, new { PostId = id }); // ✅ use ExecuteAsync
                             var queryUserId = "select UserId from RecivedProblem where ProblemsPostId= @Id";
-                            var checkUserId = await connection.ExecuteScalarAsync<int>(queryUserId, new { Id = id });
+                            var checkUserId = await connection.ExecuteScalarAsync<Guid>(queryUserId, new { Id = id });
 
                             var queryUserBLocked = "UPDATE Users SET UserBlocked = 1 WHERE Id = @Id";
                             await connection.ExecuteAsync(queryUserBLocked, new { Id = checkUserId });
@@ -96,7 +96,7 @@ public class PeriodicTaskService : BackgroundService
                             await connection.ExecuteAsync(queryUpdate, parameters);
 
                             var queryUserId = "select UserId from RecivedProblem where ProblemsPostId= @Id";
-                            var checkUserId = await connection.ExecuteScalarAsync<int>(queryUserId, new { Id = id });
+                            var checkUserId = await connection.ExecuteScalarAsync<Guid>(queryUserId, new { Id = id });
 
                             var queryUserBLocked = "UPDATE Users SET UserBlocked = 0 WHERE Id = @Id";
                             await connection.ExecuteAsync(queryUserBLocked, new { Id = checkUserId });

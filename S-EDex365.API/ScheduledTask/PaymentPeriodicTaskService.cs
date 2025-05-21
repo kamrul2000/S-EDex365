@@ -118,17 +118,19 @@ public class PaymentPeriodicTaskService : BackgroundService
                                 var IdBalance = Guid.NewGuid().ToString();
                                 parametersTeacherBalance.Add("id", IdBalance, DbType.String);
                                 parametersTeacherBalance.Add("UserId", TeacherId);
-                                parametersTeacherBalance.Add("Amount", updatedTeacherAmount);
+                                parametersTeacherBalance.Add("Amount", existingProblemsPost);
                                 parametersTeacherBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
                                 var successsTeacherBalance = await connection.ExecuteAsync(queryTeacherBalance, parametersTeacherBalance);
                             }
                             else
                             {
+
                                 // 3. Update the Balance table with the new total
                                 var queryTeacherBalanceUpdate = "UPDATE TeacherBalance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
                                 var parametersTeacherBalanceUpdate = new DynamicParameters();
                                 parametersTeacherBalanceUpdate.Add("UserId", TeacherId);
-                                parametersTeacherBalanceUpdate.Add("Amount", updatedAmount);
+                                //parametersTeacherBalanceUpdate.Add("Amount", updatedAmount);
+                                parametersTeacherBalanceUpdate.Add("Amount", existingProblemsPost);
                                 parametersTeacherBalanceUpdate.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
 
                                 var successsTeacherBalanceUpdate = await connection.ExecuteAsync(queryTeacherBalanceUpdate, parametersTeacherBalanceUpdate);

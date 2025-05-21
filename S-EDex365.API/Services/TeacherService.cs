@@ -113,7 +113,7 @@ namespace S_EDex365.API.Services
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var queryString = "Select t2.Id,t2.Photo,t3.SubjectName AS Subject ,t2.Topic,COALESCE(t4.ClassName, t5.ClassName) AS sClass,t2.Description, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from RecivedProblem t1 join ProblemsPost t2 on t1.ProblemsPostId=t2.id join Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 on t4.Id=t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where t1.UserId='"+ userId + "' and t1.SolutionPending=0 and t1.BlockFlag is NULL and t1.S_LastTime is null and t1.Flag is null ";
+                var queryString = "Select t2.Id,t2.Photo,t3.SubjectName AS Subject ,t2.Topic,COALESCE(t4.ClassName, t5.ClassName) AS sClass,t2.Description, FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from RecivedProblem t1 join ProblemsPost t2 on t1.ProblemsPostId=t2.id join Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 on t4.Id=t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where t1.UserId='"+ userId + "' and t1.SolutionPending=0 and t1.BlockFlag is NULL and t1.S_LastTime is null ";
                 var query = string.Format(queryString);
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
@@ -180,7 +180,7 @@ namespace S_EDex365.API.Services
 
                             // Insert into RecivedProblem
                             var queryString = @"
-                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby,SolutionPending,S_LastTime) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby,@SolutionPending,@S_LastTime)"
+                INSERT INTO RecivedProblem (id, UserId, ProblemsPostId, GetDateby, Updateby,SolutionPending,Flag,S_LastTime) VALUES (@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby,@SolutionPending,@Flag,@S_LastTime)"
                             ;
 
                             //INSERT INTO RecivedProblem(id, UserId, ProblemsPostId, GetDateby, Updateby) OUTPUT INSERTED.Id VALUES(@id, @UserId, @ProblemsPostId, @GetDateby, @Updateby)";
@@ -193,6 +193,7 @@ namespace S_EDex365.API.Services
                             parameters.Add("GetDateby", DateTime.Now, DbType.DateTime);
                             parameters.Add("Updateby", DateTime.Now, DbType.DateTime);
                             parameters.Add("SolutionPending", 1, DbType.Boolean);
+                            parameters.Add("Flag", 1, DbType.Boolean);
                             //parameters.Add("S_LastTime", DateTime.Now.AddMinutes(20), DbType.DateTime);
                             parameters.Add("S_LastTime", DateTime.Now.AddMinutes(20).ToString("HH:mm"), DbType.String);
 

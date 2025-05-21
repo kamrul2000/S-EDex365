@@ -59,7 +59,7 @@ namespace S_EDex365.API.Controllers
         {
             var subjectDetails = await _teacherService.GetAllSolutionTeacherAsync(userId);
             if (subjectDetails.Count == 0)
-                return Ok();
+                return Ok("[]");
             return Ok(subjectDetails);
         }
         [HttpGet("s/SolutionTeacherByPostId/{postId}")]
