@@ -17,6 +17,101 @@ namespace S_EDex365.API.Services
                 ?? throw new ArgumentNullException(nameof(_connectionString));
         }
 
+        public async Task<List<StudentCostTransaction>> GetAllCostTransactionByAsync(Guid userId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var query = @"
+        SELECT t1.photo, t2.amount, t1.GetDateby 
+        FROM SolutionPost t1 
+        JOIN ProblemsPost t2 ON t1.ProblemPostId = t2.id 
+        WHERE t1.StudentId = @StudentId";
+
+                    var transactions = (await connection.QueryAsync<StudentCostTransaction>(query, new { StudentId = userId })).ToList();
+
+                    var baseUrl = "https://api.edex365.com/solutionImage/";
+
+                    foreach (var transaction in transactions)
+                    {
+                        if (!string.IsNullOrEmpty(transaction.Photo))
+                        {
+                            transaction.Photo = baseUrl + transaction.Photo;
+                        }
+                    }
+
+                    return transactions;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<TeacherTransaction>> GetAllTeacherTransactionByAsync(Guid userId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var query = @"
+        SELECT t1.photo, t2.amount, t1.GetDateby 
+        FROM SolutionPost t1 
+        JOIN ProblemsPost t2 ON t1.ProblemPostId = t2.id 
+        WHERE t1.TeacherId = @StudentId";
+
+                    var transactions = (await connection.QueryAsync<TeacherTransaction>(query, new { StudentId = userId })).ToList();
+
+                    var baseUrl = "https://api.edex365.com/solutionImage/";
+
+                    foreach (var transaction in transactions)
+                    {
+                        if (!string.IsNullOrEmpty(transaction.Photo))
+                        {
+                            transaction.Photo = baseUrl + transaction.Photo;
+                        }
+                    }
+
+                    return transactions;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<StudentTransaction>> GetAllTransactionByAsync(Guid userId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var query = "SELECT TransactionId, Amount, GetDateby FROM Wallet WHERE UserId = @UserId";
+                    var transInfoList = (await connection.QueryAsync<StudentTransaction>(query, new { UserId = userId })).ToList();
+
+                    return transInfoList;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<StudentWallet> GetStudentWalletAsync(Guid userId)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -67,8 +162,8 @@ namespace S_EDex365.API.Services
                     parameters.Add("UserId", userId);
                     parameters.Add("TransactionId", paymentResponse.PaymentID);
                     parameters.Add("Amount", paymentResponse.Amount);
-                    parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
-                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
+                    parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     var success = await connection.ExecuteAsync(queryString, parameters);
 
 

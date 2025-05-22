@@ -25,6 +25,26 @@ namespace S_EDex365.API.Controllers
 
             return Ok("Balance:" + wallet.Balance); // or wallet.Amount, depending on your model
         }
+        [HttpGet("s/StudentTransaction")]
+        public async Task<ActionResult<StudentTransaction>> GetStudentTransaction(Guid userId)
+        {
+            var transInfo = await _walletService.GetAllTransactionByAsync(userId);
+
+            if (transInfo == null)
+                return Ok("No Transaction is here...");
+
+            return Ok(transInfo);
+        }
+        [HttpGet("s/StudentAllCostTransaction")]
+        public async Task<ActionResult<StudentCostTransaction>> GetStudentAllCostTransaction(Guid userId)
+        {
+            var transInfo = await _walletService.GetAllCostTransactionByAsync(userId);
+
+            if (transInfo == null)
+                return Ok("No Transaction is here...");
+
+            return Ok(transInfo);
+        }
 
     }
 }

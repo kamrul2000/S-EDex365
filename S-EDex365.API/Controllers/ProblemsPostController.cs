@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using S_EDex365.API.Interfaces;
@@ -15,11 +18,13 @@ namespace S_EDex365.API.Controllers
         private readonly IProblemsPost _problemsPost;
         private readonly ITeacherNotificationService _teacherService;
         private readonly IFirebaseNotificationService _notificationService;
-        public ProblemsPostController(IProblemsPost problemsPost, ITeacherNotificationService teacherService, IFirebaseNotificationService notificationService)
+        private readonly string _connectionString;
+        public ProblemsPostController(IProblemsPost problemsPost, ITeacherNotificationService teacherService, IFirebaseNotificationService notificationService, IConfiguration configuration)
         {
             _problemsPost = problemsPost;
             _teacherService = teacherService;
             _notificationService = notificationService;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
 
         }
 
@@ -29,6 +34,17 @@ namespace S_EDex365.API.Controllers
         {
             try
             {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    var queryExist = "select SubjectId from TeacherSkill where SubjectId= @SubjectId";
+                    var count = await connection.ExecuteScalarAsync<int>(queryExist, new { SubjectId = problemsPost.Subject });
+                    if (count == 0)
+                    {
+                        return Ok("Here isn't this Skill Teacher.....");
+                    }
+                }
+                    
+
                 if (problemsPost == null || problemsPost.UserId == Guid.Empty)
                 {
                     return BadRequest("Invalid input data.");
