@@ -11,6 +11,12 @@ namespace S_EDex365.Data.Interfaces
     {
         Task<List<TeacherApproval>> GetAllTeacherApprovalListAsync();
         Task<bool> UpdateTeacherApprovalAsync(TeacherApproval teacherApproval);
+        
         Task<TeacherApproval> GetTeacherApprovaByIdAsync(Guid userId);
+
+        //Update SKill
+        Task<TeacherApproval> GetTeacherApprovaAfterLoginByIdAsync(Guid Id);
+        Task<List<TeacherApproval>> GetALLTeacherApprovalListAfterLoginbyAsync();
+        Task<bool> UpdateTeacherApprovalAfterLoginAsync(TeacherApproval teacherApproval);
     }
 }

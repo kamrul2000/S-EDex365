@@ -1,0 +1,77 @@
+﻿@model S_EDex365.Model.Model.TeacherApproval
+
+<div class="col-12 mt-2 mt-3">
+    <input type="hidden" id="Id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label> Name :</label>
+        <div id="name" style="font-weight: bold; color:green;">@Model.Name</div>
+    </div>
+    <div class="form-group">
+        <label> Skill :</label>
+        <div id="subjectNames" style="font-weight: bold; color:green;">@Model.SubjectNames</div>
+    </div>
+    <div class="col-12 mt-2" style="display:none">
+        <div class="form-group">
+            <label> Email</label>
+            <input type="text" class="form-control" id="email" value="@Model.Email" />
+        </div>
+    </div>
+    <div class="col-12 mt-2" style="display:none">
+        <div class="form-group">
+            <label> MobileNo</label>
+            <input type="text" class="form-control" id="mobileNo" value="@Model.MobileNo" />
+        </div>
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <button id="submitBtn" class="btn btn-primary form-control">Approved</button>
+</div>
+<div class="col-12 mt-2 mb-3">
+    <button id="closeBtn" class="btn btn-warning form-control">Close</button>
+</div>
+
+<script>
+
+    $("#submitBtn").click(function () {
+        var data = {
+            Id: $("#Id").val(),
+            Name: $("#name").text(),
+            Name: $("#subjectNames").text(),
+        };
+
+        console.log('Data being sent:', data);  // Log the data for debugging
+
+        $.ajax({
+            url: "/TeacherApproval/UpdateTeacherApprovalAfterLoginPartail",  // Correct URL
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",  // Ensure JSON data type is sent
+            success: function (response) {
+                if (response.result == true) {
+                    $("#modalContent").html('');
+                    $('#myModal').modal('hide');
+                    dataTable.ajax.reload();
+                    toastr.success("Successfully Updated");
+                } else {
+                    toastr.error("Something went wrong");
+                }
+            },
+            error: function (er) {
+                console.error(er);  // Log error in console
+            }
+        });
+    });
+
+
+
+
+    $("#closeBtn").click(function () {
+        $('#myModal').modal('hide');
+    });
+</script>
+
+
+
+

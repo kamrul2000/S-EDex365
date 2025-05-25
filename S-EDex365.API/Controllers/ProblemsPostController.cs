@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using FirebaseAdmin.Messaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -36,14 +37,22 @@ namespace S_EDex365.API.Controllers
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    var queryExist = "select SubjectId from TeacherSkill where SubjectId= @SubjectId";
+                    //var queryExist = "select SubjectId from TeacherSkill where SubjectId= @SubjectId and Status=1";
+                    //var count = await connection.ExecuteScalarAsync<int>(queryExist, new { SubjectId = problemsPost.Subject });
+                    //if (count == 0)
+                    //{
+                    //    return Ok(new { message= "There has no teacher available for this subject" });
+                    //}
+                    var queryExist = "SELECT COUNT(*) FROM TeacherSkill WHERE SubjectId = @SubjectId AND Status = 1";
                     var count = await connection.ExecuteScalarAsync<int>(queryExist, new { SubjectId = problemsPost.Subject });
+
                     if (count == 0)
                     {
-                        return Ok("Here isn't this Skill Teacher.....");
+                        return Ok(new { message = "There has no teacher available for this subject" });
                     }
+
                 }
-                    
+
 
                 if (problemsPost == null || problemsPost.UserId == Guid.Empty)
                 {

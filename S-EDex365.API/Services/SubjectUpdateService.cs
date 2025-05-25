@@ -63,7 +63,7 @@ namespace S_EDex365.API.Services
                 await connection.OpenAsync();
 
                 // Query to select Id and SubjectName from the Subject table for the given userId
-                var queryString = "SELECT t2.Id, t2.SubjectName FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id WHERE t1.UserId = @UserId";
+                var queryString = "SELECT t2.Id, t2.SubjectName FROM TeacherSkill t1 JOIN Subject t2 ON t1.SubjectId = t2.Id WHERE t1.UserId = @UserId and t1.Status=1";
                 var skillList = await connection.QueryAsync<(Guid Id, string SubjectName)>(queryString, new { UserId = userId });
 
                 // Create a list to hold the SubjectResponseUpdate objects
@@ -125,10 +125,11 @@ namespace S_EDex365.API.Services
                         if (exists)
                         {
                             // If the record exists, update it (although there's no real need to update if the SubjectId is the same)
-                            string updateQuery = "UPDATE TeacherSkill SET SubjectId = @SubjectId,Updateby=@Updateby WHERE UserId = @UserId AND SubjectId = @SubjectId";
+                            string updateQuery = "UPDATE TeacherSkill SET SubjectId = @SubjectId,Updateby=@Updateby,Status=@Status WHERE UserId = @UserId AND SubjectId = @SubjectId";
                             SqlCommand updateCommand = new SqlCommand(updateQuery, connection);
                             updateCommand.Parameters.AddWithValue("@SubjectId", subjectId);
                             updateCommand.Parameters.AddWithValue("@UserId", userId);
+                            updateCommand.Parameters.AddWithValue("@Status", 0);
                             updateCommand.Parameters.AddWithValue("@Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
 
                             await updateCommand.ExecuteNonQueryAsync();
@@ -136,12 +137,13 @@ namespace S_EDex365.API.Services
                         else
                         {
                             // If no record exists, insert a new one
-                            string insertQuery = "INSERT INTO TeacherSkill (Id, UserId, SubjectId,GetDateby,Updateby) VALUES (@Id, @UserId, @SubjectId,@GetDateby,@Updateby)";
+                            string insertQuery = "INSERT INTO TeacherSkill (Id, UserId, SubjectId,GetDateby,Updateby,Status) VALUES (@Id, @UserId, @SubjectId,@GetDateby,@Updateby,@Status)";
                             SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
                             Guid newId = Guid.NewGuid(); // Generate new ID for each row
                             insertCommand.Parameters.AddWithValue("@Id", newId);
                             insertCommand.Parameters.AddWithValue("@UserId", userId);
                             insertCommand.Parameters.AddWithValue("@SubjectId", subjectId);
+                            insertCommand.Parameters.AddWithValue("@Status", 0);
                             insertCommand.Parameters.AddWithValue("@GetDateby", DateTime.Now.ToString("yyyy-MM-dd"));
                             insertCommand.Parameters.AddWithValue("@Updateby", DateTime.Now.ToString("yyyy-MM-dd"));
 

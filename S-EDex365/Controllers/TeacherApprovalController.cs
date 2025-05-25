@@ -52,6 +52,44 @@ namespace S_EDex365.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        public IActionResult GetApprovalAfterLoginIndex()
+        {
+            return View();
+        }
+        public async Task<IActionResult> GetAllTeacherApprovalAfterLogin()
+        {
+            var teacherApprovalList = await _teacherApproval.GetALLTeacherApprovalListAfterLoginbyAsync();
+            return Json(new { Data = teacherApprovalList });
+        }
+        public async Task<IActionResult> UpdateTeacherApprovalAfterLogin(Guid Id)
+        {
+            var serviceAndPart = await _teacherApproval.GetTeacherApprovaAfterLoginByIdAsync(Id);
+
+            if (serviceAndPart == null)
+            {
+                return NotFound();  // Handle null case (e.g., return a 404 response)
+            }
+
+            return PartialView("_TeacherApprovedAfterLogin", serviceAndPart);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateTeacherApprovalAfterLoginPartail([FromBody] TeacherApproval teacherApproval)
+        {
+            if (teacherApproval == null)
+            {
+                return BadRequest("Teacher approval data is null.");
+            }
+
+            try
+            {
+                var success = await _teacherApproval.UpdateTeacherApprovalAfterLoginAsync(teacherApproval);
+                return Json(new { result = success });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
 
 

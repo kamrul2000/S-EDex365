@@ -20,6 +20,27 @@ namespace S_EDex365.Data.Services
             _connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new ArgumentNullException(nameof(_connectionString));
         }
+
+        public async Task<List<TeacherApproval>> GetALLTeacherApprovalListAfterLoginbyAsync()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var queryString = @"Select t1.Id,t2.name,t3.SubjectName as SubjectNames from TeacherSkill t1 JOIN Users t2 on t1.UserId=t2.id JOIN Subject t3 on t3.Id=t1.SubjectId Where t1.Status=0";
+                    var query = string.Format(queryString);
+                    var approvalList = await connection.QueryAsync<TeacherApproval>(query);
+                    return approvalList.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<TeacherApproval>> GetAllTeacherApprovalListAsync()
         {
             try
@@ -37,6 +58,24 @@ namespace S_EDex365.Data.Services
                     var query = string.Format(queryString);
                     var approvalList = await connection.QueryAsync<TeacherApproval>(query);
                     return approvalList.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<TeacherApproval> GetTeacherApprovaAfterLoginByIdAsync(Guid Id)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var query = "Select t1.Id,t2.name,t3.SubjectName as SubjectNames from TeacherSkill t1 JOIN Users t2 on t1.UserId=t2.id JOIN Subject t3 on t3.Id=t1.SubjectId Where t1.Id = @Id ";
+                    var teacherApproval = await connection.QueryFirstOrDefaultAsync<TeacherApproval>(query, new { Id = Id });
+                    return teacherApproval;
                 }
             }
             catch (Exception ex)
@@ -85,6 +124,31 @@ namespace S_EDex365.Data.Services
             }
         }
 
+        public async Task<bool> UpdateTeacherApprovalAfterLoginAsync(TeacherApproval teacherApproval)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    var queryString = "update TeacherSkill set Status=@Status where id=@id";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("Status", 1, DbType.String);
+                    parameters.Add("id", teacherApproval.Id.ToString(), DbType.String);
+                    var success = await connection.ExecuteAsync(queryString, parameters);
+                    if (success > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
         public async Task<bool> UpdateTeacherApprovalAsync(TeacherApproval teacherApproval)
         {

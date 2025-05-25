@@ -94,7 +94,7 @@ namespace S_EDex365.API.Services
                 }
 
                 // Query to get the problem post details
-                var userListQuery = "SELECT UserId FROM TeacherSkill WHERE SubjectId = @SubjectId";
+                var userListQuery = "SELECT UserId FROM TeacherSkill WHERE SubjectId = @SubjectId and Status=1";
                 var userIds = await connection.QueryAsync<Guid>(userListQuery, new { SubjectId = subjectId });
 
                 return (postId, userIds.ToList());
