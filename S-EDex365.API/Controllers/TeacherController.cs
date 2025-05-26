@@ -26,8 +26,8 @@ namespace S_EDex365.API.Controllers
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                var queryFlagCheck = "SELECT BlockFlag FROM RecivedProblem WHERE UserId = @UserId";
-                var check = await connection.ExecuteScalarAsync<bool?>(queryFlagCheck, new { UserId = userId });
+                var queryFlagCheck = "SELECT UserBlocked FROM Users WHERE Id = @Id";
+                var check = await connection.ExecuteScalarAsync<bool?>(queryFlagCheck, new { Id = userId });
 
                 if (check == true)
                 {

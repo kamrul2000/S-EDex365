@@ -21,6 +21,31 @@ namespace S_EDex365.Data.Services
                 ?? throw new ArgumentNullException(nameof(_connectionString));
         }
 
+        public async Task<bool> DeleteTeacherApprovalAfterLoginAsync(Guid Id)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    
+                    var queryString = "delete from TeacherSkill where id=@id";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("id", Id.ToString(), DbType.String);
+                    var success = await connection.ExecuteAsync(queryString, parameters);
+                    if (success > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<TeacherApproval>> GetALLTeacherApprovalListAfterLoginbyAsync()
         {
             try

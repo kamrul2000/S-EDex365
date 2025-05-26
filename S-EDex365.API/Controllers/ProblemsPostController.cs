@@ -48,7 +48,7 @@ namespace S_EDex365.API.Controllers
 
                     if (count == 0)
                     {
-                        return Ok(new { message = "There has no teacher available for this subject" });
+                        return StatusCode(422, new { message = "There has no teacher available for this subject" });
                     }
 
                 }

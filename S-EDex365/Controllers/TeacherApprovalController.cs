@@ -90,6 +90,19 @@ namespace S_EDex365.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteTeacherSkillAfterLogin(Guid Id)
+        {
+            try
+            {
+                var result = await _teacherApproval.DeleteTeacherApprovalAfterLoginAsync(Id);
+                return Json(new { result });
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
 
 

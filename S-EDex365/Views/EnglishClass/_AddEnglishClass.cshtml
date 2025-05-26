@@ -1,0 +1,75 @@
+﻿<div class="col-12 mt-2 mt-3">
+    <div class="form-group">
+        <label> Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Role Name....">
+    </div>
+</div>
+<div class="col-12 mt-2 mt-3">
+    <div class="form-group">
+        <label> Amount</label>
+        <input type="text" class="form-control" id="amount" placeholder="Enter Role Name....">
+    </div>
+</div>
+<div class="col-12 mt-2 mt-3">
+    <div class="form-group">
+        <label> No. Class</label>
+        <input type="text" class="form-control" id="noClass" placeholder="Enter Role Name....">
+    </div>
+</div>
+<div class="col-12 mt-2">
+    <div class="form-group">
+        @* <label> Status</label>
+        <input type="checkbox" checked class="form-control" id="status"> *@
+        <label for="status">Status</label><br />
+        <input type="checkbox" id="status" />
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <button id="submitBtn" class="btn btn-primary form-control">Submit</button>
+</div>
+<div class="col-12 mt-2 mb-3">
+    <button id="closeBtn" class="btn btn-warning form-control">Closed</button>
+</div>
+
+<script>
+    $("#submitBtn").click(function () {
+        // var data = {
+        //     Name: $("#name").val(),
+        //     status: 1
+        // };
+        
+            var data = {
+            ClassName: $("#name").val(),
+            Amount: $("#amount").val(),
+            S_ClassName: $("#noClass").val(),
+                status: $("#status").prop("checked") ? 1 : 0
+            };
+
+            console.log(data); 
+
+        $.ajax({
+            url: "/EnglishClass/InsertEnglishClass",
+            type: "POST",
+            data: data,
+            success: function (response) {
+                if (response.result == true) {
+                    $("#addContent").html('');
+                    $('#addModal').modal('hide');
+                    dataTable.ajax.reload();
+                    toastr.success("Successfully  Created")
+                }
+                else {
+                    toastr.error("This Name is available")
+                }
+            },
+            error: function (er) {
+                alert(er);
+            }
+        });
+    });
+
+    $("#closeBtn").click(function () {
+        $('#addModal').modal('hide');
+    });
+</script>

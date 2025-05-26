@@ -22,6 +22,7 @@ builder.Services.AddScoped<IPostTypeService, PostTypeService>();
 builder.Services.AddScoped<IPostTypeDetailsService, PostTypeDetailsService>();
 builder.Services.AddScoped<IBanglaClassService, BanglaClassService>();
 builder.Services.AddScoped<IClaimTaskService, ClaimTaskService>();
+builder.Services.AddScoped<IEnglishClassService, EnglishClassService>();
 
 
 
