@@ -3,8 +3,10 @@ using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using S_EDex365.API.Interfaces;
+using S_EDex365.API.Interfaces.Bkash;
 using S_EDex365.API.Middlewares;
 using S_EDex365.API.Services;
+using S_EDex365.API.Services.Bkash;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +37,7 @@ builder.Services.AddScoped<ICommunicationService, CommunicationService>();
 builder.Services.AddScoped<IPostTypeService,PostTypeService>();
 builder.Services.AddScoped<IEnglishClassService,EnglishClassService>();
 builder.Services.AddScoped<IClaimCommunicationService,ClaimCommunicationService>();
+builder.Services.AddScoped<IBkashService,IBkashService>();
 
 
 

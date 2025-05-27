@@ -45,7 +45,92 @@ namespace S_EDex365.API.Services
                 return SolutionShowList.ToList();
             }
         }
-        public async Task<SolutionPostResponse> InsertSolutionPostAsync(SolutionPostDto solutionPost, Guid postId)
+        //public async Task<SolutionPostResponse> InsertSolutionPostAsync(SolutionPostDto solutionPost, Guid postId)
+        //{
+        //    try
+        //    {
+        //        using (var connection = new SqlConnection(_connectionString))
+        //        {
+        //            connection.Open();
+
+        //            //// Validate if postId exists in the database
+        //            string queryString1 = "SELECT UserId FROM ProblemsPost WHERE id = @id";
+        //            var parameters1 = new DynamicParameters();
+        //            parameters1.Add("id", postId, DbType.Guid);
+
+        //            var userId = await connection.QuerySingleOrDefaultAsync<Guid>(queryString1, parameters1);
+
+        //            if (userId == Guid.Empty)
+        //            {
+        //                throw new Exception("Invalid ProblemPostId.");
+        //            }
+
+        //            var query = "UPDATE RecivedProblem SET SolutionPending = 0,S_LastTime=NULL WHERE ProblemsPostId = @ProblemsPostId";
+        //            await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
+
+
+        //            var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
+        //            await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = postId });
+
+        //            // Save the uploaded photo
+        //            string uniqueFileName = null;
+        //            if (solutionPost.Photo != null && solutionPost.Photo.Length > 0)
+        //            {
+        //                string uploadsFolder = Path.Combine(_environment.WebRootPath, "solutionImage");
+        //                Directory.CreateDirectory(uploadsFolder); // Ensure the folder exists
+
+        //                uniqueFileName = Guid.NewGuid().ToString() + "_" + solutionPost.Photo.FileName;
+        //                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        //                using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //                {
+        //                    await solutionPost.Photo.CopyToAsync(fileStream);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                throw new Exception("No file uploaded.");
+        //            }
+
+        //            // Insert the solution post into the database
+        //            var queryString = @"
+        //    INSERT INTO SolutionPost 
+        //    (id, TeacherId, Photo, StudentId, Status, GetDateby, Updateby, ProblemPostId,PaymentTime,PaymentBlock) 
+        //    VALUES 
+        //    (@id, @TeacherId, @Photo, @StudentId, @Status, @GetDateby, @Updateby, @ProblemPostId,@PaymentTime,@PaymentBlock)";
+
+        //            var parameters = new DynamicParameters();
+        //            var solutionPostId = Guid.NewGuid();
+        //            parameters.Add("id", solutionPostId, DbType.Guid);
+        //            parameters.Add("TeacherId", solutionPost.TeacherId, DbType.Guid);
+        //            parameters.Add("Photo", uniqueFileName, DbType.String); // Save the file name in DB
+        //            parameters.Add("StudentId", userId, DbType.Guid);
+        //            parameters.Add("Status", 1, DbType.Boolean);
+        //            parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        //            parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        //            parameters.Add("PaymentTime", DateTime.Now.AddMinutes(715).ToString("HH:mm"), DbType.String);
+        //            parameters.Add("ProblemPostId", postId, DbType.Guid);
+        //            parameters.Add("PaymentBlock", 1, DbType.Boolean);
+
+        //            var success = await connection.ExecuteAsync(queryString, parameters);
+
+        //            // Prepare the response
+        //            SolutionPostResponse solutionPostResponse = new SolutionPostResponse
+        //            {
+        //                Photo = $"https://api.edex365.com/api/solutionImage/{uniqueFileName}"
+        //            };
+
+        //            return solutionPostResponse;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception($"Failed to save solution post: {ex.Message}");
+        //    }
+        //}
+
+
+        public async Task<List<SolutionPostResponse>> InsertSolutionPostAsync(SolutionPostDto solutionPost, Guid postId)
         {
             try
             {
@@ -53,7 +138,7 @@ namespace S_EDex365.API.Services
                 {
                     connection.Open();
 
-                    //// Validate if postId exists in the database
+                    // Validate if postId exists in the database
                     string queryString1 = "SELECT UserId FROM ProblemsPost WHERE id = @id";
                     var parameters1 = new DynamicParameters();
                     parameters1.Add("id", postId, DbType.Guid);
@@ -65,133 +150,66 @@ namespace S_EDex365.API.Services
                         throw new Exception("Invalid ProblemPostId.");
                     }
 
-                    var query = "UPDATE RecivedProblem SET SolutionPending = 0,S_LastTime=NULL WHERE ProblemsPostId = @ProblemsPostId";
-                    await connection.ExecuteScalarAsync<Guid>(query, new { ProblemsPostId = postId });
+                    // Update related records
+                    var updateRecivedProblem = "UPDATE RecivedProblem SET SolutionPending = 0, S_LastTime = NULL WHERE ProblemsPostId = @ProblemsPostId";
+                    await connection.ExecuteScalarAsync<Guid>(updateRecivedProblem, new { ProblemsPostId = postId });
 
+                    var updateProblemPost = "UPDATE ProblemsPost SET ForWallet = 1, TaskPending = 0 WHERE Id = @Id";
+                    await connection.ExecuteScalarAsync<Guid>(updateProblemPost, new { Id = postId });
 
-                    var queryProblemPost = "UPDATE ProblemsPost SET ForWallet = 1,TaskPending=0 WHERE Id = @Id";
-                    await connection.ExecuteScalarAsync<Guid>(queryProblemPost, new { Id = postId });
-
-                    //var queryExisting = "SELECT Amount FROM Balance WHERE UserId = @UserId";
-                    //var parametersExisting = new DynamicParameters();
-                    //parametersExisting.Add("UserId", userId, DbType.Guid);
-
-                    //decimal existingAmount = await connection.QueryFirstOrDefaultAsync<decimal>(queryExisting, parametersExisting);
-
-
-                    //// 1. Get the existing amount
-                    //var queryProblemsPost = "SELECT Amount FROM ProblemsPost WHERE Id = @Id";
-                    //var parametersProblemsPost = new DynamicParameters();
-                    //parametersProblemsPost.Add("Id", postId, DbType.Guid);
-
-                    //decimal existingProblemsPost = await connection.QueryFirstOrDefaultAsync<decimal>(queryProblemsPost, parametersProblemsPost);
-
-                    //// 2. Add the new amount to the existing one
-                    //decimal updatedAmount = existingAmount - existingProblemsPost ;
-
-
-                    //var queryCheck = "SELECT COUNT(1) FROM SolutionPost WHERE ProblemPostId = @ProblemPostId";
-                    //var count = await connection.ExecuteScalarAsync<int>(queryCheck, new { ProblemPostId = postId });
-
-                    //if (count <= 0)
-                    //{
-                    //    // 3. Update the Balance table with the new total
-                    //    var queryBalance = "UPDATE Balance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
-                    //    var parametersBalance = new DynamicParameters();
-                    //    parametersBalance.Add("UserId", userId);
-                    //    parametersBalance.Add("Amount", updatedAmount);
-                    //    parametersBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
-
-                    //    var successs = await connection.ExecuteAsync(queryBalance, parametersBalance);
-
-
-                    //    var queryExistingAmountTeacher = "SELECT Amount FROM TeacherBalance WHERE UserId = @UserId";
-                    //    var parametersExistingAmountTeacher = new DynamicParameters();
-                    //    parametersExistingAmountTeacher.Add("UserId", userId, DbType.Guid);
-
-                    //    decimal existingAmountTeacher = await connection.QueryFirstOrDefaultAsync<decimal>(queryExistingAmountTeacher, parametersExistingAmountTeacher);
-
-                    //    decimal updatedTeacherAmount = existingAmountTeacher + existingProblemsPost;
-
-
-                    //    if (updatedTeacherAmount > 0)
-                    //    {
-                    //        var queryTeacherBalance = "insert into TeacherBalance (id,UserId,Amount,GatDate) values ";
-                    //        queryTeacherBalance += "(@id,@UserId,@Amount,@GatDate)";
-                    //        var parametersTeacherBalance = new DynamicParameters();
-                    //        var IdBalance = Guid.NewGuid().ToString();
-                    //        parametersTeacherBalance.Add("id", IdBalance, DbType.String);
-                    //        parametersTeacherBalance.Add("UserId", solutionPost.TeacherId);
-                    //        parametersTeacherBalance.Add("Amount", updatedTeacherAmount);
-                    //        parametersTeacherBalance.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
-                    //        var successsTeacherBalance = await connection.ExecuteAsync(queryTeacherBalance, parametersTeacherBalance);
-                    //    }
-                    //    else
-                    //    {
-                    //        // 3. Update the Balance table with the new total
-                    //        var queryTeacherBalanceUpdate = "UPDATE TeacherBalance SET Amount = @Amount, GatDate = @GatDate WHERE UserId = @UserId";
-                    //        var parametersTeacherBalanceUpdate = new DynamicParameters();
-                    //        parametersTeacherBalanceUpdate.Add("UserId", solutionPost.TeacherId);
-                    //        parametersTeacherBalanceUpdate.Add("Amount", updatedAmount);
-                    //        parametersTeacherBalanceUpdate.Add("GatDate", DateTime.Now.ToString("yyyy-MM-dd"));
-
-                    //        var successsTeacherBalanceUpdate = await connection.ExecuteAsync(queryTeacherBalanceUpdate, parametersTeacherBalanceUpdate);
-                    //    }
-                    //}
-
-
-
-
-
-                    // Save the uploaded photo
-                    string uniqueFileName = null;
-                    if (solutionPost.Photo != null && solutionPost.Photo.Length > 0)
+                    // Validate and process multiple files
+                    if (solutionPost.Photos == null || !solutionPost.Photos.Any())
                     {
-                        string uploadsFolder = Path.Combine(_environment.WebRootPath, "solutionImage");
-                        Directory.CreateDirectory(uploadsFolder); // Ensure the folder exists
+                        throw new Exception("No files uploaded.");
+                    }
 
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + solutionPost.Photo.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    string uploadsFolder = Path.Combine(_environment.WebRootPath, "solutionImage");
+                    Directory.CreateDirectory(uploadsFolder); // Ensure the folder exists
 
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    var responses = new List<SolutionPostResponse>();
+
+                    foreach (var photo in solutionPost.Photos)
+                    {
+                        if (photo != null && photo.Length > 0)
                         {
-                            await solutionPost.Photo.CopyToAsync(fileStream);
+                            string uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                            using (var fileStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await photo.CopyToAsync(fileStream);
+                            }
+
+                            // Insert each photo into SolutionPost table
+                            var queryString = @"
+INSERT INTO SolutionPost 
+(id, TeacherId, Photo, StudentId, Status, GetDateby, Updateby, ProblemPostId, PaymentTime, PaymentBlock) 
+VALUES 
+(@id, @TeacherId, @Photo, @StudentId, @Status, @GetDateby, @Updateby, @ProblemPostId, @PaymentTime, @PaymentBlock)";
+
+                            var parameters = new DynamicParameters();
+                            var solutionPostId = Guid.NewGuid();
+                            parameters.Add("id", solutionPostId, DbType.Guid);
+                            parameters.Add("TeacherId", solutionPost.TeacherId, DbType.Guid);
+                            parameters.Add("Photo", uniqueFileName, DbType.String);
+                            parameters.Add("StudentId", userId, DbType.Guid);
+                            parameters.Add("Status", 1, DbType.Boolean);
+                            parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                            parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                            parameters.Add("PaymentTime", DateTime.Now.AddMinutes(715).ToString("HH:mm"), DbType.String);
+                            parameters.Add("ProblemPostId", postId, DbType.Guid);
+                            parameters.Add("PaymentBlock", 1, DbType.Boolean);
+
+                            await connection.ExecuteAsync(queryString, parameters);
+
+                            responses.Add(new SolutionPostResponse
+                            {
+                                Photo = $"https://api.edex365.com/api/solutionImage/{uniqueFileName}"
+                            });
                         }
                     }
-                    else
-                    {
-                        throw new Exception("No file uploaded.");
-                    }
 
-                    // Insert the solution post into the database
-                    var queryString = @"
-            INSERT INTO SolutionPost 
-            (id, TeacherId, Photo, StudentId, Status, GetDateby, Updateby, ProblemPostId,PaymentTime,PaymentBlock) 
-            VALUES 
-            (@id, @TeacherId, @Photo, @StudentId, @Status, @GetDateby, @Updateby, @ProblemPostId,@PaymentTime,@PaymentBlock)";
-
-                    var parameters = new DynamicParameters();
-                    var solutionPostId = Guid.NewGuid();
-                    parameters.Add("id", solutionPostId, DbType.Guid);
-                    parameters.Add("TeacherId", solutionPost.TeacherId, DbType.Guid);
-                    parameters.Add("Photo", uniqueFileName, DbType.String); // Save the file name in DB
-                    parameters.Add("StudentId", userId, DbType.Guid);
-                    parameters.Add("Status", 1, DbType.Boolean);
-                    parameters.Add("GetDateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                    parameters.Add("Updateby", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                    parameters.Add("PaymentTime", DateTime.Now.AddMinutes(715).ToString("HH:mm"), DbType.String);
-                    parameters.Add("ProblemPostId", postId, DbType.Guid);
-                    parameters.Add("PaymentBlock", 1, DbType.Boolean);
-
-                    var success = await connection.ExecuteAsync(queryString, parameters);
-
-                    // Prepare the response
-                    SolutionPostResponse solutionPostResponse = new SolutionPostResponse
-                    {
-                        Photo = $"https://api.edex365.com/api/solutionImage/{uniqueFileName}"
-                    };
-
-                    return solutionPostResponse;
+                    return responses;
                 }
             }
             catch (Exception ex)
@@ -199,5 +217,6 @@ namespace S_EDex365.API.Services
                 throw new Exception($"Failed to save solution post: {ex.Message}");
             }
         }
+
     }
 }

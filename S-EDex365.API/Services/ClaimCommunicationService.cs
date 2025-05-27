@@ -34,20 +34,7 @@ namespace S_EDex365.API.Services
 
                 foreach (var user in userTypes)
                 {
-                    var queryChat = @"
-                SELECT 
-                    VoiceUrl, 
-                    ImageUrl,
-                    Text, 
-                    GetDate,
-                    CASE 
-                        WHEN VoiceUrl IS NULL THEN Text
-                        WHEN Text IS NULL THEN VoiceUrl
-                        WHEN ImageUrl IS NULL THEN Text + ' ' + VoiceUrl
-                        ELSE Text + ' ' + VoiceUrl + ' ' + ImageUrl 
-                    END AS Message
-                FROM ClaimCommunication 
-                WHERE UserId = @UserId AND SolutionId = @SolutionId";
+                    var queryChat = @"SELECT t1.VoiceUrl, t1.ImageUrl, t1.Text, t1.GetDate, CASE WHEN t1.VoiceUrl IS NULL THEN Text WHEN Text IS NULL THEN t1.VoiceUrl WHEN t1.ImageUrl IS NULL THEN Text + ' ' + t1.VoiceUrl ELSE Text + ' ' + t1.VoiceUrl + ' ' + t1.ImageUrl END AS Message ,t2.Name as userType FROM ClaimCommunication t1 JOIN Roles t2 on t1.UserType=t2.Id WHERE t1.UserId = @UserId AND t1.SolutionId = @SolutionId";
 
                     var chats = (await connection.QueryAsync<ClaimCommunicationResponse>(
                         queryChat, new { UserId = user.UserId, SolutionId = solutionId }
@@ -72,7 +59,7 @@ namespace S_EDex365.API.Services
                     result.Add(new SolutionChatResponse
                     {
                         // UserId = user.UserId,
-                        // UserType = user.Type,
+                        UserType = user.Type,
                         Chats = chats
                     });
 

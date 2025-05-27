@@ -275,8 +275,8 @@ namespace S_EDex365.API.Services
                         foreach (var item in user.Subject)
                         {
                             string insertQuery = @"
-        INSERT INTO TeacherSkill (Id, UserId, SubjectId, GetDateby, Updateby) 
-        VALUES (@Id, @UserId, @SubjectId, @GetDateby, @Updateby)";
+        INSERT INTO TeacherSkill (Id, UserId, SubjectId, GetDateby, Updateby,Status) 
+        VALUES (@Id, @UserId, @SubjectId, @GetDateby, @Updateby,@Status)";
 
                             Guid newId = Guid.NewGuid(); // Generate a new ID for each row
 
@@ -285,6 +285,7 @@ namespace S_EDex365.API.Services
                                 Id = newId,
                                 UserId = userId,
                                 SubjectId = item, // Use the current subject ID
+                                Status = 1,
                                 GetDateby = DateTime.Now.ToString("yyyy-MM-dd"),
                                 Updateby = DateTime.Now.ToString("yyyy-MM-dd")
                             };

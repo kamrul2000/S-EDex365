@@ -25,34 +25,74 @@ namespace S_EDex365.API.Controllers
             return Ok(subjectDetails);
         }
 
+        //[HttpPost("s/SolutionPost/{postId}")]
+        //public async Task<IActionResult> UploadSolution([FromForm] SolutionPostDto solutionPost,Guid  postId)
+        //{
+        //    if (postId == Guid.Empty)
+        //    {
+        //        return BadRequest("Invalid postId.");
+        //    }
+
+        //    // Validate TeacherId and Photo
+        //    if (solutionPost.TeacherId == Guid.Empty)
+        //    {
+        //        return BadRequest("TeacherId is required.");
+        //    }
+
+        //    if (solutionPost.Photo == null || solutionPost.Photo.Length == 0)
+        //    {
+        //        return BadRequest("Photo is required.");
+        //    }
+
+        //    // Call the service method
+        //    var result = await _solutionPostService.InsertSolutionPostAsync(solutionPost, postId);
+
+        //    if (result == null)
+        //    {
+        //        return StatusCode(500, "Internal Server Error: Failed to save solution post.");
+        //    }
+
+        //    return Ok(result);
+        //}
+
+
         [HttpPost("s/SolutionPost/{postId}")]
-        public async Task<IActionResult> UploadSolution([FromForm] SolutionPostDto solutionPost,Guid  postId)
+        public async Task<IActionResult> UploadSolution([FromForm] SolutionPostDto solutionPost, Guid postId)
         {
             if (postId == Guid.Empty)
             {
                 return BadRequest("Invalid postId.");
             }
 
-            // Validate TeacherId and Photo
+            // Validate TeacherId and Photos
             if (solutionPost.TeacherId == Guid.Empty)
             {
                 return BadRequest("TeacherId is required.");
             }
 
-            if (solutionPost.Photo == null || solutionPost.Photo.Length == 0)
+            if (solutionPost.Photos == null || !solutionPost.Photos.Any())
             {
-                return BadRequest("Photo is required.");
+                return BadRequest("At least one photo is required.");
             }
 
-            // Call the service method
-            var result = await _solutionPostService.InsertSolutionPostAsync(solutionPost, postId);
-
-            if (result == null)
+            try
             {
-                return StatusCode(500, "Internal Server Error: Failed to save solution post.");
-            }
+                // Call the service method
+                var result = await _solutionPostService.InsertSolutionPostAsync(solutionPost, postId);
 
-            return Ok(result);
+                if (result == null || !result.Any())
+                {
+                    return StatusCode(500, "Internal Server Error: Failed to save solution post.");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
         }
+
+
     }
 }

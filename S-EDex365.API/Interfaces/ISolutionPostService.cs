@@ -4,7 +4,7 @@ namespace S_EDex365.API.Interfaces
 {
     public interface ISolutionPostService
     {
-        Task<SolutionPostResponse> InsertSolutionPostAsync(SolutionPostDto solutionPost,Guid postId);
+        Task<List<SolutionPostResponse>> InsertSolutionPostAsync(SolutionPostDto solutionPost,Guid postId);
         Task<List<SolutionShowAll>> GetAllSolutionAsync(Guid postId);
     }
 }

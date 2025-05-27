@@ -5,6 +5,8 @@ using Microsoft.Data.SqlClient;
 using S_EDex365.API.Interfaces;
 using S_EDex365.API.Models;
 using S_EDex365.API.Services;
+using S_EDex365.Model.Model;
+using System.Data;
 
 namespace S_EDex365.API.Controllers
 {
@@ -31,7 +33,20 @@ namespace S_EDex365.API.Controllers
 
                 if (check == true)
                 {
-                    return Ok(new { message = "You are blocked for" });
+                    var query = "SELECT UnlockTime FROM RecivedProblem WHERE UserId = @UserId AND BlockFlag = 1";
+                    var parametersType = new DynamicParameters();
+                    parametersType.Add("UserId", userId, DbType.Guid);
+
+                    // Read as TimeSpan
+                    var unlockTime = await connection.QueryFirstOrDefaultAsync<TimeSpan?>(query, parametersType);
+
+                    string unlockTimeStr = unlockTime.HasValue
+                        ? DateTime.Today.Add(unlockTime.Value).ToString("hh:mm tt")
+                        : null;
+
+
+
+                    return Ok(new { message = "You have been temporarily blocked from taking new problems for 24 hours due to not resolving your assigned problem on time. Please ensure timely and proper responses to avoid future blocks.Your Unblock Time : "+ unlockTimeStr + "" });
                 }
             }
 
