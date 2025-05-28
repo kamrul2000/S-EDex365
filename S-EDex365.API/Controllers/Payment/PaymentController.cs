@@ -48,24 +48,101 @@ namespace S_EDex365.API.Controllers.Payment
             _walletService = walletService;
         }
 
+        //[HttpPost("bkash/create-payment")]
+        ////[Authorize]
+        //public async Task<IActionResult> CreateBkashPayment(PaymentRequest payment)
+        //{
+        //    string token = await GetGrantToken();
+        //    _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+        //    _httpClient.DefaultRequestHeaders.Add("Authorization", "" + token + "");
+        //    _httpClient.DefaultRequestHeaders.Add("x-app-key", "4f6o0cjiki2rfm34kfdadl1eqq");
+
+        //    string jsonBody = "{\"mode\": \"0011\", \"payerReference\": \"01\",\"callbackURL\": \"https://api.edex365.com/payment/bkash/callback/\",\"merchantAssociationInfo\": \"MI05MID54RF09123456One\",\"amount\": \"" + payment.Amount + "\", \"currency\": \"BDT\",\"intent\": \"sale\",  \"merchantInvoiceNumber\": \"" + payment.UserId + "_" + Guid.NewGuid() + "\"}";
+
+
+
+        //    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+        //    HttpResponseMessage response = await _httpClient.PostAsync("create", content);
+        //    var responseStr = await response.Content.ReadAsStringAsync();
+
+
+        //    if (response.StatusCode == HttpStatusCode.OK)
+        //    {
+        //        var result = JObject.Parse(responseStr);
+        //        var resultDetails = new PaymentResponse
+        //        {
+        //            StatusCode = (int)result["statusCode"],
+        //            StatusMessage = (string)result["statusMessage"],
+        //            PaymentID = (string)result["paymentID"],
+        //            BkashURL = (string)result["bkashURL"],
+        //            CallbackURL = (string)result["callbackURL"],
+        //            SuccessCallbackURL = (string)result["successCallbackURL"],
+        //            FailureCallbackURL = (string)result["failureCallbackURL"],
+        //            //CancelCallbackURL = (string)result["cancelCallbackURL"],
+        //            Amount = (string)result["amount"],
+        //            Currency = (string)result["currency"],
+        //            PaymentCreateTime = (string)result["paymentCreateTime"],
+        //            MerchantInvoiceNumber = (string)result["merchantInvoiceNumber"]
+        //        };
+        //        //await _walletService.InsertWalletAsync(resultDetails, payment.UserId);
+        //        var serializedResult = JsonConvert.SerializeObject(resultDetails);
+
+        //        //var faCode = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+        //        _httpContextAccessor.HttpContext.Session.SetString("PaymentResponse", serializedResult);
+        //        await _walletService.InsertWalletAsync(resultDetails, payment.UserId);
+
+        //        return Ok(resultDetails);
+        //    }
+        //    else
+        //    {
+        //        var resultDetails = new
+        //        {
+        //            statusCode = 0,
+        //            statusMessage = "",
+        //            paymentID = "",
+        //            bkashURL = "",
+        //            callbackURL = "",
+        //            successCallbackURL = "",
+        //            failureCallbackURL = "",
+        //            amount = "",
+        //            currency = "",
+        //            paymentCreateTime = "",
+        //            merchantInvoiceNumber = "",
+        //        };
+        //        return Ok(resultDetails);
+        //    }
+        //}
+
+
+
         [HttpPost("bkash/create-payment")]
-        //[Authorize]
         public async Task<IActionResult> CreateBkashPayment(PaymentRequest payment)
         {
             string token = await GetGrantToken();
+
+            _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "" + token + "");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", token);
             _httpClient.DefaultRequestHeaders.Add("x-app-key", "4f6o0cjiki2rfm34kfdadl1eqq");
 
-            string jsonBody = "{\"mode\": \"0011\", \"payerReference\": \"01\",\"callbackURL\": \"https://api.edex365.com/payment/bkash/callback/\",\"merchantAssociationInfo\": \"MI05MID54RF09123456One\",\"amount\": \"" + payment.Amount + "\", \"currency\": \"BDT\",\"intent\": \"sale\",  \"merchantInvoiceNumber\": \"" + payment.UserId + "_" + Guid.NewGuid() + "\"}";
-
-
+            string invoiceNumber = payment.UserId + "_" + Guid.NewGuid();
+            string jsonBody = $@"{{
+        ""mode"": ""0011"",
+        ""payerReference"": ""01"",
+        ""callbackURL"": ""https://api.edex365.com/payment/bkash/callback"",
+        ""merchantAssociationInfo"": ""MI05MID54RF09123456One"",
+        ""amount"": ""{payment.Amount}"",
+        ""currency"": ""BDT"",
+        ""intent"": ""sale"",
+        ""merchantInvoiceNumber"": ""{invoiceNumber}""
+    }}";
 
             var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-
             HttpResponseMessage response = await _httpClient.PostAsync("create", content);
-            var responseStr = await response.Content.ReadAsStringAsync();
-
+            string responseStr = await response.Content.ReadAsStringAsync();
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -79,42 +156,121 @@ namespace S_EDex365.API.Controllers.Payment
                     CallbackURL = (string)result["callbackURL"],
                     SuccessCallbackURL = (string)result["successCallbackURL"],
                     FailureCallbackURL = (string)result["failureCallbackURL"],
-                    //CancelCallbackURL = (string)result["cancelCallbackURL"],
                     Amount = (string)result["amount"],
                     Currency = (string)result["currency"],
                     PaymentCreateTime = (string)result["paymentCreateTime"],
+                    MerchantInvoiceNumber = (string)result["merchantInvoiceNumber"],
+                    UserId=payment.UserId
+                };
+
+                // Optionally store session or log, but DO NOT insert wallet here
+                return Ok(resultDetails);
+            }
+
+            return BadRequest("Failed to create bKash payment");
+        }
+
+        private Guid ExtractUserIdFromInvoice(string invoice)
+        {
+            var parts = invoice.Split('_');
+            return Guid.Parse(parts[0]);
+        }
+
+        [HttpPost("payment/bkash/callback")]
+        public async Task<IActionResult> BkashCallback([FromQuery] string paymentID,Guid userId)
+        {
+            if (string.IsNullOrEmpty(paymentID))
+                return BadRequest("Missing paymentID");
+
+            string token = await GetGrantToken();
+
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", token);
+            _httpClient.DefaultRequestHeaders.Add("x-app-key", "4f6o0cjiki2rfm34kfdadl1eqq");
+
+            // Make sure this matches the actual sandbox/prod endpoint
+            var executeUrl = $"https://tokenized.sandbox.bka.sh/v1.2.0-beta/tokenized/checkout/execute";
+
+            // Prepare JSON body with paymentID
+            var requestData = new { paymentID = paymentID,userId= userId };
+            var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await _httpClient.PostAsync(executeUrl, content);
+            string responseStr = await response.Content.ReadAsStringAsync();
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var result = JObject.Parse(responseStr);
+                var resultDetails = new PaymentResponse
+                {
+                    StatusCode = (int)result["statusCode"],
+                    StatusMessage = (string)result["statusMessage"],
+                    PaymentID = (string)result["paymentID"],
+                    Amount = (string)result["amount"],
+                    Currency = (string)result["currency"],
+                    PaymentCreateTime = (string)result["paymentExecuteTime"],
                     MerchantInvoiceNumber = (string)result["merchantInvoiceNumber"]
                 };
-                //await _walletService.InsertWalletAsync(resultDetails, payment.UserId);
-                var serializedResult = JsonConvert.SerializeObject(resultDetails);
-
-                //var faCode = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-
-                _httpContextAccessor.HttpContext.Session.SetString("PaymentResponse", serializedResult);
-                await _walletService.InsertWalletAsync(resultDetails, payment.UserId);
-
-                return Ok(resultDetails);
-            }
-            else
-            {
-                var resultDetails = new
+                string statusCode = (string)result["statusCode"];
+                string statusMessage = (string)result["statusMessage"];
+                if (statusCode != "2056")
                 {
-                    statusCode = 0,
-                    statusMessage = "",
-                    paymentID = "",
-                    bkashURL = "",
-                    callbackURL = "",
-                    successCallbackURL = "",
-                    failureCallbackURL = "",
-                    amount = "",
-                    currency = "",
-                    paymentCreateTime = "",
-                    merchantInvoiceNumber = "",
-                };
-                return Ok(resultDetails);
+                    await _walletService.InsertWalletAsync(resultDetails, userId);
+                    return Ok(new { success = true, message = "Payment executed and wallet saved" });
+                }
+                //Guid userId = ExtractUserIdFromInvoice(resultDetails.MerchantInvoiceNumber);
+
+
+                return BadRequest(new { success = false, message = "Execute failed"});
             }
+
+            return BadRequest(new { success = false, message = "Execute failed"});
         }
+
+
+
+        //[HttpPost("payment/bkash/callback")]
+        //public async Task<IActionResult> BkashCallback([FromQuery] string paymentID)
+        //{
+        //    string token = await GetGrantToken();
+
+        //    _httpClient.DefaultRequestHeaders.Clear();
+        //    _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+        //    _httpClient.DefaultRequestHeaders.Add("Authorization", token);
+        //    _httpClient.DefaultRequestHeaders.Add("x-app-key", "4f6o0cjiki2rfm34kfdadl1eqq");
+
+        //    HttpResponseMessage response = await _httpClient.PostAsync($"execute?paymentID={paymentID}", null);
+        //    string responseStr = await response.Content.ReadAsStringAsync();
+
+        //    if (response.StatusCode == HttpStatusCode.OK)
+        //    {
+        //        var result = JObject.Parse(responseStr);
+        //        var resultDetails = new PaymentResponse
+        //        {
+        //            StatusCode = (int)result["statusCode"],
+        //            StatusMessage = (string)result["statusMessage"],
+        //            PaymentID = (string)result["paymentID"],
+        //            Amount = (string)result["amount"],
+        //            Currency = (string)result["currency"],
+        //            PaymentCreateTime = (string)result["paymentExecuteTime"],
+        //            MerchantInvoiceNumber = (string)result["merchantInvoiceNumber"]
+        //        };
+
+        //        // Extract UserId from invoice
+        //        Guid userId = ExtractUserIdFromInvoice(resultDetails.MerchantInvoiceNumber);
+
+        //        // Insert wallet transaction
+        //        await _walletService.InsertWalletAsync(resultDetails, userId);
+
+        //        return Ok(new { success = true, message = "Payment executed and wallet saved" });
+        //    }
+
+        //    return BadRequest(new { success = false, message = "Payment execution failed" });
+        //}
+
+
+
 
         private async Task<string> GetGrantToken()
         {

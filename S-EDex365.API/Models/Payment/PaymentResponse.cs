@@ -2,6 +2,7 @@
 {
     public class PaymentResponse
     {
+        public Guid UserId { get; set; }
         public int StatusCode { get; set; }
         public string StatusMessage { get; set; } = string.Empty;
         public string PaymentID { get; set; } = string.Empty;

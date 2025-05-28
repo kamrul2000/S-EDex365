@@ -37,7 +37,7 @@ builder.Services.AddScoped<ICommunicationService, CommunicationService>();
 builder.Services.AddScoped<IPostTypeService,PostTypeService>();
 builder.Services.AddScoped<IEnglishClassService,EnglishClassService>();
 builder.Services.AddScoped<IClaimCommunicationService,ClaimCommunicationService>();
-builder.Services.AddScoped<IBkashService,IBkashService>();
+builder.Services.AddScoped<IBkashService,BkashService>();
 
 
 
