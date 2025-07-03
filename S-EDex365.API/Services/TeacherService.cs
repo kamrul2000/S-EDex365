@@ -118,7 +118,7 @@ namespace S_EDex365.API.Services
                 var SolutionShowList = await connection.QueryAsync<SolutionShowAll>(query);
                 connection.Close();
 
-                var baseUrl = "https://api.edex365.com/solutionImage/";
+                var baseUrl = "https://api.edex365.com/uploads/";
 
                 // Update the Photo property with the full URL
                 foreach (var problem in SolutionShowList)

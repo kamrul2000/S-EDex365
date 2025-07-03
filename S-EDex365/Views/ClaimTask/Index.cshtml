@@ -44,7 +44,6 @@
                         <th>Teacher Name</th>
                         <th>Solution Image</th>
                         <th>GetDateby</th>
-                        <th></th>
                     </tr>
                 </thead>
             </table>
@@ -106,9 +105,9 @@
                         return meta.row + 1;
                     }
                 },
-                { "data": "studentName", "width": "10%" },
+                { "data": "studentName", "width": "15%" },
                 { "data": "phoneNumber", "width": "10%" },
-                { "data": "email", "width": "10%" },
+                { "data": "email", "width": "15%" },
                 // { "data": "taskImage", "width": "10%" },
                     {
                         "data": "taskImage",
@@ -127,9 +126,9 @@
                                 return '<span class="text-muted">No Image</span>';
                             }
                         },
-                        "width": "10%"
+                        "width": "15%"
                     },
-                { "data": "teacherName", "width": "10%" },
+                { "data": "teacherName", "width": "15%" },
                 // { "data": "solutionImage", "width": "10%" },
                     {
                         "data": "solutionImage",
@@ -148,19 +147,19 @@
                                 return '<span class="text-muted">No Image</span>';
                             }
                         },
-                        "width": "10%"
+                        "width": "15%"
                     },
-                { "data": "getDateby", "width": "10%" },
-                {
-                    "data": "id",
-                    "render": function (data) {
-                        return `<div class="text-center">
-                                                        <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
-                                                        <button type="button" class="btn btn-primary permissionBtn" data-id="${data}" ><i class="fas fa-plus"></i></button>
-                                                    </div>`;
-                    }, "width": "30%"
-                }
+                { "data": "getDateby", "width": "15%" }
+                // {
+                //     "data": "id",
+                //     "render": function (data) {
+                //         return `<div class="text-center">
+                //                                         <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
+                //                                         <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
+                //                                         <button type="button" class="btn btn-primary permissionBtn" data-id="${data}" ><i class="fas fa-plus"></i></button>
+                //                                     </div>`;
+                //     }, "width": "30%"
+                // }
             ]
         });
     }

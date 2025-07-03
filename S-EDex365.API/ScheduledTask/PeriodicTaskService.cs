@@ -90,7 +90,7 @@ public class PeriodicTaskService : BackgroundService
                         var check = await connection.ExecuteScalarAsync<int>(queryFlagChecks, new { Id = id });
                         if (check == 1)
                         {
-                            var queryUpdate = "UPDATE RecivedProblem SET BlockFlag = 0 WHERE ProblemsPostId = @Id";
+                            var queryUpdate = "UPDATE RecivedProblem SET BlockFlag = 0,S_LastTime=NULL,UnlockTime=NULL WHERE ProblemsPostId = @Id";
                             var parameters = new DynamicParameters();
                             parameters.Add("Id", id); // ← Add Id here
                             await connection.ExecuteAsync(queryUpdate, parameters);

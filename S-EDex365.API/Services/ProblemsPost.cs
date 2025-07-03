@@ -231,7 +231,9 @@ namespace S_EDex365.API.Services
             {
                 await connection.OpenAsync();
 
-                var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 ON t4.Id = t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where StudentId= @UserId";
+                //var query = @"select t2.Id, t3.SubjectName AS Subject, t2.Topic, t4.ClassName AS sClass, t2.Description, t2.Photo,FORMAT(t1.GetDateby, 'yyyy-MM-dd') AS GetDateby from SolutionPost t1 JOIN ProblemsPost t2 on t1.ProblemPostId=t2.Id JOIN Subject t3 on t3.Id=t2.SubjectId LEFT JOIN Class t4 ON t4.Id = t2.ClassId LEFT JOIN EnglishMediumClass t5 on t5.Id=t2.ClassId where StudentId= @UserId";
+
+                var query = @"SELECT t2.Id, MAX(t3.SubjectName) AS Subject, MAX(t2.Topic) AS Topic, MAX(t4.ClassName) AS sClass, MAX(t2.Description) AS Description, MAX(t2.Photo) AS Photo, FORMAT(MAX(t1.GetDateby), 'yyyy-MM-dd') AS GetDateby FROM SolutionPost t1 JOIN ProblemsPost t2 ON t1.ProblemPostId = t2.Id JOIN Subject t3 ON t3.Id = t2.SubjectId LEFT JOIN Class t4 ON t4.Id = t2.ClassId LEFT JOIN EnglishMediumClass t5 ON t5.Id = t2.ClassId WHERE StudentId =@UserId  GROUP BY t2.Id;";
 
                 var parameters = new { UserId = userId };
 

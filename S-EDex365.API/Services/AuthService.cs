@@ -312,7 +312,7 @@ namespace S_EDex365.API.Services
                                 var domain = "https://";
                                 var message = "Edex365 OTP Number is " + otp + " ";
                                 string url = "" + domain + "bulksmsbd.net/api/smsapi?api_key=AQVhdExRIVugmhs0fsNE&type=text&number=" + user.MobileNo + "&senderid=8809617620256&message=" + message + "";
-                                //client.DownloadString(url);
+                                client.DownloadString(url);
                             }
                         }
 
