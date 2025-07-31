@@ -88,35 +88,7 @@
                 toastr.success(text);
             }
         });
-        // var i = 1;
-        // function loadDataTable() {
-        //     dataTable = $("#tblData").DataTable({
-        //         "ajax": {
-        //             "url": "/Role/GetAllRoles",  // Ensure this is the correct URL returning JSON data
-        //             "dataSrc": ""  // Assumes a flat array is returned
-        //         },
-        //         "columns": [
-        //             {
-        //                 data: 'SrNo',
-        //                 render: function (data, type, row, meta) {
-        //                     return meta.row + 1;  // Auto-generate serial numbers
-        //                 }
-        //             },
-        //             { "data": "RName", "width": "40%" },  // Fetches the 'RName' field
-        //             { "data": "StatusName", "width": "20%" },  // Fetches the 'StatusName' field
-        //             {
-        //                 "data": "Id",  // Fetches the 'Id' (GUID) field
-        //                 "render": function (data) {
-        //                     return `<div class="text-center">
-        //                                     <button type="button" class="btn btn-success modalBtn" data-id="${data}" ><i class="fas fa-edit"></i></button>
-        //                                     <button type="button" class="btn btn-danger deleteBtn" data-id="${data}" ><i class="fas fa-trash"></i></button>
-        //                                     <button type="button" class="btn btn-primary permissionBtn" data-id="${data}" ><i class="fas fa-plus"></i></button>
-        //                                 </div>`;
-        //                 }, "width": "30%"
-        //             }
-        //         ]
-        //     });
-        // }
+        
 
         var i = 1;
         function loadDataTable() {

@@ -10,7 +10,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@ViewData["Title"] - Service Management System</title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/theme.min.css" asp-append-version="true">
@@ -34,28 +33,7 @@
             </h1>
         </header>
         
-        @* <form class="auth-form" method="post" asp-action="Login" asp-controller="Auth">
-            
-            
-            <div class="form-group">
-                <div class="form-label-group">
-                    <input type="text" id="inputUser" asp-for="Email" class="form-control" placeholder="Username" autofocus=""> <label for="inputUser">Username</label>
-                </div>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="form-label-group">
-                    <input type="password" id="inputPassword" asp-for="Password" class="form-control" placeholder="Password"> <label for="inputPassword">Password</label>
-                </div>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
-            </div>
-            
-        </form> *@
-
+       
 
         <form class="auth-form" method="post" asp-action="Login" asp-controller="Auth">
             <div class="form-group">
@@ -80,9 +58,7 @@
 
 
 
-        <footer class="auth-footer">
-            © @DateTime.Now.Year All Rights Reserved.
-        </footer>
+        
     </main>
     <script src="~/js/jquery-3.3.1.min.js" asp-append-version="true"></script>
     <script src="~/js/popper.min.js" asp-append-version="true"></script>

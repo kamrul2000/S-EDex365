@@ -20,21 +20,32 @@
 </head>
 <body>
     @* Hero Section Start *@
-    <section class="hero-banner position-relative">
+    <section class="hero-banner position-relative py-5 bg-light">
         <div class="container position-relative">
-            <div class="row d-flex justify-content-center">
-                <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-12 col-sm-12 col-12 text-center">
-                    <div class="hero-title fs-1 fw-bold text-uppercase">
+            <div class="row justify-content-center">
+                <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-12 text-center">
+                    <h1 class="hero-title display-4 fw-bold text-uppercase mb-4">
                         If you can<br>
-                        <div class="highlight-hero-title position-relative">
-                            <div class="highlight-hero-title-inner">imagine it</div>
-                        </div>
-                        we can make it
-                    </div>
-                    <p class="hero-subtitle fs-5 fw-normal mx-auto mb-0" style="display:none">We are a creative design agency located in the city of San Francisco, California.</p>
+                        <span class="text-primary position-relative d-inline-block">
+                            imagine it
+                            <span class="position-absolute top-100 start-50 translate-middle-x w-100 border-top border-primary" style="height: 2px;"></span>
+                        </span>
+                        <br>we can make it
+                    </h1>
+                    <p class="hero-subtitle fs-5 fw-light text-muted mb-4 mx-auto" style="max-width: 800px;">
+                        Welcome to EDex365, your ultimate education platform designed to bridge the gap between students and teachers in a collaborative, problem-solving environment.
+                    </p>
+
+
+
                     <div class="hero-action d-flex flex-wrap justify-content-center gap-3">
-                        <a href="#" style="display:none" class="btn btn-primary btn-hover-secondery text-capitalize fw-normal">Learn More</a>
-                        <a href="#" style="display:none" class="btn btn-outline-primary btn-hover-outline-secondery text-capitalize fw-normal">Contact Us</a>
+                        <a href="#" class="btn btn-primary px-4 py-2 fw-medium text-white d-flex justify-content-center align-items-center">
+                            Learn More
+                        </a>
+                        <a href="#" class="btn btn-outline-primary px-4 py-2 fw-medium d-flex justify-content-center align-items-center">
+                            Contact Us
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -43,62 +54,51 @@
     @* Hero Section End *@
 
     <!-- Collapse Section -->
-    <section class="container mt-5"  style="display:none">
-        <h2 class="text-center mb-4">Collapsible Section Example</h2>
-        <div class="text-center">
-            <!-- Collapse Button -->
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContent" aria-expanded="false" aria-controls="collapseContent">
-                Toggle Collapse
-            </button>
-        </div>
-        <!-- Collapsible Content -->
-        <div class="collapse mt-3" id="collapseContent">
-            <div class="card card-body">
-                This is the collapsible content section. You can use this space to show or hide additional details.
-            </div>
-        </div>
-    </section>
+   
 
     <!-- Contact Section -->
     <section class="contact position-relative mt-5">
         <div class="container">
-            <div class="row">
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-12">
-                    <h5 class="fs-7 section-subheading text-uppercase fw-500">Contact us now</h5>
-                    <div class="fs-2 section-heading text-uppercase fw-bold">
-                        Have a<br> problem?<br> We are here<br> to help you
+            <div class="row align-items-stretch">
+                <!-- Left Side: Text -->
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-12 d-flex">
+                    <div class="p-3 w-100 d-flex flex-column justify-content-center bg-light">
+                        <h5 class="fs-7 text-uppercase fw-semibold mb-2">Contact us now</h5>
+                        <div class="fs-2 section-heading text-uppercase fw-bold">
+                            Have a<br> problem?<br> We are here<br> to help you
+                        </div>
                     </div>
                 </div>
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-12">
-                    <form id="contactMeForm" asp-action="InsertContactMe" asp-controller="ContactMe" method="post">
-                        <div class="row">
-                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                
-                                <div class="form-group">
-                                    <label class="form-label text-uppercase fs-6 mb-3">Full Name</label>
+
+                <!-- Right Side: Form -->
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-12 d-flex">
+                    <div class="p-3 w-100 bg-white">
+                        <form id="contactMeForm" asp-action="InsertContactMe" asp-controller="ContactMe" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-uppercase fs-6 mb-2">Full Name</label>
                                     <input type="text" class="form-control border-0" placeholder="Enter your name" asp-for="FullName">
                                     <span asp-validation-for="FullName" class="text-danger"></span>
                                 </div>
-                            </div>
-                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label class="form-label text-uppercase mb-3">Email</label>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-uppercase fs-6 mb-2">Email</label>
                                     <input type="email" class="form-control border-0" placeholder="Enter your email" asp-for="Email">
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
-                            </div>
-                            <div class="col-xxl-12 col-xl-12 col-12">
-                                <div class="mb-xxl-4 mb-xl-4 mb-lg-4 mb-md-4 mb-sm-3 mb-3">
-                                    <label class="form-label text-uppercase mb-3">Message</label>
-                                    <textarea class="form-control border-0" placeholder="Enter your message" asp-for="Message"></textarea>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label text-uppercase fs-6 mb-2">Message</label>
+                                    <textarea class="form-control border-0" rows="5" placeholder="Enter your message" asp-for="Message"></textarea>
                                     <span asp-validation-for="Message" class="text-danger"></span>
                                 </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center mx-auto px-4 py-2">
+                                        Submit
+                                    </button>
+                                </div>
+
                             </div>
-                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 d-flex justify-content-end">
-                                <button class="btn btn-hover-secondery text-capitalize mt-2 w-100" type="submit" style="background-color:#F27A24">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

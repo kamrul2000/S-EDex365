@@ -1,0 +1,2408 @@
+@media only screen and (max-width: 991px) {
+    /*
+      Header Start
+      =================================*/
+      .header{
+        display: none;
+      }
+    /*
+      Header End
+      =================================*/
+
+    /*
+    	Navbar Start
+  	  =================================*/
+  	  nav .navbar-nav{
+  	  	margin-top: 20px;
+  	  }
+  	  nav .navbar-nav .nav-item{
+  	  	padding: 0px 0px 0px 0px;
+  	  }
+      .sticky-nav .navbar-nav .nav-item{
+        padding: 0px 0px 0px 0px;
+        border-bottom: 1px solid;
+        border-color: #9FF1DE;
+      }
+      nav .navbar-nav .dropdown .dropdown-menu{
+        margin-top: 0px;
+        border-radius: 5px;
+      }
+      nav .navbar-nav .dropdown .dropdown-menu .dropdown-item{
+        font-weight: 500;
+      }
+      nav .navbar-nav .nav-item .browseBtn{
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      nav .navbar-nav .nav-item .nav-link{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+      }
+      nav .navbar-nav .nav-item .nav-link:hover{
+        border-bottom: none;
+      }
+  	  /*
+        Navbar Start
+      =================================*/
+
+
+      /*
+        Banner Area Start
+      =================================*/
+      .banner{
+        width: 100%;
+        padding-top: 10%;
+        padding-right: 5%;
+        padding-bottom: 150px;
+        padding-left: 5%;
+        text-align: center;
+      }
+      .banner .video-area{
+        width: 100%;
+        margin: 0;
+      }
+      .banner .text-box .heading{
+        margin-top: 5px;
+      }
+      .banner .text-box .heading h1{
+        font-size: 30px;
+      }
+      .banner .text-box .heading h2{
+        font-size: 25px;
+      }
+      .banner .text-box p{
+        font-size: 14px;
+      }
+      .banner .btn-area a{
+        padding: 10px 14px;
+        text-align: center;
+      }
+      .banner .btn-area .joinFree{
+        display: none!important;
+        visibility: hidden;
+      }
+      /*
+        Banner Area End
+      =================================*/
+
+
+      /*
+        Courser Item Slider Box Start
+      =================================*/
+      .course-item{
+        padding: 10% 10%;
+      }
+      .course-item .course-item-slider{
+        margin-top: -8px;
+      }
+      .course-item .course-item-slider .item{
+        width: 96%;
+        height: auto;
+        margin-left: 5px;
+      }
+      /*
+        Courser Item Slider Box End
+      =================================*/
+
+
+      /*
+        Our All Courses Item Start
+      =================================*/
+      .all-course-box{
+        width: 100%;
+        padding: 10% 5%;
+      }
+      .all-course-box .heading{
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .all-course-box .heading h2{
+        font-size: 28px;
+      }
+      .all-course-box .heading p{
+        width: 100%;
+        margin: auto;
+        font-size: 14px;
+      }
+      .all-course-box .item{
+        width: 95%;
+        height: auto;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 20px;
+        padding-left: 10px;
+        margin: 20px 0px 0px 0px;
+      }
+      .all-course-box .item a{
+        font-size: 16px;
+      }
+      /*
+      Our All Courses Item End
+      =================================*/
+
+
+      /*
+      All Courses Admission Area Start
+    =================================*/
+    .courses-admission{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .courses-admission .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .courses-admission .heading h2{
+      font-size: 28px;
+    }
+    .courses-admission .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .courses-admission #course-item h2{
+      font-size: 20px;
+    }
+    /*
+      All Courses Admission Area End
+    =================================*/
+
+    /*
+      100% Job Courses Start
+    =================================*/
+    .job-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .job-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .job-course .heading h2{
+      font-size: 28px;
+    }
+    .job-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    /*
+      100% Job Courses End
+    =================================*/
+
+
+    /*
+      Course Details Start
+    =================================*/
+    .course-details{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .course-details .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .course-details .heading h2{
+      font-size: 28px;
+    }
+    .course-details .course-name h2{
+      padding: 15px 0px 10px 0px;
+      font-size: 25px;
+    }
+    .course-details .ima-area{
+      width: 100%;
+      height: 250px;
+    }
+    #duration-card{
+      margin-bottom: 15px;
+    }
+    .course-details .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .course-details .btn-area{
+      padding-bottom: 20px;
+    }
+    .course-details .btn-area .course-outline-download{
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+    #course-overview h2{
+      font-size: 25px;
+    }
+    #course-curriculum .card{
+      padding: 10px 10px;
+    }
+    #course-curriculum h2{
+      font-size: 25px;
+    }
+    .course-details .software .card{
+      padding: 10px 10px;
+    }
+    .course-details .software .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .course-for-whom .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .course-for-whom .card{
+      padding: 10px 10px;
+    }
+    .course-details .work-position .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .work-position .card{
+      padding: 10px 10px;
+    }
+    /*
+      Course Details End
+    =================================*/
+
+
+    /*
+    Course Admission Modal Form Start
+=================================*/
+    #admissionModalForm {
+        padding: 10% 5%;
+    }
+
+        #admissionModalForm label {
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+        }
+    /*
+    Course Admission Modal Form End
+=================================*/
+
+
+    /*
+      Our All Popular Courses Start
+    =================================*/
+    .all-popular-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .all-popular-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .all-popular-course .heading h2{
+      font-size: 28px;
+    }
+    .all-popular-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .course-topic-tab #course-tab-slider .item{
+      width: 90%;
+      margin: auto;
+    }
+    .course-topic-tab #course-tab-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .course-topic-tab #course-tab-slider .slick-next{
+      margin-right: 15px;
+    }
+    .all-popular-course .tab-content .all-course .card{
+      width: 100%;
+      margin: auto;
+    }
+    .all-popular-course #all-course-slider{
+      margin-left: 0px;
+    }
+    /*
+      Our All Popular Courses End
+    =================================*/
+
+
+     /*
+      Our Special Services Start
+    =================================*/
+    .our-services{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-services .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-services .heading h2{
+      font-size: 28px;
+    }
+    .our-services .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .our-services .card{
+      padding: 10px 10px;
+    }
+    .our-services .card .card-heading h4{
+      font-size: 16px;
+    }
+    .our-services .card .text p{
+      font-size: 14px;
+      text-align: justify-all;
+    }
+    /*
+      Our Special Services End
+    =================================*/
+
+
+    /*
+      Free Seminar Area Start
+    =================================*/
+    .free-seminar-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .free-seminar-area .heading{
+      text-align: center;
+    }
+    .free-seminar-area .heading h2{
+      font-size: 28px;
+    }
+    .free-seminar-area .text p{
+      text-align: center;
+    }
+    .free-seminar-area .box .date h4{
+      font-size: 20px;
+      padding-top: 15px;
+    }
+    .free-seminar-area .box .date p{
+      font-size: 14px;
+    }
+    .free-seminar-area .box .seminar-topic-box .topic-name h4{
+      font-size: 16px;
+    }
+    .free-seminar-area .box .seminar-topic-box .topic-name span{
+      font-size: 14px;
+    }
+    .free-seminar-area .img{
+      margin-top: 50px;
+    }
+     /*
+      Free Seminar Area Start
+    =================================*/
+
+
+    /*
+      Practical Project Training Area Start
+    =================================*/
+    .practical-training-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .practical-training-area .heading{
+      margin-top: 0px;
+      text-align: center;
+    }
+    .practical-training-area .heading h2{
+      font-size: 28px;
+    }
+    .practical-training-area .text p{
+      text-align: center;
+    }
+    .practical-training-area .img{
+      margin-top: 40px;
+    }
+     /*
+      Practical Project Training Area End
+    =================================*/
+
+
+     /*
+      Our Student Success Story Start
+    =================================*/
+    .success-story{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .success-story .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .success-story .heading h2{
+      font-size: 28px;
+    }
+    .success-story .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .success-story .video-area{
+      width: 100%;
+    }
+
+    /*
+      Our Student Success Story End
+    =================================*/
+
+
+    /*
+      Our Success Story Area Start
+    =================================*/
+    .our-success-history{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-success-history .heading{
+      margin-top: 0px;
+      text-align: center;
+    }
+    .our-success-history .heading h2{
+      font-size: 28px;
+    }
+    .our-success-history .text p{
+      text-align: center;
+    }
+    .our-success-history .img{
+      margin-top: 40px;
+    }
+    .our-success-history .btn-area{
+      text-align: center;
+    }
+    .our-success-history .counter-area .counter-box{
+      margin-top: 30px;
+      margin-bottom: 0px;
+    }
+    .our-success-history .counter-area .forPhone{
+      margin-bottom: 30px;
+    }
+    /*
+      Our Success Story Area End
+    =================================*/
+
+
+    /*
+      Our Students Comments Start
+    =================================*/
+    .students-comments{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .students-comments .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .students-comments .heading h2{
+      font-size: 28px;
+    }
+    .students-comments .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .students-comments .slider-area #students-comments-slider .slick-prev{
+      margin-left: 12px;
+    }
+    .students-comments .slider-area #students-comments-slider .slick-next{
+      margin-right: 12px;
+    }
+    /*
+      Our Students Comments End
+    =================================*/
+
+
+     /*
+      Our Partner Area Start
+    =================================*/
+    .our-partner-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-partner-area .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-partner-area .heading h2{
+      font-size: 28px;
+    }
+    .our-partner-area .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .our-partner-area .btn-area{
+      margin-top: 15px;
+    }
+    .our-partner-area .btn-area ul li{
+      font-size: 12px;
+      padding: 10px 10px;
+    }
+    .our-partner-area #content-one .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-one .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    .our-partner-area #content-two .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-two .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    .our-partner-area #content-three .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-three .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    /*
+      Our Partner Area End
+    =================================*/
+
+
+      /*
+      Contact with us Start
+    =================================*/
+    .contact-us{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .contact-us .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .contact-us .heading h2{
+      font-size: 28px;
+    }
+    .contact-us .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    #contact-way .border-rt{
+      border-right: none;
+    }
+    #contact-way .map{
+      height: 300px;
+    }
+    #contact-way .address{
+      width: 100%;
+      padding: 5px 5px;
+    }
+    #contact-way .visit-time{
+      width: 100%;
+      padding: 5px 5px 15px 5px;
+    }
+    #messege-section{
+      padding: 20px 0px;
+    }
+    #messege-section h3{
+      font-size: 18px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    #messege-section .form-area{
+      width: 100%;
+    }
+    /*
+      Contact with us End
+    =================================*/
+
+
+    /*
+      Footer Start
+    =================================*/
+    .footer{
+      padding-top: 10%;
+      padding-right: 5%;
+      padding-bottom: 10%;
+      padding-left: 5%;
+    }
+    .footer .heading h5{
+      font-size: 18px;
+    }
+    .footer .contact-way i{
+      font-size: 16px;
+    }
+    .footer .contact-way p{
+      font-size: 14px;
+    }
+    .footer .contact-way a{
+      font-size: 14px;
+    }
+    .footer .social-link{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .footer .footer-link ul li a{
+      font-size: 14px;
+    }
+    /*
+        Footer End
+      =================================*/   
+    }
+
+
+
+
+
+    @media only screen and (max-width: 768px) {
+    /*
+      Header Start
+      =================================*/
+      .header{
+        display: none;
+      }
+    /*
+      Header End
+      =================================*/
+
+
+    /*
+      Navbar Start
+      =================================*/
+      nav .navbar-nav{
+        margin-top: 20px;
+      }
+      nav .navbar-nav .nav-item{
+        padding: 0px 0px 0px 0px;
+      }
+      .sticky-nav .navbar-nav .nav-item{
+        padding: 0px 0px 0px 0px;
+        border-bottom: 1px solid;
+        border-color: #9FF1DE;
+      }
+      nav .navbar-nav .dropdown .dropdown-menu{
+        margin-top: 0px;
+        border-radius: 5px;
+      }
+      nav .navbar-nav .dropdown .dropdown-menu .dropdown-item{
+        font-weight: 500;
+      }
+      nav .navbar-nav .nav-item .browseBtn{
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      nav .navbar-nav .nav-item .nav-link{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+      }
+      nav .navbar-nav .nav-item .nav-link:hover{
+        border-bottom: none;
+      }
+      /*
+        Navbar Start
+      =================================*/
+
+
+      /*
+        Banner Area Start
+      =================================*/
+      .banner{
+        width: 100%;
+        padding-top: 10%;
+        padding-right: 5%;
+        padding-bottom: 150px;
+        padding-left: 5%;
+        text-align: center;
+      }
+      .banner .video-area{
+        width: 100%;
+        margin: 0;
+      }
+      .banner .text-box .heading{
+        margin-top: 5px;
+      }
+      .banner .text-box .heading h1{
+        font-size: 30px;
+      }
+      .banner .text-box .heading h2{
+        font-size: 25px;
+      }
+      .banner .text-box p{
+        font-size: 14px;
+      }
+      .banner .btn-area a{
+        padding: 10px 14px;
+        text-align: center;
+      }
+      .banner .btn-area .joinFree{
+        display: none!important;
+        visibility: hidden;
+      }
+      /*
+        Banner Area End
+      =================================*/
+
+
+      /*
+        Courser Item Slider Box Start
+      =================================*/
+      .course-item{
+        padding: 10% 10%;
+      }
+      .course-item .course-item-slider{
+        margin-top: -8px;
+      }
+      .course-item .course-item-slider .item{
+        width: 96%;
+        height: auto;
+        margin-left: 5px;
+      }
+      /*
+        Courser Item Slider Box End
+      =================================*/
+
+
+      /*
+        Our All Courses Item Start
+      =================================*/
+      .all-course-box{
+        width: 100%;
+        padding: 10% 5%;
+      }
+      .all-course-box .heading{
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .all-course-box .heading h2{
+        font-size: 28px;
+      }
+      .all-course-box .heading p{
+        width: 100%;
+        margin: auto;
+        font-size: 14px;
+      }
+      .all-course-box .item{
+        width: 95%;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        margin: 20px 0px 0px 0px;
+      }
+      /*
+      Our All Courses Item End
+      =================================*/
+
+
+      /*
+      All Courses Admission Area Start
+    =================================*/
+    .courses-admission{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .courses-admission .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .courses-admission .heading h2{
+      font-size: 28px;
+    }
+    .courses-admission .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .courses-admission #course-item h2{
+      font-size: 20px;
+    }
+    .courses-admission #web-software-course-slider{
+      margin-left: 0px;
+    }
+    .courses-admission #web-software-course-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .courses-admission #web-software-course-slider .slick-next{
+      margin-right: 15px;
+    }
+    .courses-admission #web-software-course-slider .card{
+      width: 100%;
+      margin: auto;
+    }
+    /*
+      All Courses Admission Area End
+    =================================*/
+
+
+    /*
+      100% Job Courses Start
+    =================================*/
+    .job-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .job-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .job-course .heading h2{
+      font-size: 28px;
+    }
+    .job-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    /*
+      100% Job Courses End
+    =================================*/
+
+
+    /*
+      Course Details Start
+    =================================*/
+    .course-details{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .course-details .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .course-details .heading h2{
+      font-size: 28px;
+    }
+    .course-details .course-name h2{
+      padding: 15px 0px 10px 0px;
+      font-size: 25px;
+    }
+    .course-details .ima-area{
+      width: 100%;
+      height: 250px;
+    }
+    #duration-card{
+      margin-bottom: 15px;
+    }
+    .course-details .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .course-details .btn-area{
+      padding-bottom: 20px;
+    }
+    .course-details .btn-area .course-outline-download{
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+    #course-overview h2{
+      font-size: 25px;
+    }
+    #course-curriculum .card{
+      padding: 10px 10px;
+    }
+    #course-curriculum h2{
+      font-size: 25px;
+    }
+    .course-details .software .card{
+      padding: 10px 10px;
+    }
+    .course-details .software .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .course-for-whom .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .course-for-whom .card{
+      padding: 10px 10px;
+    }
+    .course-details .work-position .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .work-position .card{
+      padding: 10px 10px;
+    }
+    /*
+      Course Details End
+    =================================*/
+
+        /*
+    Course Admission Modal Form Start
+=================================*/
+        #admissionModalForm {
+            padding: 10% 5%;
+        }
+
+            #admissionModalForm label {
+                font-size: 16px;
+                font-weight: bold;
+                color: black;
+            }
+        /*
+    Course Admission Modal Form End
+=================================*/
+
+
+    /*
+      Our All Popular Courses Start
+    =================================*/
+    .all-popular-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .all-popular-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .all-popular-course .heading h2{
+      font-size: 28px;
+    }
+    .all-popular-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .course-topic-tab #course-tab-slider .item{
+      width: 90%;
+      margin: auto;
+    }
+    .course-topic-tab #course-tab-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .course-topic-tab #course-tab-slider .slick-next{
+      margin-right: 15px;
+    }
+    .all-popular-course .tab-content .all-course .card{
+      width: 100%;
+      margin: auto;
+    }
+    .all-popular-course #all-course-slider{
+      margin-left: 0px;
+    }
+    /*
+      Our All Popular Courses End
+    =================================*/
+
+
+    /*
+      Day Long Course Start
+    =================================*/
+    .day-long-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .day-long-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .day-long-course .heading h2{
+      font-size: 28px;
+    }
+    .day-long-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    #day-long-course-slider{
+      margin-left: 0px;
+    }
+    #day-long-course-slider .slick-prev{
+      margin-left: 15px;
+    }
+    #day-long-course-slider .slick-next{
+      margin-right: 15px;
+    }
+    #day-long-course-slider .card{
+      width: 100%;
+      margin: auto;
+    }
+    /*
+      Day Long Course End
+    =================================*/
+
+
+
+ /*
+      Day Long Course Details Start
+    =================================*/
+    .day-long-course-details{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .day-long-course-details .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .day-long-course-details .heading h2{
+      font-size: 28px;
+    }
+    .day-long-course-details .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .day-long-course-details .course-overview{
+      width: 100%;
+      margin: auto;
+    }
+    .day-long-course-details .course-overview .card{
+      padding: 20px 20px;
+    }
+    .day-long-course-details .course-curriculum .card{
+      padding: 20px 20px;
+    }
+    .day-long-course-details .details-card .card{
+      padding: 20px 20px;
+    }
+    /*
+      Day Long Course Details End
+    =================================*/
+
+
+     /*
+      Our Special Services Start
+    =================================*/
+    .our-services{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-services .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-services .heading h2{
+      font-size: 28px;
+    }
+    .our-services .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    /*
+      Our Special Services End
+    =================================*/
+
+
+    /*
+      Free Seminar Area Start
+    =================================*/
+    .free-seminar-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .free-seminar-area .heading{
+      text-align: center;
+    }
+    .free-seminar-area .heading h2{
+      font-size: 28px;
+    }
+    .free-seminar-area .box .date h4{
+      font-size: 20px;
+      padding-top: 15px;
+    }
+    .free-seminar-area .box .date p{
+      font-size: 14px;
+    }
+    .free-seminar-area .box .seminar-topic-box .topic-name h4{
+      font-size: 16px;
+    }
+    .free-seminar-area .box .seminar-topic-box .topic-name span{
+      font-size: 14px;
+    }
+    .free-seminar-area .text p{
+      text-align: center;
+    }
+    .free-seminar-area .img{
+      margin-top: 50px;
+    }
+     /*
+      Free Seminar Area Start
+    =================================*/
+
+
+    /*
+      Practical Project Training Area Start
+    =================================*/
+    .practical-training-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .practical-training-area .heading{
+      margin-top: 0px;
+      text-align: center;
+    }
+    .practical-training-area .heading h2{
+      font-size: 28px;
+    }
+    .practical-training-area .text p{
+      text-align: center;
+    }
+    .practical-training-area .img{
+      margin-top: 40px;
+    }
+     /*
+      Practical Project Training Area End
+    =================================*/
+
+
+     /*
+      Our Student Success Story Start
+    =================================*/
+    .success-story{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .success-story .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .success-story .heading h2{
+      font-size: 28px;
+    }
+    .success-story .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .success-story .video-area{
+      width: 100%;
+    }
+
+    /*
+      Our Student Success Story End
+    =================================*/
+
+
+    /*
+      Our Success Story Area Start
+    =================================*/
+    .our-success-history{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-success-history .heading{
+      margin-top: 0px;
+      text-align: center;
+    }
+    .our-success-history .heading h2{
+      font-size: 28px;
+    }
+    .our-success-history .text p{
+      text-align: center;
+    }
+    .our-success-history .img{
+      margin-top: 40px;
+    }
+    .our-success-history .btn-area{
+      text-align: center;
+    }
+    .our-success-history .counter-area .box{
+      display: flex;
+    }
+    .our-success-history .counter-area .counter-box{
+      margin-top: 30px;
+      margin-bottom: 0px;
+    }
+    .our-success-history .counter-area .forPhone{
+      margin-bottom: 30px;
+    }
+    /*
+      Our Success Story Area End
+    =================================*/
+
+
+    /*
+      Our Students Comments Start
+    =================================*/
+    .students-comments{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .students-comments .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .students-comments .heading h2{
+      font-size: 28px;
+    }
+    .students-comments .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .students-comments .slider-area #students-comments-slider .slick-prev{
+      margin-left: 12px;
+    }
+    .students-comments .slider-area #students-comments-slider .slick-next{
+      margin-right: 12px;
+    }
+    /*
+      Our Students Comments End
+    =================================*/
+
+
+     /*
+      Our Partner Area Start
+    =================================*/
+    .our-partner-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-partner-area .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-partner-area .heading h2{
+      font-size: 28px;
+    }
+    .our-partner-area .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .our-partner-area .btn-area{
+      margin-top: 15px;
+    }
+    .our-partner-area .btn-area ul li{
+      font-size: 12px;
+      padding: 10px 10px;
+    }
+    .our-partner-area #content-one .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-one .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    .our-partner-area #content-two .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-two .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    .our-partner-area #content-three .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-three .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    /*
+      Our Partner Area End
+    =================================*/
+
+
+     /*
+      Our Events Area Start
+    =================================*/
+    .our-events .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-events .heading h2{
+      font-size: 28px;
+    }
+    .our-events .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .our-events .card img{
+      width: 100%;
+      height: 250px;
+    }
+    .our-events .card .card-body{
+      margin-top: 0px;
+    }
+     /*
+      Our Events Area End
+    =================================*/
+
+
+
+    /*
+      Career Placement Cell Start
+    =================================*/
+    .career-placement-cell{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .career-placement-cell .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .career-placement-cell .heading h2{
+      font-size: 28px;
+    }
+    .career-placement-cell .cell-activites{
+      margin-top: 50px;
+    }
+    .career-placement-cell .cell-activites h4{
+      width: 100%;
+      margin: auto;
+    }
+    .career-placement-cell .cell-activites .img img{
+      width: 95%;
+      height: auto;
+    }
+    /*
+      Career Placement Cell End
+    =================================*/
+
+
+      /*
+      Contact with us Start
+    =================================*/
+    .contact-us{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .contact-us .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .contact-us .heading h2{
+      font-size: 28px;
+    }
+    .contact-us .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    #contact-way .border-rt{
+      border-right: none;
+    }
+    #contact-way .map{
+      height: 300px;
+    }
+    #contact-way .address{
+      width: 100%;
+      padding: 5px 5px;
+    }
+    #contact-way .visit-time{
+      width: 100%;
+      padding: 5px 5px 15px 5px;
+    }
+    #messege-section{
+      padding: 20px 0px;
+    }
+    #messege-section h3{
+      font-size: 18px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    #messege-section .form-area{
+      width: 100%;
+    }
+    /*
+      Contact with us End
+    =================================*/
+
+
+
+    /*
+      Photo Gallery Start
+    =================================*/
+    .photo-gallery{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .photo-gallery .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .photo-gallery .heading h2{
+      font-size: 28px;
+    }
+    .photo-gallery .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .photo-gallery  .photo-heading h2{
+      font-size: 18px;
+    }
+    .photo-gallery .photo{
+      margin-bottom: 15px;
+    }
+    /*
+      Photo Gallery End
+    =================================*/
+
+
+
+    /*
+      Mentors Start
+    =================================*/
+    .mentors{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .mentors .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .mentors .heading h2{
+      font-size: 28px;
+    }
+    .mentors .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .mentors  .course-topic-tab #course-tab-slider .item{
+      width: 90%;
+      margin: auto;
+    }
+    .mentors  .course-topic-tab #course-tab-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .mentors  .course-topic-tab #course-tab-slider .slick-next{
+      margin-right: 15px;
+    }
+    .mentors .tab-content .all-course .card{
+      width: 100%;
+      margin: auto;
+    }
+    .mentors #all-course-slider{
+      margin-left: 0px;
+    }
+    .mentors .tab-content .about-mentor .details{
+      margin-top: 25px;
+    }
+    .mentors .tab-content .about-mentor .mentor-photo{
+      margin-top: 0px;
+    }
+    .mentors .tab-content .about-mentor .details .name h2{
+      font-size: 25px;
+      text-align: center;
+    }.mentors .tab-content .about-mentor .details .designation h4{
+      text-align: center;
+    }
+    .mentors .tab-content .about-mentor .details .experience{
+      margin-top: 20px;
+    }
+    /*
+      Mentors End
+    =================================*/
+
+
+    /*
+      Footer Start
+    =================================*/
+    .footer{
+      padding-top: 10%;
+      padding-right: 5%;
+      padding-bottom: 10%;
+      padding-left: 5%;
+    }
+    .footer .heading h5{
+      font-size: 18px;
+    }
+    .footer .contact-way i{
+      font-size: 16px;
+    }
+    .footer .contact-way p{
+      font-size: 14px;
+    }
+    .footer .contact-way a{
+      font-size: 14px;
+    }
+    .footer .social-link{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .footer .footer-link ul li a{
+      font-size: 14px;
+    }
+    /*
+        Footer End
+      =================================*/   
+    }
+
+
+
+
+
+
+
+
+    @media only screen and (max-width: 480px) {
+    /*
+      Header Start
+      =================================*/
+      .header{
+        display: none;
+      }
+    /*
+      Header End
+      =================================*/
+
+
+    /*
+      Navbar Start
+      =================================*/
+      nav .navbar-nav{
+        margin-top: 20px;
+      }
+      nav .navbar-nav .nav-item{
+        padding: 0px 0px 0px 0px;
+      }
+      .sticky-nav .navbar-nav .nav-item{
+        padding: 0px 0px 0px 0px;
+        border-bottom: 1px solid;
+        border-color: #9FF1DE;
+      }
+      nav .navbar-nav .dropdown .dropdown-menu{
+        margin-top: 0px;
+        border-radius: 5px;
+      }
+      nav .navbar-nav .dropdown .dropdown-menu .dropdown-item{
+        font-weight: 500;
+      }
+      nav .navbar-nav .nav-item .browseBtn{
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      nav .navbar-nav .nav-item .nav-link{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+      }
+      nav .navbar-nav .nav-item .nav-link:hover{
+        border-bottom: none;
+      }
+      /*
+        Navbar Start
+      =================================*/
+
+
+      /*
+        Banner Area Start
+      =================================*/
+      .banner{
+        width: 100%;
+        padding-top: 10%;
+        padding-right: 5%;
+        padding-bottom: 150px;
+        padding-left: 5%;
+        text-align: center;
+      }
+      .banner .video-area{
+        width: 100%;
+        margin: 0;
+      }
+      .banner .text-box .heading{
+        margin-top: 5px;
+      }
+      .banner .text-box .heading h1{
+        font-size: 30px;
+      }
+      .banner .text-box .heading h2{
+        font-size: 25px;
+      }
+      .banner .text-box p{
+        font-size: 14px;
+      }
+      .banner .btn-area a{
+        padding: 10px 14px;
+        text-align: center;
+      }
+      .banner .btn-area .joinFree{
+        display: none!important;
+        visibility: hidden;
+      }
+      /*
+        Banner Area End
+      =================================*/
+
+
+      /*
+        Courser Item Slider Box Start
+      =================================*/
+      .course-item{
+        padding: 10% 10%;
+      }
+      .course-item .course-item-slider{
+        margin-top: -8px;
+      }
+      .course-item .course-item-slider .item{
+        width: 96%;
+        height: auto;
+        margin-left: 5px;
+      }
+      /*
+        Courser Item Slider Box End
+      =================================*/
+
+
+      /*
+        Our All Courses Item Start
+      =================================*/
+      .all-course-box{
+        width: 100%;
+        padding: 10% 5%;
+      }
+      .all-course-box .heading{
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .all-course-box .heading h2{
+        font-size: 28px;
+      }
+      .all-course-box .heading p{
+        width: 100%;
+        margin: auto;
+        font-size: 14px;
+      }
+      .all-course-box .item{
+        width: 95%;
+        height: auto;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        margin: 20px 0px 0px 0px;
+      }
+      /*
+      Our All Courses Item End
+      =================================*/
+
+
+      /*
+      All Courses Admission Area Start
+    =================================*/
+    .courses-admission{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .courses-admission .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .courses-admission .heading h2{
+      font-size: 28px;
+    }
+    .courses-admission .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .courses-admission #course-item h2{
+      font-size: 20px;
+    }
+    .courses-admission #web-software-course-slider{
+      margin-left: 0px;
+    }
+    .courses-admission #web-software-course-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .courses-admission #web-software-course-slider .slick-next{
+      margin-right: 15px;
+    }
+    .courses-admission #web-software-course-slider .card{
+      width: 100%;
+      margin: auto;
+    }
+    /*
+      All Courses Admission Area End
+    =================================*/
+
+
+    /*
+      100% Job Courses Start
+    =================================*/
+    .job-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .job-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .job-course .heading h2{
+      font-size: 28px;
+    }
+    .job-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    /*
+      100% Job Courses End
+    =================================*/
+
+
+    /*
+      Course Details Start
+    =================================*/
+    .course-details{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .course-details .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .course-details .heading h2{
+      font-size: 28px;
+    }
+    .course-details .course-name h2{
+      padding: 15px 0px 10px 0px;
+      font-size: 25px;
+    }
+    .course-details .ima-area{
+      width: 100%;
+      height: 250px;
+    }
+    #duration-card{
+      margin-bottom: 15px;
+    }
+    .course-details .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .course-details .btn-area{
+      padding-bottom: 20px;
+    }
+    .course-details .btn-area .course-outline-download{
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+    }
+    #course-overview h2{
+      font-size: 25px;
+    }
+    #course-curriculum .card{
+      padding: 10px 10px;
+    }
+    #course-curriculum h2{
+      font-size: 25px;
+    }
+    .course-details .software .card{
+      padding: 10px 10px;
+    }
+    .course-details .software .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .course-for-whom .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .course-for-whom .card{
+      padding: 10px 10px;
+    }
+    .course-details .work-position .card h2{
+      font-size: 25px;
+      text-align: center;
+    }
+    .course-details .work-position .card{
+      padding: 10px 10px;
+    }
+    /*
+      Course Details End
+    =================================*/
+
+
+        /*
+    Course Admission Modal Form Start
+=================================*/
+        #admissionModalForm {
+            padding: 10% 5%;
+        }
+
+            #admissionModalForm label {
+                font-size: 16px;
+                font-weight: bold;
+                color: black;
+            }
+        /*
+    Course Admission Modal Form End
+=================================*/
+
+
+    /*
+      Our All Popular Courses Start
+    =================================*/
+    .all-popular-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .all-popular-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .all-popular-course .heading h2{
+      font-size: 28px;
+    }
+    .all-popular-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .course-topic-tab #course-tab-slider .item{
+      width: 90%;
+      margin: auto;
+    }
+    .course-topic-tab #course-tab-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .course-topic-tab #course-tab-slider .slick-next{
+      margin-right: 15px;
+    }
+    .all-popular-course .tab-content .all-course .card{
+      width: 100%;
+      margin: auto;
+    }
+    .all-popular-course #all-course-slider{
+      margin-left: 0px;
+    }
+    /*
+      Our All Popular Courses End
+    =================================*/
+
+
+    /*
+      Day Long Course Start
+    =================================*/
+    .day-long-course{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .day-long-course .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .day-long-course .heading h2{
+      font-size: 28px;
+    }
+    .day-long-course .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    #day-long-course-slider{
+      margin-left: 0px;
+    }
+    #day-long-course-slider .slick-prev{
+      margin-left: 15px;
+    }
+    #day-long-course-slider .slick-next{
+      margin-right: 15px;
+    }
+    #day-long-course-slider .card{
+      width: 100%;
+      margin: auto;
+    }
+    /*
+      Day Long Course End
+    =================================*/
+
+
+
+ /*
+      Day Long Course Details Start
+    =================================*/
+    .day-long-course-details{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .day-long-course-details .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .day-long-course-details .heading h2{
+      font-size: 28px;
+    }
+    .day-long-course-details .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .day-long-course-details .course-overview{
+      width: 100%;
+      margin: auto;
+    }
+    .day-long-course-details .course-overview .card{
+      padding: 20px 20px;
+    }
+    .day-long-course-details .course-curriculum .card{
+      padding: 20px 20px;
+    }
+    .day-long-course-details .details-card .card{
+      padding: 20px 20px;
+    }
+    /*
+      Day Long Course Details End
+    =================================*/
+
+
+
+
+     /*
+      Our Special Services Start
+    =================================*/
+    .our-services{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-services .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-services .heading h2{
+      font-size: 28px;
+    }
+    .our-services .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    /*
+      Our Special Services End
+    =================================*/
+
+
+    /*
+      Free Seminar Area Start
+    =================================*/
+    .free-seminar-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .free-seminar-area .heading{
+      text-align: center;
+    }
+    .free-seminar-area .heading h2{
+      font-size: 28px;
+    }
+    .free-seminar-area .box .date h4{
+      font-size: 20px;
+      padding-top: 15px;
+    }
+    .free-seminar-area .box .date p{
+      font-size: 14px;
+    }
+    .free-seminar-area .box .seminar-topic-box .topic-name h4{
+      font-size: 16px;
+    }
+    .free-seminar-area .box .seminar-topic-box .topic-name span{
+      font-size: 14px;
+    }
+    .free-seminar-area .text p{
+      text-align: center;
+    }
+    .free-seminar-area .img{
+      margin-top: 50px;
+    }
+     /*
+      Free Seminar Area Start
+    =================================*/
+
+
+    /*
+      Practical Project Training Area Start
+    =================================*/
+    .practical-training-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .practical-training-area .heading{
+      margin-top: 0px;
+      text-align: center;
+    }
+    .practical-training-area .heading h2{
+      font-size: 28px;
+    }
+    .practical-training-area .text p{
+      text-align: center;
+    }
+    .practical-training-area .img{
+      margin-top: 40px;
+    }
+     /*
+      Practical Project Training Area End
+    =================================*/
+
+
+     /*
+      Our Student Success Story Start
+    =================================*/
+    .success-story{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .success-story .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .success-story .heading h2{
+      font-size: 28px;
+    }
+    .success-story .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .success-story .video-area{
+      width: 100%;
+    }
+
+    /*
+      Our Student Success Story End
+    =================================*/
+
+
+    /*
+      Our Success Story Area Start
+    =================================*/
+    .our-success-history{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-success-history .heading{
+      margin-top: 0px;
+      text-align: center;
+    }
+    .our-success-history .heading h2{
+      font-size: 28px;
+    }
+    .our-success-history .text p{
+      text-align: center;
+    }
+    .our-success-history .img{
+      margin-top: 40px;
+    }
+    .our-success-history .btn-area{
+      text-align: center;
+    }
+    .our-success-history .counter-area .box{
+      display: flex;
+    }
+    .our-success-history .counter-area .counter-box{
+      margin-top: 30px;
+      margin-bottom: 0px;
+    }
+    .our-success-history .counter-area .forPhone{
+      margin-bottom: 30px;
+    }
+    /*
+      Our Success Story Area End
+    =================================*/
+
+
+    /*
+      Our Students Comments Start
+    =================================*/
+    .students-comments{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .students-comments .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .students-comments .heading h2{
+      font-size: 28px;
+    }
+    .students-comments .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .students-comments .slider-area #students-comments-slider .slick-prev{
+      margin-left: 12px;
+    }
+    .students-comments .slider-area #students-comments-slider .slick-next{
+      margin-right: 12px;
+    }
+    /*
+      Our Students Comments End
+    =================================*/
+
+
+     /*
+      Our Partner Area Start
+    =================================*/
+    .our-partner-area{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .our-partner-area .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .our-partner-area .heading h2{
+      font-size: 28px;
+    }
+    .our-partner-area .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .our-partner-area .btn-area{
+      margin-top: 15px;
+    }
+    .our-partner-area .btn-area ul li{
+      font-size: 12px;
+      padding: 10px 10px;
+    }
+    .our-partner-area #content-one .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-one .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    .our-partner-area #content-two .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-two .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    .our-partner-area #content-three .logo{
+      padding-top: 20px;
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .our-partner-area #content-three .logo img{
+      width: 80px;
+      height: auto;
+      text-align: center;
+    }
+    /*
+      Our Partner Area End
+    =================================*/
+
+
+    /*
+      Career Placement Cell Start
+    =================================*/
+    .career-placement-cell{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .career-placement-cell .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .career-placement-cell .heading h2{
+      font-size: 28px;
+    }
+    .career-placement-cell .cell-activites{
+      margin-top: 50px;
+    }
+    .career-placement-cell .cell-activites h4{
+      width: 100%;
+      margin: auto;
+    }
+    .career-placement-cell .cell-activites .img img{
+      width: 95%;
+      height: auto;
+    }
+    /*
+      Career Placement Cell End
+    =================================*/
+
+
+      /*
+      Contact with us Start
+    =================================*/
+    .contact-us{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .contact-us .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .contact-us .heading h2{
+      font-size: 28px;
+    }
+    .contact-us .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    #contact-way .border-rt{
+      border-right: none;
+    }
+    #contact-way .map{
+      height: 300px;
+    }
+    #contact-way .address{
+      width: 100%;
+      padding: 5px 5px;
+    }
+    #contact-way .visit-time{
+      width: 100%;
+      padding: 5px 5px 15px 5px;
+    }
+    #messege-section{
+      padding: 20px 0px;
+    }
+    #messege-section h3{
+      font-size: 18px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    #messege-section .form-area{
+      width: 100%;
+    }
+    /*
+      Contact with us End
+    =================================*/
+
+
+
+    /*
+      Photo Gallery Start
+    =================================*/
+    .photo-gallery{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .photo-gallery .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .photo-gallery .heading h2{
+      font-size: 28px;
+    }
+    .photo-gallery .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .photo-gallery  .photo-heading h2{
+      font-size: 18px;
+    }
+    .photo-gallery .photo{
+      margin-bottom: 15px;
+    }
+    /*
+      Photo Gallery End
+    =================================*/
+
+
+
+    /*
+      Mentors Start
+    =================================*/
+    .mentors{
+      width: 100%;
+      padding: 10% 5%;
+    }
+    .mentors .heading{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .mentors .heading h2{
+      font-size: 28px;
+    }
+    .mentors .heading p{
+      width: 100%;
+      margin: auto;
+      font-size: 14px;
+    }
+    .mentors  .course-topic-tab #course-tab-slider .item{
+      width: 90%;
+      margin: auto;
+    }
+    .mentors  .course-topic-tab #course-tab-slider .slick-prev{
+      margin-left: 15px;
+    }
+    .mentors  .course-topic-tab #course-tab-slider .slick-next{
+      margin-right: 15px;
+    }
+    .mentors .tab-content .all-course .card{
+      width: 100%;
+      margin: auto;
+    }
+    .mentors #all-course-slider{
+      margin-left: 0px;
+    }
+    .mentors .tab-content .about-mentor .details{
+      margin-top: 25px;
+    }
+    .mentors .tab-content .about-mentor .mentor-photo{
+      margin-top: 0px;
+    }
+    .mentors .tab-content .about-mentor .details .name h2{
+      font-size: 25px;
+      text-align: center;
+    }.mentors .tab-content .about-mentor .details .designation h4{
+      text-align: center;
+    }
+    .mentors .tab-content .about-mentor .details .experience{
+      margin-top: 20px;
+    }
+    /*
+      Mentors End
+    =================================*/
+
+
+    /*
+      Footer Start
+    =================================*/
+    .footer{
+      padding-top: 10%;
+      padding-right: 5%;
+      padding-bottom: 10%;
+      padding-left: 5%;
+    }
+    .footer .heading h5{
+      font-size: 18px;
+    }
+    .footer .contact-way i{
+      font-size: 16px;
+    }
+    .footer .contact-way p{
+      font-size: 14px;
+    }
+    .footer .contact-way a{
+      font-size: 14px;
+    }
+    .footer .social-link{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .footer .footer-link ul li a{
+      font-size: 14px;
+    }
+    /*
+        Footer End
+      =================================*/   
+    }
+
+
+
+
+
+
